@@ -4,7 +4,7 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :elevation="hover ? 20 : 8"
-      class="card mx-4"
+      class="card"
       ref="card"
       :style="{
         transform: cardTransform,

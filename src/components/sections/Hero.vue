@@ -1,61 +1,45 @@
 <template>
   <v-container class="container image" fluid>
-    <div class="d-flex flex-column justify-center" style="translate: 10%;">
-      <!--<v-card
-        color="black"
-        variant="flat"
-        class="text-h3 px-6 py-2 light-speed-left"
-        rounded="xl"
-        style="width: fit-content"
-      >
-        <span class="text-amber-accent-3">T</span>EC<span class="text-amber-accent-3">H</span>
-      </v-card>
+    <v-row justify="end" align="center">
+      <v-col cols="6">
+        <div style="width: 80%; height: 30%;">
+          <v-img
+            src="@/assets/technoxus_logo_2.png"
+            class="light-speed-left ms-n9"
+            eager
+          />
+        </div>
 
-      <div class="text-h1 slide-left-delay-1" elevation="3">
-        NOXUS
-      </div>-->
+        <div class="text-h3 slide-left-delay-1">
+          <div>Школа технологий для детей</div>
+          <div>г. Смоленск</div>
+        </div>
 
-      <div style="width: 90%; height: 30%;">
-        <v-img
-          src="@/assets/hero_text_1.png"
-          class="light-speed-left ms-n9"
-          eager
-        />
-      </div>
-
-      <div class="text-h3 slide-left-delay-1">
-        <div>Школа технологий для детей</div>
-        <div>г. Смоленск</div>
-      </div>
-
-      <v-sheet
-        class="mt-6 slide-left-delay-2 shine"
-        elevation="24"
-      >
-        <v-btn
-          size="x-large"
-          color="amber-accent-3"
-          class="button"
+        <v-sheet
+          class="mt-6 slide-left-delay-2 shine"
+          elevation="24"
         >
-          Записаться
-        </v-btn>
-      </v-sheet>
-    </div>
+          <v-btn
+            size="x-large"
+            color="amber-accent-3"
+            class="button"
+          >
+            Записаться
+          </v-btn>
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="5">
+        <HeroSvg class="mx-n4"/>
+      </v-col>
+    </v-row>
     
-    <HeroSvg class="mt-n6"/>
   </v-container>
 </template>
 
-<script setup>
-import HeroSvg from '@/components/svg/HeroSvg'
-</script>
-
 <style scoped>
 .container {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: calc(100vh - 120px);
-  height: calc(100vh - 60px);
+  height: calc(90vh - 60px);
 }
 
 .slide-left-delay-0 {

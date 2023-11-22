@@ -4,8 +4,9 @@
       <Header/>
       <v-main>
         <Hero/>
+        <About/>
+        <Timetable/>
         <Courses/>
-        <!--<About/>-->
         <Footer/>
       </v-main>
     </v-layout>
@@ -16,8 +17,9 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Hero from '@/components/sections/Hero'
-import Courses from './components/sections/Courses.vue'
 import About from './components/sections/About.vue'
+import Timetable from './components/sections/Timetable.vue'
+import Courses from './components/sections/Courses.vue'
 </script>
 
 <style>
