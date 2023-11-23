@@ -1,8 +1,10 @@
 <template>
-  <v-container class="px-8">
+  <v-container class="px-8 mt-16">
     <v-row>
-      <v-col cols="12" class="text-h4 courses-title">
-        Все курсы
+      <v-col cols="12">
+        <Title class="courses-title">
+          Все курсы
+        </Title>
       </v-col>
 
       <CourseCard
@@ -17,26 +19,52 @@
 </template>
 
 <script setup>
-import useAnimatedTitle from '@/composables/useAnimatedTitle';
+import useAnimations from '@/composables/useAnimations'
 import { gsap } from 'gsap'
 import { onMounted } from 'vue'
 
 const cards = [
   {
     title: 'asd',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
   },
   {
     title: 'zxc',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
   },
   {
     title: 'qwe',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!',
+    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
+  },
+  {
+    title: 'asd',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
+  },
+  {
+    title: 'zxc',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
+  },
+  {
+    title: 'qwe',
+    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
+  },
+  {
+    title: 'asd',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
+  },
+  {
+    title: 'zxc',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
+  },
+  {
+    title: 'qwe',
+    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
   }
 ]
 
-useAnimatedTitle('.courses-title')
+const { animateTitle } = useAnimations()
+
+animateTitle('.courses-title')
 
 onMounted(() => {
   gsap.timeline({

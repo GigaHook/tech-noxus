@@ -1,8 +1,10 @@
 <template>
   <v-container class="px-8">
     <v-row justify-md="space-around" justify-lg="center">
-      <v-col cols="10" class="text-h4 mb-16 about-title">
-        У нас вы научитесь
+      <v-col cols="10" class="text-h4 mb-16">
+        <Title class="about-title">
+          У нас вы научитесь
+        </Title>
       </v-col>
 
       <AboutRow
@@ -18,8 +20,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import useAnimatedTitle from '@/composables/useAnimatedTitle'
+import useAnimations from '@/composables/useAnimations'
 
 const rows = [
   {
@@ -39,8 +40,9 @@ const rows = [
   },
 ]
 
-useAnimatedTitle('.about-title')
+const { animateTitle } = useAnimations()
 
+animateTitle('.about-title')
 </script>
 
 <style scoped>

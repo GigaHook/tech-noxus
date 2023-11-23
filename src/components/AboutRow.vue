@@ -4,12 +4,9 @@
     class="text-h6"
     :order-md="even ? index + 1 : index"
   >
-    <h2
-      class="text-h4 px-2 pt-1 mb-2 title"
-      :class="'title' + index"
-    >
-      # {{ title }}
-    </h2>
+    <Title :class="'title' + index">
+      {{ title }}
+    </Title>
 
     <div :class="`text text${index}`">
       {{ text }}
