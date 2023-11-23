@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'
+import useAnimatedTitle from '@/composables/useAnimatedTitle'
 
 const rows = [
   {
@@ -34,36 +34,13 @@ const rows = [
   },
   {
     title: 'Технике видеомонтажа',
-    text: 'Овладейте искусством видеомонтажа, научитесь монтировать и обрабатывать видео, добавлять спецэффекты, работать с цветокоррекцией и графикой. Сможете монтировать рекламные ролики, клипы, фильмы',
+    text: 'Овладейте искусством видеомонтажа, научитесь монтировать и обрабатывать видео, добавлять спецэффекты, работать с цветокоррекцией и графикой. Монтируйте рекламные ролики, клипы, фильмы.',
     img: 'VideoSvg',
   },
 ]
 
-onMounted(() => {
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.about-title',
-      start: 'bottom+=100px bottom',
-      end: '+=50px',
-      scrub: 1,
-    },
-  })
-  .set('.about-title', {
-    opacity: 0,
-    scale: 0,
-  })
-  .to('.about-title', {
-    delay: 1,
-    opacity: 0.8,
-    scale: 1.2,
-    duration: 0.8,
-  })
-  .to('.about-title', {
-    opacity: 1.0,
-    scale: 1.0,
-    duration: 0.2,
-  })
-})
+useAnimatedTitle('.about-title')
+
 </script>
 
 <style scoped>

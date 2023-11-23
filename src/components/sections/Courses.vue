@@ -1,7 +1,7 @@
 <template>
   <v-container class="px-8">
     <v-row>
-      <v-col cols="12" class="text-h5">
+      <v-col cols="12" class="text-h4 courses-title">
         Все курсы
       </v-col>
 
@@ -17,6 +17,7 @@
 </template>
 
 <script setup>
+import useAnimatedTitle from '@/composables/useAnimatedTitle';
 import { gsap } from 'gsap'
 import { onMounted } from 'vue'
 
@@ -34,6 +35,8 @@ const cards = [
     text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!',
   }
 ]
+
+useAnimatedTitle('.courses-title')
 
 onMounted(() => {
   gsap.timeline({
@@ -56,3 +59,9 @@ onMounted(() => {
   })
 })
 </script>
+
+<style>
+.card:hover {
+  z-index: 1;
+}
+</style>

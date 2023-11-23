@@ -97,6 +97,6 @@ onMounted(() => {
 .title {
   background-color: #FFC400;
   width: fit-content;
-  text-shadow: 6px -6px white;
+  text-shadow: 5px -5px white;
 }
 </style>
