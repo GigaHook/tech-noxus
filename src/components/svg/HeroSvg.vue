@@ -360,13 +360,13 @@
 
 svg#freepik_stories-developer-activity.animated #freepik--Lines--inject-5 {
   animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 2.5) slideUp;
-  animation-delay: 1.3s;
+  animation-delay: 1s;
   opacity: 0
 }
 
 svg#freepik_stories-developer-activity.animated #freepik--Graphics--inject-5 {
   animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 2.5) slideUp;
-  animation-delay: 1s;
+  animation-delay: .8s;
   opacity: 0
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="px-8">
+  <v-container class="px-8" ref="about">
     <v-row justify-md="space-around" justify-lg="center">
       <v-col cols="12" class="text-h4" :class="mobile ? 'mb-0' : 'mb-16'">
         <Title class="about-title text-no-wrap">
@@ -21,9 +21,16 @@
 
 <script setup>
 import useAnimations from '@/composables/useAnimations'
+import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import { ref } from 'vue'
 
 const { mobile } = useDisplay()
+
+const store = useStore()
+const about = ref()
+store.about = about
+console.log(store);
 
 const rows = [
   {

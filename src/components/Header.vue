@@ -1,6 +1,6 @@
 <template>
   <v-app-bar flat>
-    <v-app-bar-title>
+    <v-app-bar-title @click="navigate(store.hero)">
       <div class="d-flex flex-no-wrap align-center">
         <v-img
           src="@/assets/images/logo.png"
@@ -10,22 +10,72 @@
       </div>
     </v-app-bar-title>
 
-    <v-btn>
-      О нас
-    </v-btn>
-
-    <v-btn>
-      расписание
-    </v-btn>
+    <template v-if="!mobile">
+      <v-btn
+        v-for="item in menuItems"
+        @click="navigate(item.to)"
+      >
+        {{ item.text }}
+      </v-btn>
+    </template>
     
-    <v-btn>
-      курсы
-    </v-btn>
+    <v-app-bar-nav-icon
+      v-else
+      class="pb-1"
+      @click="side = !side"
+    />
     
-    <v-btn icon="fa-brands fa-vk"/>
   </v-app-bar>
+
+  <v-navigation-drawer
+    location="right"
+    v-model="side"
+  >
+    <v-list
+      :items="menuItems"
+      item-title="text"
+      item-value="to"
+      @update:selected="selected => navigate(selected[0])"
+    />
+  </v-navigation-drawer>
 </template>
 
 <script setup>
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+import useStore from '@/composables/useStore'
+import { ref, computed } from 'vue'
 
+const { mobile } = useDisplay()
+const store = useStore()
+const side = ref(false)
+const menuItems = computed(() => [
+  {
+    text: 'О нас',
+    to: store.about,
+  },
+  {
+    text: 'Расписание',
+    to: store.timetable,
+  },
+  {
+    text: 'Все курсы',
+    to: store.courses,
+  },
+  {
+    text: 'Мы на карте',
+    to: store.map,
+  },
+  {
+    text: 'Партнёры',
+    to: store.partners,
+  },
+  {
+    text: 'Записаться',
+    to: store.form,
+  }
+])
+
+function navigate(section) {
+  section.$el.scrollIntoView({ behavior: "smooth" })
+}
 </script>

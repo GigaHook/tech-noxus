@@ -2,6 +2,7 @@
   <v-container
     class="container"
     :class="!mobile && 'image'" fluid
+    ref="sectionHero"
   >
     <v-row justify="end" align="center">
       <v-col cols="12" lg="6">
@@ -107,11 +108,15 @@
 </template>
 
 <script setup>
+import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const { mobile } = useDisplay()
+const store = useStore()
+const sectionHero = ref()
+store.sectionHero = sectionHero
 
 onMounted(() => {
   gsap.timeline({})
@@ -120,6 +125,10 @@ onMounted(() => {
     x: '-100%',
     stagger: true,
   })
+  .set('.fade-in', {
+    opacity: 0
+  })
+
   //первый слайд
   .to('.slide-0', {
     opacity: .9,
@@ -132,30 +141,32 @@ onMounted(() => {
     x: '0',
     duration: .2,
   })
+
   //второй слайд
   .to('.slide-1', {
     opacity: .9,
     x: '10%',
     duration: .5,
-    delay: .3,
   })
   .to('.slide-1', {
     opacity: 1,
     x: '0',
     duration: .2,
   })
+
   //третий слайд
   .to('.slide-2', {
     opacity: .9,
     x: '3%',
     duration: .5,
-    delay: .3,
+    delay: .2,
   })
   .to('.slide-2', {
     opacity: 1,
     x: '0',
     duration: .2,
   })
+  
   //фейд-ин
   .to('.fade-in', {
     opacity: 1,
@@ -208,6 +219,7 @@ onMounted(() => {
   top: 0;
   left: -50%;
   animation: shine 3s ease-out infinite 2s; 
+  animation-delay: .1s;
   transform: skewX(-25deg);
 }
 
