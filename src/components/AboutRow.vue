@@ -3,8 +3,9 @@
     cols="12" md="6" lg="5" xl="4"
     class="text-h6"
     :order-md="even ? index + 1 : index"
+    :order="index + 1"
   >
-    <Title :class="`title${index}`">
+    <Title v-if="!mobile" :class="`title${index}`">
       {{ title }}
     </Title>
 
@@ -14,12 +15,17 @@
   </v-col>
 
   <v-col
-    cols="12" md="6" lg="5" 
+    cols="12" md="6" lg="4" 
+    :offset-xl="even ? 1 : 0"
     class="mb-6" 
     :order-md="even ? index : index + 1"
+    :order="index"
   >
+    <Title v-if="mobile" :class="`title${index}`">
+      {{ title }}
+    </Title>
     <RenderOnScroll>
-      <component :is="img"/>
+      <component :is="img" style="max-height: 50vh;"/>
     </RenderOnScroll>
   </v-col>
 </template>
@@ -27,6 +33,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap/all'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+
+const { mobile } = useDisplay()
 
 const { index } = defineProps({
   index: Number,

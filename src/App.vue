@@ -5,7 +5,7 @@
       <v-main>
         <Hero/>
         <About/>
-        <About2/>
+        <About2 v-if="!mobile"/>
         <Timetable/>
         <Courses/>
         <Footer/>
@@ -22,6 +22,10 @@ import About from '@/components/sections/About.vue'
 import About2 from '@/components/sections/About2.vue'
 import Timetable from '@/components/sections/Timetable.vue'
 import Courses from '@/components/sections/Courses.vue'
+
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+
+const { mobile } = useDisplay()
 </script>
 
 <style>

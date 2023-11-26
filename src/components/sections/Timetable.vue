@@ -1,5 +1,5 @@
 <template>
-  <v-container class="my-16">
+  <v-container class="my-16 pt-16">
     <v-row justify="space-around" align="center">
       <v-col
         v-if="display.mdAndUp.value"
@@ -110,128 +110,130 @@ const sunday = [
 const display = useDisplay()
 
 onMounted(() => {
-  //часы круглые
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.clock-icon-1',
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 2,
-    }
-  })
-  .set('.clock-icon-1', {
-    x: '-100%',
-    y: '-240%',
-    opacity: 0,
-    scale: 1.3,
-    rotation: -60,
-  })
-  .to('.clock-icon-1', {
-    x: '25%',
-    y: '-25%',
-    opacity: 1,
-    scale: 1,
-    rotation: 0,
-    ease: 'none',
-  })
-  .to('.clock-icon-1', {
-    x: '25%',
-    y: '25%',
-    opacity: 1,
-    scale: 1,
-    rotation: 180,
-    ease: 'none',
-  })
-  .to('.clock-icon-1', {
-    x: '-150%',
-    y: '120%',
-    opacity: 0,
-    scale: 1.5,
-    rotation: 260,
-    ease: 'none',
-  })
-
-  //часы песочные
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.clock-icon-2',
-      start: 'top-=50px bottom',
-      end: 'bottom top+=100px',
-      scrub: 2,
-    }
-  })
-  .set('.clock-icon-2', {
-    x: '175%',
-    y: '-200%',
-    opacity: 0,
-    scale: 1.2,
-    rotation: 360,
-  })
-  .to('.clock-icon-2', {
-    x: '50%',
-    y: '50%',
-    opacity: 1,
-    scale: 1,
-    rotation: 200,
-    ease: 'none',
-  })
-  .to('.clock-icon-2', {
-    x: '50%',
-    y: '50%',
-    opacity: 1,
-    scale: 1,
-    rotation: 80,
-    ease: 'none',
-  })
-  .to('.clock-icon-2', {
-    x: '200%',
-    y: '100%',
-    opacity: 0,
-    scale: 1.2,
-    rotation: 0,
-    ease: 'none',
-  })
-
-  //календарь
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.clock-icon-3',
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 2,
-    }
-  })
-  .set('.clock-icon-3', {
-    x: '175%',
-    y: '-200%',
-    opacity: 0,
-    scale: 1.2,
-    rotation: 35,
-  })
-  .to('.clock-icon-3', {
-    x: '0%',
-    y: '-25%',
-    opacity: 1,
-    rotation: -25,
-    scale: 1,
-    ease: 'none',
-  })
-  .to('.clock-icon-3', {
-    x: '-25%',
-    y: '25%',
-    opacity: 1,
-    rotation: -35,
-    scale: 1,
-    ease: 'none',
-  })
-  .to('.clock-icon-3', {
-    x: '-100%',
-    y: '100%',
-    opacity: 0,
-    scale: 1.2,
-    rotation: -165,
-    ease: 'none',
-  })
+  if (!display.mobile.value) {
+    //часы круглые
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.clock-icon-1',
+        start: 'top-=25px bottom',
+        end: 'bottom top',
+        scrub: 2,
+      }
+    })
+    .set('.clock-icon-1', {
+      x: '-100%',
+      y: '-240%',
+      opacity: 0,
+      scale: 1.3,
+      rotation: -60,
+    })
+    .to('.clock-icon-1', {
+      x: '25%',
+      y: '-25%',
+      opacity: 1,
+      scale: 1,
+      rotation: 0,
+      ease: 'none',
+    })
+    .to('.clock-icon-1', {
+      x: '25%',
+      y: '25%',
+      opacity: 1,
+      scale: 1,
+      rotation: 180,
+      ease: 'none',
+    })
+    .to('.clock-icon-1', {
+      x: '-150%',
+      y: '120%',
+      opacity: 0,
+      scale: 1.5,
+      rotation: 260,
+      ease: 'none',
+    })
+  
+    //часы песочные
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.clock-icon-2',
+        start: 'top-=75px bottom',
+        end: 'bottom top+=100px',
+        scrub: 2,
+      }
+    })
+    .set('.clock-icon-2', {
+      x: '175%',
+      y: '-200%',
+      opacity: 0,
+      scale: 1.2,
+      rotation: 360,
+    })
+    .to('.clock-icon-2', {
+      x: '50%',
+      y: '50%',
+      opacity: 1,
+      scale: 1,
+      rotation: 200,
+      ease: 'none',
+    })
+    .to('.clock-icon-2', {
+      x: '50%',
+      y: '50%',
+      opacity: 1,
+      scale: 1,
+      rotation: 80,
+      ease: 'none',
+    })
+    .to('.clock-icon-2', {
+      x: '200%',
+      y: '100%',
+      opacity: 0,
+      scale: 1.2,
+      rotation: 0,
+      ease: 'none',
+    })
+  
+    //календарь
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.clock-icon-3',
+        start: 'top-=25px bottom',
+        end: 'bottom top',
+        scrub: 2,
+      }
+    })
+    .set('.clock-icon-3', {
+      x: '175%',
+      y: '-200%',
+      opacity: 0,
+      scale: 1.2,
+      rotation: 35,
+    })
+    .to('.clock-icon-3', {
+      x: '0%',
+      y: '-25%',
+      opacity: 1,
+      rotation: -25,
+      scale: 1,
+      ease: 'none',
+    })
+    .to('.clock-icon-3', {
+      x: '-25%',
+      y: '25%',
+      opacity: 1,
+      rotation: -35,
+      scale: 1,
+      ease: 'none',
+    })
+    .to('.clock-icon-3', {
+      x: '-100%',
+      y: '100%',
+      opacity: 0,
+      scale: 1.2,
+      rotation: -165,
+      ease: 'none',
+    })
+  }
 })
 </script>
 

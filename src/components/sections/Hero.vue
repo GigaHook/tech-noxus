@@ -1,111 +1,174 @@
 <template>
-  <v-container class="container image" fluid>
+  <v-container
+    class="container"
+    :class="!mobile && 'image'" fluid
+  >
     <v-row justify="end" align="center">
-      <v-col cols="6">
-        <div style="width: 80%; height: 30%;">
+      <v-col cols="12" lg="6">
+        <div
+          :style="{
+            height: !mobile ? '30%' : '',
+            width: !mobile ? '80%' : '90vw',
+          }"
+          :class="mobile && 'mt-n4'"
+        >
           <v-img
             src="@/assets/images/technoxus_logo_2.png"
-            class="light-speed-left ms-n9"
+            class="slide-0"
+            :class="!mobile && 'ms-n9'"
             eager
           />
         </div>
 
-        <div class="text-h3 slide-left-delay-1">
+        <div
+          class="slide-1"
+          :class="mobile ? 'text-h5' : 'text-h3 mt-2'"
+        >
           <div>Школа технологий для детей</div>
           <div>г. Смоленск</div>
         </div>
 
-        <v-sheet
-          class="mt-6 slide-left-delay-2 shine"
-          elevation="24"
-        >
-          <v-btn
-            size="x-large"
-            color="amber-accent-3"
-            class="button"
+        <template v-if="!mobile">
+          <v-sheet
+            class="mt-6 slide-2 shine"
+            elevation="24"
           >
-            Записаться
+            <v-btn
+              size="x-large"
+              color="amber-accent-3"
+              class="button"
+            >
+              Записаться
+            </v-btn>
+          </v-sheet>
+          
+          <v-btn
+            variant="text"
+            size="large"
+            class="font-weight-bold"
+            v-ripple="{ color: 'yellow' }"
+          >
+            Группа ВКонтакте
           </v-btn>
-        </v-sheet>
+        </template>
       </v-col>
 
-      <v-col cols="5">
+      <v-col cols="12" lg="5" class="py-0 mt-n8">
         <HeroSvg class="mx-n4"/>
+
+        <template v-if="mobile">
+          <div class="d-flex flex-no-wrap justify-space-between pb-2 fade-in">
+            <v-btn
+              variant="text"
+              class="font-weight-bold px-2"
+              v-ripple="{ class: `text-amber-accent-3` }"
+              append-icon="fas fa-arrow-up-right-from-square"
+            >
+              ВКонтакте
+            </v-btn>
+  
+            <v-btn
+              variant="text"
+              class="font-weight-bold px-2"
+              v-ripple="{ class: `text-amber-accent-3` }"
+              append-icon="fas fa-phone"
+            >
+              +7 (906) 517-74-36
+            </v-btn>
+          </div>
+
+          <v-sheet
+            class="mt-2 slide-2 shine w-100"
+            elevation="24"
+          >
+            <v-btn
+              size="x-large"
+              color="amber-accent-3"
+              class="button w-100"
+            >
+              Записаться
+            </v-btn>
+          </v-sheet>
+  
+          <div class="d-flex justify-center fade-in">
+            <v-btn
+              icon="fa fa-arrow-down"
+              variant="text"
+              size="x-large"
+              class="pb-2 mt-2"
+              style="z-index: 1;"
+            />
+          </div>
+        </template>
       </v-col>
     </v-row>
     
   </v-container>
 </template>
 
+<script setup>
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+import { gsap } from 'gsap/all'
+import { onMounted } from 'vue'
+
+const { mobile } = useDisplay()
+
+onMounted(() => {
+  gsap.timeline({})
+  .set('.slide-0, .slide-1, .slide-2', {
+    opacity: 0,
+    x: '-100%',
+    stagger: true,
+  })
+  //первый слайд
+  .to('.slide-0', {
+    opacity: .9,
+    x: '10%',
+    duration: .6,
+    delay: .3,
+  })
+  .to('.slide-0', {
+    opacity: 1,
+    x: '0',
+    duration: .2,
+  })
+  //второй слайд
+  .to('.slide-1', {
+    opacity: .9,
+    x: '10%',
+    duration: .5,
+    delay: .3,
+  })
+  .to('.slide-1', {
+    opacity: 1,
+    x: '0',
+    duration: .2,
+  })
+  //третий слайд
+  .to('.slide-2', {
+    opacity: .9,
+    x: '3%',
+    duration: .5,
+    delay: .3,
+  })
+  .to('.slide-2', {
+    opacity: 1,
+    x: '0',
+    duration: .2,
+  })
+  //фейд-ин
+  .to('.fade-in', {
+    opacity: 1,
+    duration: .5,
+  })
+})
+</script>
+
 <style scoped>
+
 .container {
-  height: calc(90vh - 60px);
-}
-
-.slide-left-delay-0 {
-  opacity: 0;
-  animation: slide-left .5s cubic-bezier(0.5, 0.9, 0.3, 1) forwards .2s;
-}
-
-.slide-left-delay-1 {
-  opacity: 0;
-  animation: slide-left .5s cubic-bezier(0.5, 0.9, 0.3, 1) forwards .9s;
-}
-
-.slide-left-delay-2 {
-  opacity: 0;
-  animation: slide-left .5s cubic-bezier(0.5, 0.9, 0.3, 1) forwards 1.2s;
-}
-
-.light-speed-left {
-  animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) light-speed-left
-}
-
-@keyframes light-speed-left { 
-  from {
-    transform: translate3d(-50%, 0, 0) skewX(20deg);
-    opacity: 0;
-  }
-  60% {
-    transform: skewX(-10deg);
-    opacity: 1;
-  }
-  80% {
-    transform: skewX(2deg);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes slide-left {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%);
-  }
-  75% {
-    opacity: 1;
-    transform: translateX(7%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-}
-
-.fade-in {
-  opacity: 0;
-  animation: 1s 1 forwards ease-in-out fade-in;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  min-height: calc(90vh - 60px);
+  height: fit-content;
 }
 
 .image {

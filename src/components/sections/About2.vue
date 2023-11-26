@@ -1,9 +1,10 @@
 <template>
   <v-container
-    class="container"
-    :style="display.lgAndDown.value ? 'width: 75%' : 'width: 50%'"
+    class="container mt-16 pb-16"
+    :style="width"
   >
     <v-sheet
+      v-if="!display.mobile.value"
       color="black"
       class="numbers ps-1 rounded-xl text-green-accent-2 text-h5"
     >
@@ -11,10 +12,9 @@
     </v-sheet>
 
     <v-sheet 
+      v-if="!display.mobile.value"
       class="code rounded-xl overflow-hidden"
-      :style="{
-        transform: codeTransform,
-      }"
+      elevation="12"
       ref="code"
     >
       <v-img src="@/assets/images/code3.jpg" cover/>
@@ -23,7 +23,6 @@
     <v-sheet
       color="grey-lighten-3"
       class="image rounded-xl"
-      :style="{ transform: imageTransform }"
       ref="image"
       elevation="12"
     >
@@ -33,9 +32,8 @@
             <div class="text-h4 my-2">
               С нуля до первых проектов
             </div>
-            Неважно, есть ли у вас опыт программирования или вы только делаете первые шаги в IT.
+            Неважно, есть ли у вас опыт в программировании и дизайне или вы только делаете первые шаги в IT.
             Мы научим вас всем навыкам, необходимым для работы над реальными проектами.
-            <!--Пройдя обучение на практических кейсах, вы получите реальный опыт и готовые проекты для портфолио или стартапа.-->
           </v-col>
           
           <v-col cols="6">
@@ -50,14 +48,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { useMouseInElement } from '@vueuse/core'
+import { useMouseInElement, useScroll } from '@vueuse/core'
+import { gsap } from 'gsap/all'
 
 const display = useDisplay()
 const numbers = ref()
 const code = ref()
 const image = ref()
+const { isScrolling } = useScroll(window)
+
+const width = display.lgAndDown.value ? 'width: 75%' :
+  display.mobile.value ? 'width: 100%' :  'width: 50%'
 
 function generateNumbers() {
   let result = ''
@@ -70,7 +73,7 @@ function generateNumbers() {
   return result.repeat(display.mdAndDown.value ? 6 : 16)
 }
 
-function calculateTransform(elem, c) {
+function animate(elem, c) {
   function cap(value, max) {
     value > max + c && (value = max + c)
     value < -max - c && (value = -max - c)
@@ -78,20 +81,21 @@ function calculateTransform(elem, c) {
   }
 
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(elem)
-  
-  return computed(() => {
-    const  offsetX = cap((elementX.value - elementWidth.value / 2) / c, 60 - c)
-    const  offsetY = cap((elementY.value - elementHeight.value / 2) / c, 60 - c)
-    return `translateX(${offsetX}px) translateY(${offsetY}px)`
-  })
+
+  watch ([elementX, elementY], () => !isScrolling.value && gsap.to(elem.value.$el, {
+      x: cap((elementX.value - elementWidth.value / 2) / c, 60 - c),
+      y: cap((elementY.value - elementHeight.value / 2) / c, 60 - c),
+    })
+  ) 
 }
 
-const codeTransform = calculateTransform(code, 20)
-const imageTransform = calculateTransform(image, 10)
-
 onMounted(() => {
-  numbers.value = generateNumbers()
-  setInterval(() => numbers.value = generateNumbers(), 1000)
+  if (!display.mobile.value) {
+    numbers.value = generateNumbers()
+    setInterval(() => numbers.value = generateNumbers(), 1000)
+    animate(code, 20)
+    animate(image, 10)
+  }
 })
 
 </script>
@@ -119,9 +123,11 @@ onMounted(() => {
   text-shadow: 0px 0px 10px #69F0AE;
 }
 .code {
-
+  top: 10%;
+  right: 8%;
 }
 .image {
-
+  bottom: 10%;
+  right: 4%;
 }
 </style>

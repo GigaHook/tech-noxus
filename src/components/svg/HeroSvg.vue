@@ -359,19 +359,19 @@
 }
 
 svg#freepik_stories-developer-activity.animated #freepik--Lines--inject-5 {
-  animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideUp;
+  animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 2.5) slideUp;
   animation-delay: 1.3s;
   opacity: 0
 }
 
 svg#freepik_stories-developer-activity.animated #freepik--Graphics--inject-5 {
-  animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideUp;
+  animation: 0.7s 1 forwards cubic-bezier(.36, -0.01, .5, 2.5) slideUp;
   animation-delay: 1s;
   opacity: 0
 }
 
 svg#freepik_stories-developer-activity.animated #freepik--Character--inject-5 {
-  animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) lightSpeedRight;
+  animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.5) lightSpeedRight;
   animation-delay: 0s;
 }
 

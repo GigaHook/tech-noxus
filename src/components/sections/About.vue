@@ -1,8 +1,8 @@
 <template>
   <v-container class="px-8">
     <v-row justify-md="space-around" justify-lg="center">
-      <v-col cols="10" class="text-h4 mb-16">
-        <Title class="about-title">
+      <v-col cols="12" class="text-h4" :class="mobile ? 'mb-0' : 'mb-16'">
+        <Title class="about-title text-no-wrap">
           У нас вы научитесь
         </Title>
       </v-col>
@@ -21,6 +21,9 @@
 
 <script setup>
 import useAnimations from '@/composables/useAnimations'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+
+const { mobile } = useDisplay()
 
 const rows = [
   {
@@ -39,6 +42,12 @@ const rows = [
     img: 'VideoSvg',
   },
 ]
+
+mobile.value && rows.push({
+  title: 'С нуля до первых проектов',
+  text: 'Неважно, есть ли у вас опыт в программировании и дизайне или вы только делаете первые шаги в IT. Мы научим вас всем навыкам, необходимым для работы над реальными проектами.',
+  img: 'FirstProjectSvg',
+})
 
 const { slideLeft } = useAnimations()
 
