@@ -4,7 +4,7 @@
     class="text-h6"
     :order-md="even ? index + 1 : index"
   >
-    <Title :class="'title' + index">
+    <Title :class="`title${index}`">
       {{ title }}
     </Title>
 
@@ -14,20 +14,13 @@
   </v-col>
 
   <v-col
-    cols="12" md="6" lg="5"
-    class="mb-6"
-    :class="'img' + index"
+    cols="12" md="6" lg="5" 
+    class="mb-6" 
     :order-md="even ? index : index + 1"
   >
-    <div style="height: 50vh;">
-      <v-fade-transition>
-        <component
-          :is="img"
-          v-if="imgVisible"
-          class="mt-n4 w-100 h-100"
-        />
-      </v-fade-transition>
-    </div>
+    <RenderOnScroll>
+      <component :is="img"/>
+    </RenderOnScroll>
   </v-col>
 </template>
 
@@ -42,20 +35,9 @@ const { index } = defineProps({
   img: String,
 })
 
-const imgVisible = ref(false)
 const even = ref(index % 2 == 0)
 
 onMounted(() => {
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: `.img${index}`,
-      start: 'top+=200px bottom',
-      end: 'bottom top',
-      onEnter: () => imgVisible.value = true,
-      onLeaveBack: () => imgVisible.value = false,
-    }
-  })
-
   gsap.timeline({
     scrollTrigger: {
       trigger: `.text${index}`,
@@ -90,10 +72,5 @@ onMounted(() => {
 <style scoped>
 .text, .title {
   opacity: 0
-}
-.title {
-  background-color: #FFC400;
-  width: fit-content;
-  text-shadow: 5px -5px white;
 }
 </style>

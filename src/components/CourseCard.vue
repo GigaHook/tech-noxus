@@ -26,10 +26,7 @@
 import { useMouseInElement } from '@vueuse/core'
 import { ref, computed } from 'vue'
 
-defineProps({
-  title: String,
-  text: String,
-})
+defineProps({ title: String, text: String })
 
 const hover = ref()
 const card = ref()
@@ -54,7 +51,7 @@ const cardTransform = computed(() => {
   ).toFixed(2)
 
   return isOutside.value 
-    ? '' 
+    ? ''
     : `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg) scale(1.05)`
 })
 </script>

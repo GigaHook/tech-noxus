@@ -4,7 +4,7 @@
       <v-col cols="6">
         <div style="width: 80%; height: 30%;">
           <v-img
-            src="@/assets/technoxus_logo_2.png"
+            src="@/assets/images/technoxus_logo_2.png"
             class="light-speed-left ms-n9"
             eager
           />
@@ -113,7 +113,7 @@
 }
 
 .image::after {
-  background-image: url('@/assets/hero_circuits.png');
+  background-image: url('@/assets/images/hero_circuits.png');
   background-color: rgba(255, 255, 255, 0.5);
   background-position: start center;
   background-size: contain;

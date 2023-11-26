@@ -62,9 +62,9 @@ const cards = [
   }
 ]
 
-const { animateTitle } = useAnimations()
+const { slideLeft } = useAnimations()
 
-animateTitle('.courses-title')
+slideLeft('.courses-title')
 
 onMounted(() => {
   gsap.timeline({

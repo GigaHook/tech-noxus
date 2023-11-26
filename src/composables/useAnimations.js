@@ -1,7 +1,7 @@
 import gsap from "gsap/all"
 import { onMounted } from "vue"
 
-function animateTitle(title) {
+function slideLeft(title) {
   onMounted(() => {
     gsap.timeline({
       scrollTrigger: {
@@ -21,26 +21,11 @@ function animateTitle(title) {
       x: '0',
       duration: 1,
     })
-    //.set(title, {
-    //  opacity: 0,
-    //  scale: 0,
-    //})
-    //.to(title, {
-    //  delay: 1,
-    //  opacity: 0.8,
-    //  scale: 1.2,
-    //  duration: 0.8,
-    //})
-    //.to(title, {
-    //  opacity: 1.0,
-    //  scale: 1.0,
-    //  duration: 0.2,
-    //})
   })
 }
 
 export default function useAnimations() {
   return {
-    animateTitle,
+    slideLeft,
   }
 }

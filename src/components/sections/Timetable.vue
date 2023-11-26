@@ -114,7 +114,7 @@ onMounted(() => {
   gsap.timeline({
     scrollTrigger: {
       trigger: '.clock-icon-1',
-      start: 'top-=50px bottom',
+      start: 'top bottom',
       end: 'bottom top',
       scrub: 2,
     }
@@ -155,7 +155,7 @@ onMounted(() => {
   gsap.timeline({
     scrollTrigger: {
       trigger: '.clock-icon-2',
-      start: 'top bottom',
+      start: 'top-=50px bottom',
       end: 'bottom top+=100px',
       scrub: 2,
     }

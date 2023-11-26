@@ -40,9 +40,9 @@ const rows = [
   },
 ]
 
-const { animateTitle } = useAnimations()
+const { slideLeft } = useAnimations()
 
-animateTitle('.about-title')
+slideLeft('.about-title')
 </script>
 
 <style scoped>
