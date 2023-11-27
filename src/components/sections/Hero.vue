@@ -2,7 +2,7 @@
   <v-container
     class="container"
     :class="!mobile && 'image'" fluid
-    ref="sectionHero"
+    ref="hero"
   >
     <v-row justify="end" align="center">
       <v-col cols="12" lg="6">
@@ -54,7 +54,7 @@
         </template>
       </v-col>
 
-      <v-col cols="12" lg="5" class="py-0 mt-n8">
+      <v-col cols="12" lg="5" class="pt-4">
         <HeroSvg class="mx-n4"/>
 
         <template v-if="mobile">
@@ -115,63 +115,45 @@ import { ref, onMounted } from 'vue'
 
 const { mobile } = useDisplay()
 const store = useStore()
-const sectionHero = ref()
-store.sectionHero = sectionHero
+const hero = ref()
+store.hero = hero
+
+const slides = ['.slide-0', '.slide-1', '.slide-2']
 
 onMounted(() => {
-  gsap.timeline({})
-  .set('.slide-0, .slide-1, .slide-2', {
-    opacity: 0,
-    x: '-100%',
-    stagger: true,
-  })
-  .set('.fade-in', {
-    opacity: 0
-  })
-
-  //первый слайд
-  .to('.slide-0', {
-    opacity: .9,
-    x: '10%',
-    duration: .6,
-    delay: .3,
-  })
-  .to('.slide-0', {
-    opacity: 1,
-    x: '0',
-    duration: .2,
-  })
-
-  //второй слайд
-  .to('.slide-1', {
-    opacity: .9,
-    x: '10%',
-    duration: .5,
-  })
-  .to('.slide-1', {
-    opacity: 1,
-    x: '0',
-    duration: .2,
-  })
-
-  //третий слайд
-  .to('.slide-2', {
-    opacity: .9,
-    x: '3%',
-    duration: .5,
-    delay: .2,
-  })
-  .to('.slide-2', {
-    opacity: 1,
-    x: '0',
-    duration: .2,
-  })
-  
-  //фейд-ин
-  .to('.fade-in', {
-    opacity: 1,
-    duration: .5,
-  })
+  gsap.timeline()
+    .set(slides, {
+      opacity: 0,
+      x: '-100%',
+      stagger: true,
+    })
+    .set('.fade-in', {
+      opacity: 0
+    })
+    .to('.slide-0', {
+      opacity: 1,
+      x: 0,
+      duration: .7,
+      delay: .5,
+      ease: 'back.out',
+    })
+    .to('.slide-1', {
+      opacity: 1,
+      x: 0,
+      duration: .7,
+      ease: 'back.out',
+    })
+    .to('.slide-2', {
+      opacity: 1,
+      x: 0,
+      duration: .7,
+      delay: .3,
+      ease: 'back.out',
+    })
+    .to('.fade-in', {
+      opacity: 1,
+      duration: .5,
+    })
 })
 </script>
 
@@ -188,7 +170,6 @@ onMounted(() => {
 
 .image::after {
   background-image: url('@/assets/images/hero_circuits.png');
-  background-color: rgba(255, 255, 255, 0.5);
   background-position: start center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -219,7 +200,6 @@ onMounted(() => {
   top: 0;
   left: -50%;
   animation: shine 3s ease-out infinite 2s; 
-  animation-delay: .1s;
   transform: skewX(-25deg);
 }
 

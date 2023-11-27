@@ -2,7 +2,7 @@
   <v-container class="my-16 pt-16">
     <v-row justify="space-around" align="center">
       <v-col
-        v-if="display.mdAndUp.value"
+        v-if="display.lgAndUp.value"
         md="1"
         class="clock d-flex justify-center align-center"
       >
@@ -51,7 +51,7 @@
       </v-col>
 
       <v-col
-        v-if="display.mdAndUp.value"
+        v-if="display.lgAndUp.value"
         md="1"
         class="clock d-flex justify-center align-center flex-column"
       >

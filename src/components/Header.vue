@@ -21,13 +21,14 @@
     
     <v-app-bar-nav-icon
       v-else
-      class="pb-1"
       @click="side = !side"
+      class="pb-1"
     />
     
   </v-app-bar>
 
   <v-navigation-drawer
+    v-if="mobile"
     location="right"
     v-model="side"
   >
@@ -58,7 +59,7 @@ const menuItems = computed(() => [
     to: store.timetable,
   },
   {
-    text: 'Все курсы',
+    text: 'Курсы',
     to: store.courses,
   },
   {

@@ -1,12 +1,14 @@
 <template>
   <v-container
     class="container mt-16 pb-16"
-    :style="width"
+    :style="{
+      width
+    }"
   >
     <v-sheet
       v-if="!display.mobile.value"
       color="black"
-      class="numbers ps-1 rounded-xl text-green-accent-2 text-h5"
+      class="blank ps-1 rounded-xl text-green-accent-2 text-h5"
     >
       {{ numbers }}
     </v-sheet>
@@ -17,7 +19,7 @@
       elevation="12"
       ref="code"
     >
-      <v-img src="@/assets/images/code3.jpg" cover/>
+      <v-img src="@/assets/images/code3.jpg" cover eager/>
     </v-sheet>
 
     <v-sheet
@@ -59,19 +61,19 @@ const code = ref()
 const image = ref()
 const { isScrolling } = useScroll(window)
 
-const width = display.lgAndDown.value ? 'width: 75%' :
-  display.mobile.value ? 'width: 100%' :  'width: 50%'
+const width = display.lgAndDown.value ? 'width: 75%' : 'width: 50%'
 
-function generateNumbers() {
-  let result = ''
-  let value = 121
-
-  while (value--) {
-    result += Math.round(Math.random())
-  }
-
-  return result.repeat(display.mdAndDown.value ? 6 : 16)
-}
+//нахуй матрицу, numbers -> blank
+//function generateNumbers() {
+//  let result = ''
+//  let value = 121
+//
+//  while (value--) {
+//    result += Math.round(Math.random())
+//  }
+//
+//  return result.repeat(display.mdAndDown.value ? 6 : 16)
+//}
 
 function animate(elem, c) {
   function cap(value, max) {
@@ -91,8 +93,6 @@ function animate(elem, c) {
 
 onMounted(() => {
   if (!display.mobile.value) {
-    numbers.value = generateNumbers()
-    setInterval(() => numbers.value = generateNumbers(), 1000)
     animate(code, 20)
     animate(image, 10)
   }
@@ -116,7 +116,7 @@ onMounted(() => {
   transition: 'all .1s ease-out';
 }
 
-.numbers {
+.blank {
   overflow-wrap: break-word;
   overflow: hidden;
   font-family: monospace !important;
