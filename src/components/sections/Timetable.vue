@@ -1,72 +1,80 @@
 <template>
   <v-container class="my-16 pt-16">
-    <v-row justify="space-around" align="center">
-      <v-col
-        v-if="display.lgAndUp.value"
-        md="1"
-        class="clock d-flex justify-center align-center"
-      >
-        <v-icon
-          icon="far fa-clock"
-          color="grey-lighten-1"
-          size="175"
-          class="clock-icon clock-icon-1"
-        />
-      </v-col>
-
-      <v-col cols="12" md="7" lg="6" xl="5" xxl="4" style="z-index: 1;">
-        <v-card
+    <v-row justify="center">
+      <v-col cols="12" lg="8" xl="6">
+        <v-sheet
           elevation="12"
-          style="border-radius: 2rem; overflow: visible !important;"
+          style="outline: 2px solid #9e9e9e"
+          ref="timetable"
         >
           <v-sheet
-            class="d-flex justify-center align-center position-relative"
-            style="height: 60px; border-top-left-radius: 2rem; border-top-right-radius: 2rem;"
-            color="amber-accent-3"
+            color="grey-lighten-2"
+            class="pa-1 d-flex justify-space-between"
+            style="border-bottom: 2px solid #9e9e9e"
           >
-            <div class="calendar calendar-left"></div>
-            <div class="calendar calendar-right"></div>
+            <h2 class="text-h6 ps-2"  style="font-family: 'BrassMono';">
+              Расписание
+            </h2>
 
-            <h2 class="text-h4">Расписание занятий</h2>
+            <div>
+              <v-btn
+                icon="mdi mdi-minus"
+                size="30"
+                rounded
+                variant="flat"
+                class="me-1 text-grey-darken-1"
+              />
+              
+              <v-btn
+                icon="mdi mdi-square-outline"
+                size="30"
+                rounded
+                variant="flat"
+                class="me-1 text-grey-darken-1"
+              />
+
+              <v-btn
+                icon="mdi mdi-close"
+                size="30"
+                color="red-lighten-2"
+                rounded
+                variant="flat"
+              />
+            </div>
           </v-sheet>
-        
-          <v-row justify="center" class="text-h6 text-center">
-            <v-col cols="4" class="ma-4">
-              <h3 class="text-h5">Суббота</h3>
-              <div v-for="day in saturday" class="mt-2">
-                {{ day.title }} <br>
-                {{ day.time }}
-              </div>
-            </v-col>
-          
-            <v-col cols="4" class="ma-4">
-              <h3 class="text-h5 text-center">Воскресенье</h3>
-              <div v-for="day in sunday" class="mt-2">
-                {{ day.title }} <br>
-                {{ day.time }}
-              </div>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
 
-      <v-col
-        v-if="display.lgAndUp.value"
-        md="1"
-        class="clock d-flex justify-center align-center flex-column"
-      >
-        <v-icon
-          icon="far fa-calendar-days"
-          color="grey-lighten-1"
-          size="175"
-          class="clock-icon clock-icon-3"
-        />
-        <v-icon
-          icon="far fa-hourglass"
-          color="grey-lighten-1"
-          size="175"
-          class="clock-icon clock-icon-2"
-        />
+          <v-container fluid>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-card variant="outlined">
+                  <v-card-title class="text-h5">
+                    Суббота
+                  </v-card-title>
+                
+                  <v-card-text class="text-h6">
+                    <div v-for="day in saturday" class="text-h6">
+                      {{ day.title }} - {{ day.time }}
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-card variant="outlined">
+                  <v-card-title class="text-h5">
+                    Воскресенье
+                  </v-card-title>
+                
+                  <v-card-text class="text-h6">
+                    <div v-for="day in sunday" class="text-h6">
+                      {{ day.title }} - {{ day.time }}
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>
@@ -74,8 +82,10 @@
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { onMounted } from 'vue'
-import { gsap } from 'gsap/all'
+import { ref } from 'vue'
+
+const display = useDisplay()
+const timetable = ref()
 
 const saturday = [
   {
@@ -106,135 +116,6 @@ const sunday = [
     time: '16:00 - 17:30'
   }
 ]
-
-const display = useDisplay()
-
-onMounted(() => {
-  if (!display.mobile.value) {
-    //часы круглые
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: '.clock-icon-1',
-        start: 'top-=25px bottom',
-        end: 'bottom top',
-        scrub: 2,
-      }
-    })
-    .set('.clock-icon-1', {
-      x: '-100%',
-      y: '-240%',
-      opacity: 0,
-      scale: 1.3,
-      rotation: -60,
-    })
-    .to('.clock-icon-1', {
-      x: '25%',
-      y: '-25%',
-      opacity: 1,
-      scale: 1,
-      rotation: 0,
-      ease: 'none',
-    })
-    .to('.clock-icon-1', {
-      x: '25%',
-      y: '25%',
-      opacity: 1,
-      scale: 1,
-      rotation: 180,
-      ease: 'none',
-    })
-    .to('.clock-icon-1', {
-      x: '-150%',
-      y: '120%',
-      opacity: 0,
-      scale: 1.5,
-      rotation: 260,
-      ease: 'none',
-    })
-  
-    //часы песочные
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: '.clock-icon-2',
-        start: 'top-=75px bottom',
-        end: 'bottom top+=100px',
-        scrub: 2,
-      }
-    })
-    .set('.clock-icon-2', {
-      x: '175%',
-      y: '-200%',
-      opacity: 0,
-      scale: 1.2,
-      rotation: 360,
-    })
-    .to('.clock-icon-2', {
-      x: '50%',
-      y: '50%',
-      opacity: 1,
-      scale: 1,
-      rotation: 200,
-      ease: 'none',
-    })
-    .to('.clock-icon-2', {
-      x: '50%',
-      y: '50%',
-      opacity: 1,
-      scale: 1,
-      rotation: 80,
-      ease: 'none',
-    })
-    .to('.clock-icon-2', {
-      x: '200%',
-      y: '100%',
-      opacity: 0,
-      scale: 1.2,
-      rotation: 0,
-      ease: 'none',
-    })
-  
-    //календарь
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: '.clock-icon-3',
-        start: 'top-=25px bottom',
-        end: 'bottom top',
-        scrub: 2,
-      }
-    })
-    .set('.clock-icon-3', {
-      x: '175%',
-      y: '-200%',
-      opacity: 0,
-      scale: 1.2,
-      rotation: 35,
-    })
-    .to('.clock-icon-3', {
-      x: '0%',
-      y: '-25%',
-      opacity: 1,
-      rotation: -25,
-      scale: 1,
-      ease: 'none',
-    })
-    .to('.clock-icon-3', {
-      x: '-25%',
-      y: '25%',
-      opacity: 1,
-      rotation: -35,
-      scale: 1,
-      ease: 'none',
-    })
-    .to('.clock-icon-3', {
-      x: '-100%',
-      y: '100%',
-      opacity: 0,
-      scale: 1.2,
-      rotation: -165,
-      ease: 'none',
-    })
-  }
-})
 </script>
 
 <style scoped>

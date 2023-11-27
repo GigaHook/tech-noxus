@@ -1,8 +1,12 @@
 <template>
-  <v-container class="px-8" ref="about">
+  <v-container class="px-8">
     <v-row justify-md="space-around" justify-lg="center">
-      <v-col cols="12" class="text-h4" :class="mobile ? 'mb-0' : 'mb-16'">
-        <Title class="about-title text-no-wrap">
+      <v-col
+        cols="12"
+        class="text-h4"
+        :class="mobile ? 'mb-0' : 'mb-16'"
+      >
+        <Title class="about-title text-no-wrap" ref="title">
           У нас вы научитесь
         </Title>
       </v-col>
@@ -20,17 +24,14 @@
 </template>
 
 <script setup>
-import useAnimations from '@/composables/useAnimations'
-import useStore from '@/composables/useStore'
-import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref } from 'vue'
+import { slideLeft } from '@/composables/useAnimations'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()
+const title = ref()
 
-const store = useStore()
-const about = ref()
-store.about = about
-console.log(store);
+defineExpose({ title })
 
 const rows = [
   {
@@ -55,8 +56,6 @@ mobile.value && rows.push({
   text: 'Неважно, есть ли у вас опыт в программировании и дизайне или вы только делаете первые шаги в IT. Мы научим вас всем навыкам, необходимым для работы над реальными проектами.',
   img: 'FirstProjectSvg',
 })
-
-const { slideLeft } = useAnimations()
 
 slideLeft('.about-title')
 </script>

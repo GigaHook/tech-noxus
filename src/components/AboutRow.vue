@@ -17,13 +17,13 @@
   <v-col
     cols="12" md="6" lg="4" 
     :offset-xl="even ? 1 : 0"
-    class="mb-6" 
     :order-md="even ? index : index + 1"
     :order="index"
   >
     <Title v-if="mobile" :class="`title${index}`">
       {{ title }}
     </Title>
+    
     <RenderOnScroll>
       <component :is="img" style="max-height: 50vh;"/>
     </RenderOnScroll>

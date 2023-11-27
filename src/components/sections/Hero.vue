@@ -1,8 +1,10 @@
 <template>
   <v-container
+    fluid
     class="container"
-    :class="!mobile && 'image'" fluid
-    ref="hero"
+    :class="!mobile && 'image'"
+    :style="mobile && 'margin-top: 60px'"
+    ref="heroBody"
   >
     <v-row justify="end" align="center">
       <v-col cols="12" lg="6">
@@ -38,18 +40,30 @@
               size="x-large"
               color="amber-accent-3"
               class="button"
+              ref="heroBtn"
             >
               Записаться
             </v-btn>
           </v-sheet>
+
+          <v-btn
+            variant="text"
+            size="large"
+            class="font-weight-bold mt-6 fade-in"
+            v-ripple="{ class: `text-yellow` }"
+            append-icon="fas fa-arrow-up-right-from-square"
+          >
+            ВКонтакте
+          </v-btn><br>
           
           <v-btn
             variant="text"
             size="large"
-            class="font-weight-bold"
-            v-ripple="{ color: 'yellow' }"
+            class="font-weight-bold fade-in"
+            v-ripple="{ class: `text-yellow` }"
+            append-icon="fas fa-phone"
           >
-            Группа ВКонтакте
+            +7 (906) 517-74-36
           </v-btn>
         </template>
       </v-col>
@@ -62,7 +76,7 @@
             <v-btn
               variant="text"
               class="font-weight-bold px-2"
-              v-ripple="{ class: `text-amber-accent-3` }"
+              v-ripple="{ class: `text-yellow` }"
               append-icon="fas fa-arrow-up-right-from-square"
             >
               ВКонтакте
@@ -71,7 +85,7 @@
             <v-btn
               variant="text"
               class="font-weight-bold px-2"
-              v-ripple="{ class: `text-amber-accent-3` }"
+              v-ripple="{ class: `text-yellow` }"
               append-icon="fas fa-phone"
             >
               +7 (906) 517-74-36
@@ -86,6 +100,7 @@
               size="x-large"
               color="amber-accent-3"
               class="button w-100"
+              v-ripple="{ class: `text-yellow` }"
             >
               Записаться
             </v-btn>
@@ -93,14 +108,32 @@
   
           <div class="d-flex justify-center fade-in">
             <v-btn
-              icon="fa fa-arrow-down"
+              @click="scroll"
+              append-icon="fa fa-arrow-down"
               variant="text"
               size="x-large"
               class="pb-2 mt-2"
               style="z-index: 1;"
-            />
+              v-ripple="{ class: `text-yellow` }"
+              stacked
+            >
+              Интересно? листай ниже
+            </v-btn>
           </div>
         </template>
+      </v-col>
+
+      <v-col cols="12" class="text-center">
+        <v-btn
+          v-if="!mobile"
+          @click="scroll"
+          variant="text"
+          append-icon="fa fa-arrow-down"
+          v-ripple="{ class: `text-yellow` }"
+          stacked
+        >
+          Интересно? листай ниже
+        </v-btn>
       </v-col>
     </v-row>
     
@@ -108,17 +141,27 @@
 </template>
 
 <script setup>
-import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 import { ref, onMounted } from 'vue'
 
+const { data } = defineProps({ data: Object })
+
 const { mobile } = useDisplay()
-const store = useStore()
-const hero = ref()
-store.hero = hero
 
 const slides = ['.slide-0', '.slide-1', '.slide-2']
+
+const heroBody = ref()
+const heroBtn = ref()
+
+defineExpose({ heroBody, heroBtn })
+
+function scroll() {
+  data.about.title.$el.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  })
+}
 
 onMounted(() => {
   gsap.timeline()

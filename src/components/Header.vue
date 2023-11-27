@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar flat>
-    <v-app-bar-title @click="navigate(store.hero)">
+  <v-app-bar ref="header" scroll-behavior="elevate">
+    <v-app-bar-title @click="up" style="cursor: pointer">
       <div class="d-flex flex-no-wrap align-center">
         <v-img
           src="@/assets/images/logo.png"
@@ -9,15 +9,29 @@
         <div class="ms-2">TechNoxus</div>
       </div>
     </v-app-bar-title>
-
-    <template v-if="!mobile">
+    
+    <v-slide-x-reverse-transition
+      v-if="!mobile"
+      group
+      leave-absolute
+    >
       <v-btn
-        v-for="item in menuItems"
-        @click="navigate(item.to)"
+        v-for="(item, index) in menuItems"
+        :key="index"
+        @click="scrollTo(item.ref)"
       >
         {{ item.text }}
       </v-btn>
-    </template>
+
+      <v-btn
+        flat
+        v-if="btnVisible"
+        variant="elevated"
+        color="amber-accent-3"
+      >
+        Записаться
+      </v-btn>
+    </v-slide-x-reverse-transition>
     
     <v-app-bar-nav-icon
       v-else
@@ -35,48 +49,36 @@
     <v-list
       :items="menuItems"
       item-title="text"
-      item-value="to"
-      @update:selected="selected => navigate(selected[0])"
+      item-value="ref"
+      @update:selected="selected => scrollTo(selected[0])"
     />
   </v-navigation-drawer>
 </template>
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import useStore from '@/composables/useStore'
-import { ref, computed } from 'vue'
+import { ref,  onMounted } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
+
+const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
 
 const { mobile } = useDisplay()
-const store = useStore()
 const side = ref(false)
-const menuItems = computed(() => [
-  {
-    text: 'О нас',
-    to: store.about,
-  },
-  {
-    text: 'Расписание',
-    to: store.timetable,
-  },
-  {
-    text: 'Курсы',
-    to: store.courses,
-  },
-  {
-    text: 'Мы на карте',
-    to: store.map,
-  },
-  {
-    text: 'Партнёры',
-    to: store.partners,
-  },
-  {
-    text: 'Записаться',
-    to: store.form,
-  }
-])
+const btnVisible = ref(false)
 
-function navigate(section) {
-  section.$el.scrollIntoView({ behavior: "smooth" })
+onMounted(() => {
+  useIntersectionObserver(
+    data.hero.heroBtn, 
+    ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
+  )
+})
+
+function scrollTo(ref) {
+  ref.value.$el.scrollIntoView({ behavior: "smooth" })
+  side.value = false
+}
+
+function up() {
+  data.hero.heroBody.$el.scrollIntoView({ behavior: "smooth" })
 }
 </script>

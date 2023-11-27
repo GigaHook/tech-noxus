@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import useAnimations from '@/composables/useAnimations'
+import { slideLeft } from '@/composables/useAnimations'
 import { gsap } from 'gsap'
 import { onMounted } from 'vue'
 
@@ -61,8 +61,6 @@ const cards = [
     text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
   }
 ]
-
-const { slideLeft } = useAnimations()
 
 slideLeft('.courses-title')
 

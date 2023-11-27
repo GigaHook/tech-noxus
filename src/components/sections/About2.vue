@@ -1,8 +1,8 @@
 <template>
   <v-container
-    class="container mt-16 pb-16"
+    class="container"
     :style="{
-      width
+      width: display.lgAndDown.value ? '75%' : '50%',
     }"
   >
     <v-sheet
@@ -10,7 +10,7 @@
       color="black"
       class="blank ps-1 rounded-xl text-green-accent-2 text-h5"
     >
-      {{ numbers }}
+
     </v-sheet>
 
     <v-sheet 
@@ -54,47 +54,33 @@ import { ref, onMounted, watch } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useMouseInElement, useScroll } from '@vueuse/core'
 import { gsap } from 'gsap/all'
+import { parallax } from '@/composables/useAnimations'
 
 const display = useDisplay()
-const numbers = ref()
 const code = ref()
 const image = ref()
 const { isScrolling } = useScroll(window)
 
-const width = display.lgAndDown.value ? 'width: 75%' : 'width: 50%'
-
-//нахуй матрицу, numbers -> blank
-//function generateNumbers() {
-//  let result = ''
-//  let value = 121
-//
-//  while (value--) {
-//    result += Math.round(Math.random())
-//  }
-//
-//  return result.repeat(display.mdAndDown.value ? 6 : 16)
-//}
-
-function animate(elem, c) {
-  function cap(value, max) {
-    value > max + c && (value = max + c)
-    value < -max - c && (value = -max - c)
-    return value
+function animate(elem, value) {
+  function cap(x, max) {
+    if (x > max + x) return max + x
+    if (x < -max + x) return -max + x
+    return x
   }
 
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(elem)
 
   watch ([elementX, elementY], () => !isScrolling.value && gsap.to(elem.value.$el, {
-      x: cap((elementX.value - elementWidth.value / 2) / c, 60 - c),
-      y: cap((elementY.value - elementHeight.value / 2) / c, 60 - c),
+      x: cap((elementX.value - elementWidth.value / 2) / value, 60 - value),
+      y: cap((elementY.value - elementHeight.value / 2) / value, 60 - value),
     })
   ) 
 }
 
 onMounted(() => {
   if (!display.mobile.value) {
-    animate(code, 20)
-    animate(image, 10)
+    parallax(code, -20)
+    parallax(image, 20)
   }
 })
 
@@ -106,13 +92,13 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 385px;
+  height: 75vh;
 }
 
 .container > * {
   position: absolute;
   width: 75%;
-  height: 100%;
+  height: 385px;
   transition: 'all .1s ease-out';
 }
 
@@ -123,11 +109,11 @@ onMounted(() => {
   text-shadow: 0px 0px 10px #69F0AE;
 }
 .code {
-  top: 10%;
-  right: 8%;
+  bottom: 80px;
+  left: 80px;
 }
 .image {
-  bottom: 10%;
-  right: 4%;
+  top: 50px;
+  right: 50px;
 }
 </style>

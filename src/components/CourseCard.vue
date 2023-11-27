@@ -7,7 +7,7 @@
       class="card"
       ref="card"
       :style="{
-        transform: cardTransform,
+        transform: !mobile && cardTransform,
         transition: 'all .1s ease-out',
       }"
     >
@@ -25,8 +25,11 @@
 <script setup>
 import { useMouseInElement } from '@vueuse/core'
 import { ref, computed } from 'vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 defineProps({ title: String, text: String })
+
+const { mobile } = useDisplay()
 
 const hover = ref()
 const card = ref()
@@ -40,18 +43,22 @@ const {
 } = useMouseInElement(card)
 
 const cardTransform = computed(() => {
-  const MAX_ROTATION = 10
+  if (!mobile.value) {
+    const MAX_ROTATION = 10
+  
+    const rX = (
+      MAX_ROTATION / 2 - (elementY.value / elementHeight.value) * MAX_ROTATION
+    ).toFixed(2)
+  
+    const rY = (
+      (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
+    ).toFixed(2)
+  
+    return isOutside.value 
+      ? ''
+      : `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg) scale(1.05)`
+  }
 
-  const rX = (
-    MAX_ROTATION / 2 - (elementY.value / elementHeight.value) * MAX_ROTATION
-  ).toFixed(2)
-
-  const rY = (
-    (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
-  ).toFixed(2)
-
-  return isOutside.value 
-    ? ''
-    : `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg) scale(1.05)`
+  return ''
 })
 </script>
