@@ -24,10 +24,12 @@
       </v-btn>
 
       <v-btn
-        flat
         v-if="btnVisible"
+        @click="scrollToForm"
+        flat
         variant="elevated"
         color="amber-accent-3"
+
       >
         Записаться
       </v-btn>
@@ -73,9 +75,16 @@ onMounted(() => {
   )
 })
 
-function scrollTo(ref) {
-  ref.value.$el.scrollIntoView({ behavior: "smooth" })
+function scrollTo(elem) {
+  elem.value.$el.scrollIntoView({ behavior: "smooth" })
   side.value = false
+}
+
+function scrollToForm() {
+  data.form.$el.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  })
 }
 
 function up() {

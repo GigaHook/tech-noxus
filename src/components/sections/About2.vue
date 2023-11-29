@@ -23,7 +23,6 @@
     </v-sheet>
 
     <v-sheet
-      color="grey-lighten-3"
       class="image rounded-xl"
       ref="image"
       elevation="12"
@@ -103,14 +102,14 @@ onMounted(() => {
 }
 
 .blank {
-  overflow-wrap: break-word;
-  overflow: hidden;
-  font-family: monospace !important;
-  text-shadow: 0px 0px 10px #69F0AE;
+  background-image: url(@/assets/images/blank-bg.png);
+  background-position: center;
+  background-size: 51%;
+  background-repeat: repeat;
 }
 .code {
-  bottom: 80px;
-  left: 80px;
+  bottom: 90px;
+  left: 100px;
 }
 .image {
   top: 50px;

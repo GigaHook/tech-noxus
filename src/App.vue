@@ -6,8 +6,9 @@
         <Hero ref="hero" :data="dataHero"/>
         <About ref="about"/>
         <About2 v-if="!mobile"/>
-        <Timetable ref="timetable"/>
         <Courses ref="courses"/>
+        <Timetable ref="timetable"/>
+        <Form ref="form"/>
         <Footer/>
       </v-main>
     </v-layout>
@@ -22,6 +23,7 @@ import About from '@/components/sections/About.vue'
 import About2 from '@/components/sections/About2.vue'
 import Timetable from '@/components/sections/Timetable.vue'
 import Courses from '@/components/sections/Courses.vue'
+import Form from '@/components/sections/Form.vue'
 
 import { ref } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -32,9 +34,16 @@ const hero = ref()
 const about = ref()
 const timetable = ref()
 const courses = ref()
+const form = ref()
 
-const dataHeader = ref({ hero: hero }) 
-const dataHero = ref({ about: about })
+const dataHeader = ref({
+  hero: hero,
+  form: form,
+}) 
+const dataHero = ref({
+  about: about,
+  form: form,
+})
 
 const menuItems = [
   {
@@ -42,12 +51,12 @@ const menuItems = [
     ref: about,
   },
   {
-    text: 'Расписание',
-    ref: timetable,
-  },
-  {
     text: 'Курсы',
     ref: courses,
+  },
+  {
+    text: 'Расписание',
+    ref: timetable,
   },
 ]
 </script>

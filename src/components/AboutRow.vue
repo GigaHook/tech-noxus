@@ -24,44 +24,48 @@
       {{ title }}
     </Title>
     
-    <RenderOnScroll>
+    <RenderOnScroll style="height: 50vh;">
       <component :is="img" style="max-height: 50vh;"/>
     </RenderOnScroll>
   </v-col>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()
 
 const { index } = defineProps({
-  index: Number,
+  index: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   title: String,
   text: String,
   img: String,
 })
 
-const even = ref(index % 2 == 0)
+const even = index % 2 == 0
 
 onMounted(() => {
   gsap.timeline({
     scrollTrigger: {
-      trigger: `.text${index}`,
-      start: 'top+=100px bottom',
+      trigger: `.title${index}`,
+      start: 'top+=150px bottom',
       end: '+=150px',
       scrub: 1.5,
     }
   })
   .set(`.title${index}`, {
     opacity: 0,
-    x: even.value ? 300 : -300,
+    x: even ? 300 : -300,
   })
   .set(`.text${index}`, {
     opacity: 0,
-    x: even.value ? 300 : -300,
+    x: even ? 300 : -300,
   })
   .to(`.title${index}`, {
     opacity: 1,

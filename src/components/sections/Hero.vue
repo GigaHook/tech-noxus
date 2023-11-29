@@ -37,6 +37,7 @@
             elevation="24"
           >
             <v-btn
+              @click="scrollToForm"
               size="x-large"
               color="amber-accent-3"
               class="button"
@@ -46,15 +47,23 @@
             </v-btn>
           </v-sheet>
 
-          <v-btn
-            variant="text"
-            size="large"
-            class="font-weight-bold mt-6 fade-in"
-            v-ripple="{ class: `text-yellow` }"
-            append-icon="fas fa-arrow-up-right-from-square"
+          <a
+            href="https://vk.com/technoxus_smol"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-black"
           >
-            ВКонтакте
-          </v-btn><br>
+            <v-btn
+              variant="text"
+              size="large"
+              class="font-weight-bold mt-6 fade-in"
+              v-ripple="{ class: `text-yellow` }"
+              append-icon="fas fa-arrow-up-right-from-square"
+            >
+              ВКонтакте
+            </v-btn>
+          </a>
+          <br>
           
           <v-btn
             variant="text"
@@ -73,14 +82,21 @@
 
         <template v-if="mobile">
           <div class="d-flex flex-no-wrap justify-space-between pb-2 fade-in">
-            <v-btn
-              variant="text"
-              class="font-weight-bold px-2"
-              v-ripple="{ class: `text-yellow` }"
-              append-icon="fas fa-arrow-up-right-from-square"
+            <a
+              href="https://vk.com/technoxus_smol"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-black"
             >
-              ВКонтакте
-            </v-btn>
+              <v-btn
+                variant="text"
+                class="font-weight-bold px-2"
+                v-ripple="{ class: `text-yellow` }"
+                append-icon="fas fa-arrow-up-right-from-square"
+              >
+                ВКонтакте
+              </v-btn>
+            </a>
   
             <v-btn
               variant="text"
@@ -97,6 +113,7 @@
             elevation="24"
           >
             <v-btn
+              @click="scrollToForm"
               size="x-large"
               color="amber-accent-3"
               class="button w-100"
@@ -108,7 +125,7 @@
   
           <div class="d-flex justify-center fade-in">
             <v-btn
-              @click="scroll"
+              @click="scrollDown"
               append-icon="fa fa-arrow-down"
               variant="text"
               size="x-large"
@@ -126,7 +143,7 @@
       <v-col cols="12" class="text-center">
         <v-btn
           v-if="!mobile"
-          @click="scroll"
+          @click="scrollDown"
           variant="text"
           append-icon="fa fa-arrow-down"
           v-ripple="{ class: `text-yellow` }"
@@ -146,18 +163,22 @@ import { gsap } from 'gsap/all'
 import { ref, onMounted } from 'vue'
 
 const { data } = defineProps({ data: Object })
-
 const { mobile } = useDisplay()
-
 const slides = ['.slide-0', '.slide-1', '.slide-2']
-
 const heroBody = ref()
 const heroBtn = ref()
 
 defineExpose({ heroBody, heroBtn })
 
-function scroll() {
+function scrollDown() {
   data.about.title.$el.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  })
+}
+
+function scrollToForm() {
+  data.form.$el.scrollIntoView({
     behavior: "smooth",
     block: "center",
   })
