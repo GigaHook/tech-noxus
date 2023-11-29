@@ -136,7 +136,7 @@ const rules = {
 function submit() {
   form.value.validate().then(() => {
     if (form.value.isValid) {
-
+      
     }
   })
 }

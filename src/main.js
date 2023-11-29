@@ -11,6 +11,7 @@ import VideoSvg from './components/svg/VideoSvg.vue'
 import ModelingSvg from './components/svg/ModelingSvg.vue'
 import FirstProjectSvg from './components/svg/FirstProjectSvg.vue'
 import TimetableSvg from './components/svg/TimetableSvg.vue'
+import MapSvg from './components/svg/MapSvg.vue'
 import RenderOnScroll from './components/RenderOnScroll.vue'
 
 const app = createApp(App)
@@ -24,6 +25,7 @@ app.component('ModelingSvg', ModelingSvg)
 app.component('VideoSvg', VideoSvg)
 app.component('FirstProjectSvg', FirstProjectSvg)
 app.component('TimetableSvg', TimetableSvg)
+app.component('MapSvg', MapSvg)
 app.component('RenderOnScroll', RenderOnScroll)
 
 registerPlugins(app)

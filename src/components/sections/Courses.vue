@@ -8,7 +8,7 @@
       </v-col>
 
       <CourseCard
-        v-for="(card, index) in cards"
+        v-for="(courses, index) in cards"
         :key="index"
         :title="card.title"
         :text="card.text"
@@ -22,45 +22,7 @@
 import { slideLeft } from '@/composables/useAnimations'
 import { gsap } from 'gsap'
 import { onMounted } from 'vue'
-
-const cards = [
-  {
-    title: 'asd',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  },
-  {
-    title: 'zxc',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
-  },
-  {
-    title: 'qwe',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  },
-  {
-    title: 'asd',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  },
-  {
-    title: 'zxc',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
-  },
-  {
-    title: 'qwe',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  },
-  {
-    title: 'asd',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  },
-  {
-    title: 'zxc',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere rerum enim ullam. Eligendi reiciendis molestias possimus magni neque. Repellat consequatur officia eius, velit dolorum provident laborum rem cupiditate commodi!',
-  },
-  {
-    title: 'qwe',
-    text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem totam at reiciendis voluptatum praesentium voluptatibus dolor amet perspiciatis nisi exercitationem! Error harum totam quidem sapiente iure nihil autem nam ipsa!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi exercitationem quibusdam et ut pariatur a. Illo aliquid nulla similique reprehenderit quae fugit, necessitatibus quis culpa nihil id ratione expedita!',
-  }
-]
+import courses from '@/courses'
 
 slideLeft('.courses-title')
 

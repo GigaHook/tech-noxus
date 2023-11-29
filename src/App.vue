@@ -8,6 +8,7 @@
         <About2 v-if="!mobile"/>
         <Courses ref="courses"/>
         <Timetable ref="timetable"/>
+        <Map ref="map"/>
         <Form ref="form"/>
         <Footer/>
       </v-main>
@@ -19,11 +20,12 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Hero from '@/components/sections/Hero'
-import About from '@/components/sections/About.vue'
-import About2 from '@/components/sections/About2.vue'
-import Timetable from '@/components/sections/Timetable.vue'
-import Courses from '@/components/sections/Courses.vue'
-import Form from '@/components/sections/Form.vue'
+import About from '@/components/sections/About'
+import About2 from '@/components/sections/About2'
+import Timetable from '@/components/sections/Timetable'
+import Courses from '@/components/sections/Courses'
+import Map from '@/components/sections/Map'
+import Form from '@/components/sections/Form'
 
 import { ref } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -34,6 +36,7 @@ const hero = ref()
 const about = ref()
 const timetable = ref()
 const courses = ref()
+const map = ref()
 const form = ref()
 
 const dataHeader = ref({
@@ -58,6 +61,11 @@ const menuItems = [
     text: 'Расписание',
     ref: timetable,
   },
+  {
+    text: 'Мы на карте',
+    ref: map,
+  }
+
 ]
 </script>
 
