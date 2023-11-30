@@ -58,22 +58,20 @@
               size="large"
               class="font-weight-bold mt-6 fade-in"
               v-ripple="{ class: `text-yellow` }"
-              append-icon="fas fa-arrow-up-right-from-square"
+              prepend-icon="fab fa-vk"
             >
               ВКонтакте
             </v-btn>
           </a>
-          <br>
           
-          <v-btn
-            variant="text"
-            size="large"
-            class="font-weight-bold fade-in"
-            v-ripple="{ class: `text-yellow` }"
-            append-icon="fas fa-phone"
-          >
+          <div class="font-weight-bold">
+            <v-icon
+              size="16"
+              class="fade-in ms-4 mb-1"
+              icon="fas fa-phone"
+            />
             +7 (906) 517-74-36
-          </v-btn>
+          </div>
         </template>
       </v-col>
 
@@ -197,21 +195,19 @@ onMounted(() => {
     .to('.slide-0', {
       opacity: 1,
       x: 0,
-      duration: .7,
-      delay: .5,
+      duration: 1,
       ease: 'back.out',
     })
     .to('.slide-1', {
       opacity: 1,
       x: 0,
-      duration: .7,
+      duration: .5,
       ease: 'back.out',
     })
     .to('.slide-2', {
       opacity: 1,
       x: 0,
-      duration: .7,
-      delay: .3,
+      duration: .5,
       ease: 'back.out',
     })
     .to('.fade-in', {

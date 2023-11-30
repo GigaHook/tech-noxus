@@ -25,19 +25,14 @@ export function slideLeft(text) {
   })
 }
 
-export function parallax(target, value) {  
-  function cap(x, max) {
-    if (x > max + x) return max + x
-    if (x < -max + x) return -max + x
-    return x
-  }
-
+export function parallax(target, valueX, valueY=valueX) {  
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
+  const elem = target.value instanceof SVGGElement ? target.value : target.value.$el
 
-  watch ([elementX, elementY], () => !isScrolling.value && gsap.to(target.value.$el, {
-      x: cap((elementX.value - elementWidth.value / 2) / value, 60 - value),
-      y: cap((elementY.value - elementHeight.value / 2) / value, 60 - value),
+  watch ([elementX, elementY], () => !isScrolling.value && gsap.to(elem, {
+      x: (elementX.value - elementWidth.value / 2) / valueX,
+      y: (elementY.value - elementHeight.value / 2) / valueY
     })
   )
 }

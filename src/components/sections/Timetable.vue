@@ -2,8 +2,8 @@
   <v-container class="my-16 pt-16">
     <v-row justify="center" align="center">
       <v-col cols="12" lg="4">
-        <RenderOnScroll style="min-height: 40vh;">
-          <TimetableSvg/>
+        <RenderOnScroll style="height: 40vh; max-height: 800px;">
+          <TimetableSvg style="max-height: 100%;"/>
         </RenderOnScroll>
       </v-col>
 

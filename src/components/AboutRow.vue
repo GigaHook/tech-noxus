@@ -1,7 +1,8 @@
 <template>
   <v-col
     cols="12" md="6" lg="5" xl="4"
-    class="text-h6"
+    class="text-h6 mt-2"
+    :class="index == 3 && 'mt-16 pt-16'"
     :order-md="even ? index + 1 : index"
     :order="index + 1"
   >
@@ -16,6 +17,8 @@
 
   <v-col
     cols="12" md="6" lg="4" 
+    class="mb-8"
+    :class="index == 3 && 'mb-16'"
     :offset-xl="even ? 1 : 0"
     :order-md="even ? index : index + 1"
     :order="index"
@@ -24,8 +27,13 @@
       {{ title }}
     </Title>
     
-    <RenderOnScroll style="height: 50vh;">
-      <component :is="img" style="max-height: 50vh;"/>
+    <RenderOnScroll style="height: 40vh;">
+      <component
+        :is="img"
+        :style="index == 3
+          ? {'height': '60vh !important'}
+          : {'max-height': '50vh'}
+        "/>
     </RenderOnScroll>
   </v-col>
 </template>

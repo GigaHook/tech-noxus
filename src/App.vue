@@ -1,14 +1,14 @@
 <template>
   <v-app>
-    <Header :menu-items="menuItems" :data="dataHeader"/>
+    <Header :menu-items="menuItems" :data="headerData"/>
     <v-layout>
       <v-main>
-        <Hero ref="hero" :data="dataHero"/>
+        <Hero ref="hero" :data="heroData"/>
         <About ref="about"/>
         <About2 v-if="!mobile"/>
         <Courses ref="courses"/>
-        <Timetable ref="timetable"/>
         <Map ref="map"/>
+        <Timetable ref="timetable"/>
         <Form ref="form"/>
         <Footer/>
       </v-main>
@@ -39,11 +39,12 @@ const courses = ref()
 const map = ref()
 const form = ref()
 
-const dataHeader = ref({
+const headerData = ref({
   hero: hero,
   form: form,
 }) 
-const dataHero = ref({
+
+const heroData = ref({
   about: about,
   form: form,
 })
