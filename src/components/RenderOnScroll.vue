@@ -1,6 +1,6 @@
 <template>
   <div :class="triggerClass">
-    <v-fade-transition>
+    <v-fade-transition group>
       <slot v-if="visible"/>
     </v-fade-transition>
   </div>

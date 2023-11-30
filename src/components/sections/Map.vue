@@ -19,13 +19,13 @@
           <MapSvg style="max-height: 100%;"/>
         </RenderOnScroll>
 
-        <div class="description mb-2">
+        <div class="map-description mb-2">
           <v-icon icon="fas fa-location-dot" size="24" class="mb-1"/>
           Школа английского языка Express English, г. Смоленск,
           ул. Попова 125
         </div>
 
-        <div class="description mb-2">
+        <div class="map-description mb-2">
           <v-icon icon="fas fa-phone" size="22" class="mb-1"/>
           +7 (906) 517-74-36 <br>
         </div>
@@ -34,7 +34,7 @@
           href="https://vk.com/technoxus_smol"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-black description"
+          class="text-black map-description"
           style="text-decoration: none; cursor: pointer;"
         >
           <v-icon icon="fab fa-vk" size="28" class="mb-1"/>
@@ -47,18 +47,19 @@
 </template>
 
 <script setup>
-import { slideLeft } from '@/composables/useAnimations'
+import { slideLeft, fadeIn } from '@/composables/useAnimations'
 import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'
 
 slideLeft('.map-title')
+fadeIn('.map-description')
 
 onMounted(() => {
   gsap.timeline({
     scrollTrigger: {
       trigger: '.map-container',
-      start: 'top center',
-      end: '+=50px',
+      start: 'center bottom',
+      end: '+=150px',
       scrub: 1,
     }
   }).fromTo('.map-container', {
@@ -78,7 +79,7 @@ onMounted(() => {
   opacity: 0;
 }
 
-.description {
+.map-description {
   font-size: 18px !important;
 }
 </style>

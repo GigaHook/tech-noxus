@@ -2,24 +2,44 @@ import { gsap } from "gsap/all"
 import { onMounted, watch } from "vue"
 import { useMouseInElement, useScroll } from '@vueuse/core'
 
-export function slideLeft(text) {
+export function slideLeft(elem) {
   onMounted(() => {
     gsap.timeline({
       scrollTrigger: {
-        trigger: text,
+        trigger: elem,
         start: 'bottom+=100px bottom',
         end: '+=50px',
         scrub: 2,
       },
     })
-    .set(text, {
+    .set(elem, {
       opacity: 0,
       x: '-100%',
     })
-    .to(text, {
+    .to(elem, {
       delay: 1,
       opacity: 1,
       x: '0',
+      duration: 1,
+    })
+  })
+}
+
+export function fadeIn(elem) {
+  onMounted(() => {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: elem,
+        start: 'bottom+=100px bottom',
+        end: '+=50px',
+        scrub: 2,
+      },
+    })
+    .set(elem, {
+      opacity: 0,
+    })
+    .to(elem, {
+      opacity: 1,
       duration: 1,
     })
   })
