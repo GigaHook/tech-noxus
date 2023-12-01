@@ -4,20 +4,36 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :elevation="hover ? 20 : 8"
-      class="card"
+      class="course-card"
       ref="card"
       :style="{
         transform: !mobile && cardTransform,
         transition: 'all .1s ease-out',
       }"
     >
+      <v-card-item>
+        <v-img
+          class="h-100"
+          
+        />
+      </v-card-item>
+
       <v-card-title class="text-h5">
-        {{ title }}
+        {{ title }} <br>
+        <CourseTypeChip :type="course.type"/>
       </v-card-title>
 
-      <v-card-text class="text-body-1">
+      <v-card-text class="text-body-1 text-truncate">
         {{ text }}
       </v-card-text>
+
+      <v-card-actions>
+        <v-btn 
+          variant="plain"
+        >
+          Подробнее
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-col>  
 </template>
@@ -62,3 +78,11 @@ const cardTransform = computed(() => {
   return ''
 })
 </script>
+
+<style scoped>
+.course-card {
+  height: 350px;
+}
+
+
+</style>

@@ -79,13 +79,10 @@
                       </template>
                     </v-select>
 
-                    <v-chip
-                      v-show="course"
-                      :color="course?.type == 'Очное обучение' ? 'light-blue' : 'green'"
-                      variant="elevated"
-                    >
-                      {{ course?.type }}
-                    </v-chip>
+                    <CourseTypeChip
+                      v-if="course" 
+                      :type="course?.type"
+                    />
                   </v-col>
 
                   <v-col cols="12" md="6">
