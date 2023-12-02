@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mb-12">
+  <v-container class="my-16">
     <v-row justify="center" align="center">
       <v-col cols="12" lg="8" xl="6" class="pe-8">
         <h2 class="text-h4 mb-6 map-title">

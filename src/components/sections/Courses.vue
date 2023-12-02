@@ -1,12 +1,15 @@
 <template>
-  <v-container class="px-8 mt-16">
-    <v-row>
-      <v-col cols="12">
-        <Title class="courses-title">
-          Все курсы
-        </Title>
-      </v-col>
+  <v-container class="mt-16 mb-n4">
+    <Title class="courses-title">
+      Все курсы
+    </Title>
+  </v-container>
 
+  <v-container class="mb-16" :style="{
+      'max-width': display.xl.value && '1320px'
+    }"
+  >
+    <v-row justify="center">
       <CourseCard
         v-for="(course, index) in courses"
         :key="index"
@@ -21,7 +24,10 @@
 import { slideLeft } from '@/composables/useAnimations'
 import { gsap } from 'gsap'
 import { onMounted } from 'vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 import courses from '@/courses'
+
+const display = useDisplay()
 
 slideLeft('.courses-title')
 

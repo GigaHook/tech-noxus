@@ -12,27 +12,27 @@
       }"
     >
       <v-img 
-        class="card-image ma-2"
-        src="@/assets/images/courses/minecraft_python.png"
+        class="card-image mx-2 mt-4"
+        :src="course.img"
       />
 
-      <v-card-title class="text-h6 text-wrap">
+      <v-card-title class="text-h6 pb-0 text-wrap">
         {{ course.title }}
       </v-card-title>
 
-      <v-card-text class="text-body-1 d-flex justify-space-between">
-        <div class="text-h6 font-weight-bold">
-          {{ course.price }} 
-          <v-icon
-            icon="mdi mdi-currency-rub"
-            class="mb-1 ms-n2"
-            size="22"
-          />
-
-        </div>
+      <v-card-text class="pt-0 pb-2 ps-2">
         <CourseTypeChip :type="course.type"/>
       </v-card-text>
 
+      <v-card-text class="text-h6 py-0 font-weight-bold">
+        {{ course.price }} 
+        <v-icon
+          icon="mdi mdi-currency-rub"
+          class="mb-1 ms-n2"
+          size="22"
+        />
+      </v-card-text>
+      
       <v-card-actions>
         <v-btn variant="flat" color="amber-accent-3">
           Записаться
@@ -44,6 +44,8 @@
       </v-card-actions>
     </v-card>
   </v-col>  
+
+
 </template>
 
 <script setup>
@@ -88,11 +90,13 @@ const cardTransform = computed(() => {
 
 <style scoped>
 .course-card {
-  height: 400px;
+  height: 380px;
+  max-width: 320px;
 }
 
 .card-image {
   height: calc(50% - 16px);
+  max-height: calc(50% - 16px);
   width: calc(100% - 16px);
 }
 </style>
