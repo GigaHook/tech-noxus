@@ -8,10 +8,9 @@
       </v-col>
 
       <CourseCard
-        v-for="(courses, index) in cards"
+        v-for="(course, index) in courses"
         :key="index"
-        :title="card.title"
-        :text="card.text"
+        :course="course"
         class="card"
       />
     </v-row>

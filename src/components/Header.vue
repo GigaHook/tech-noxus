@@ -29,7 +29,6 @@
         flat
         variant="elevated"
         color="amber-accent-3"
-
       >
         Записаться
       </v-btn>
@@ -59,7 +58,7 @@
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref,  onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 
 const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
