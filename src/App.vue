@@ -6,7 +6,7 @@
         <Hero ref="hero" :data="heroData"/>
         <About ref="about"/>
         <About2 v-if="!mobile"/>
-        <Courses ref="courses"/>
+        <Courses ref="courses" :data="coursesData"/>
         <Map ref="map"/>
         <Timetable ref="timetable"/>
         <Form ref="form"/>
@@ -46,6 +46,10 @@ const headerData = ref({
 
 const heroData = ref({
   about: about,
+  form: form,
+})
+
+const coursesData = ref({
   form: form,
 })
 

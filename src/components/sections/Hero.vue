@@ -51,12 +51,12 @@
             href="https://vk.com/technoxus_smol"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-black"
+            class="text-black fade-in"
           >
             <v-btn
               variant="text"
               size="large"
-              class="font-weight-bold mt-6 fade-in"
+              class="font-weight-bold mt-6"
               v-ripple="{ class: `text-yellow` }"
               prepend-icon="fab fa-vk"
             >
@@ -64,10 +64,10 @@
             </v-btn>
           </a>
           
-          <div class="font-weight-bold">
+          <div class="font-weight-bold fade-in">
             <v-icon
               size="16"
-              class="fade-in ms-4 mb-1"
+              class="ms-4 mb-1"
               icon="fas fa-phone"
             />
             +7 (906) 517-74-36
@@ -98,7 +98,7 @@
   
             <v-btn
               variant="text"
-              class="font-weight-bold px-2"
+              class="font-weight-bold px-2 fade-in"
               v-ripple="{ class: `text-yellow` }"
               append-icon="fas fa-phone"
             >

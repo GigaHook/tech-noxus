@@ -21,8 +21,7 @@
 
         <div class="map-description mb-2">
           <v-icon icon="fas fa-location-dot" size="24" class="mb-1"/>
-          Школа английского языка Express English, г. Смоленск,
-          ул. Попова 125
+          г. Смоленск, ул. Попова 125
         </div>
 
         <div class="map-description mb-2">

@@ -153,7 +153,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import courses from '@/courses'
 import useStore from '@/composables/useStore'
 
@@ -162,7 +162,7 @@ const store = useStore()
 const contactItems = [
   'Написать в Телеграм',
   'Написать в WhatsApp',
-  'Позвонить'
+  'Позвонить',
 ]
 
 const token = '6924203386:AAFuf4p_fRI2gs0h6u9NZ62g0EQo7g2o8rk'
@@ -171,7 +171,10 @@ const chatId = '-4089804866'
 const form = ref()
 const name = ref()
 const tel = ref()
-const course = ref(courses.find(course => store.selectedCourse?.name == course.title))
+const course = computed({
+  get: () => store.selectedCourse,
+  set: value => store.selectedCourse = value
+})
 const contactBy = ref()
 const status = ref(false)
 

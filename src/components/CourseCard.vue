@@ -4,60 +4,155 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :elevation="hover ? 20 : 8"
-      class="course-card d-flex flex-column"
+      class="course-card d-flex flex-column pa-3"
       ref="card"
       :style="{
-        transform: !mobile && cardTransform,
+        transform: !display.mobile.value && cardTransform,
         transition: 'all .1s ease-out',
       }"
     >
-      <v-img 
-        class="card-image mx-2 mt-4"
-        :src="course.img"
-      />
-
-      <v-card-title class="text-h6 pb-0 text-wrap">
-        {{ course.title }}
-      </v-card-title>
-
-      <v-card-text class="pt-0 pb-2 ps-2">
-        <CourseTypeChip :type="course.type"/>
-      </v-card-text>
-
-      <v-card-text class="text-h6 py-0 font-weight-bold">
-        {{ course.price }} 
-        <v-icon
-          icon="mdi mdi-currency-rub"
-          class="mb-1 ms-n2"
-          size="22"
+      <div class="h-50 mb-auto">
+        <v-img
+          :src="course.img"
+          class="h-100"
         />
-      </v-card-text>
-      
-      <v-card-actions>
-        <v-btn variant="flat" color="amber-accent-3">
-          Записаться
-        </v-btn>
+        
+        <div class="text-h6">
+          {{ course.title }}
+        </div>
+      </div>
 
-        <v-btn variant="plain">
-          Подробнее
-        </v-btn>
-      </v-card-actions>
+      <div>
+        <CourseTypeChip :type="course.type" class=""/>
+
+        <div class="text-h6 ms-1">
+          {{ course.price }} 
+          <v-icon
+            icon="mdi mdi-currency-rub"
+            class="mb-1 ms-n2"
+            size="22"
+          />
+        </div>
+
+        <div class="d-flex justify-space-between align-center w-100">
+          <v-btn
+            @click="applyForCourse"
+            variant="flat"
+            color="amber-accent-3"
+          >
+            Записаться
+          </v-btn>
+  
+          <v-btn size="small" variant="plain" @click="overlay = true">
+            Подробнее
+          </v-btn>
+        </div>
+      </div>
     </v-card>
+
+    <v-overlay
+      v-model="overlay"
+      class="d-flex justify-center align-center"
+      scroll-strategy="none"
+    >
+      <v-card
+        class="pa-3 position-relative"
+        style="width: clamp(720px, 75vw, 1080px); height: clamp(640px, 75vh, 900px);"
+      >
+        <v-row :style="display.mobile.value && 'max-height: 100%; overflow-y: scroll;'">
+          <v-col cols="12" md="5" class="d-flex flex-column h-100">
+            <v-img :src="course.img" class="align-self-stretch"/>
+
+            <div
+              v-if="!display.mobile.value"
+              class="text-h5 ms-1 mb-1"
+            >
+              {{ course.price }} 
+              <v-icon
+                icon="mdi mdi-currency-rub"
+                class="mb-1 ms-n2"
+                size="22"
+              />
+            </div>
+
+            <v-btn
+              v-if="!display.mobile.value"
+              @click="applyForCourse"
+              variant="flat"
+              color="amber-accent-3 w-50"
+            >
+              Записаться
+            </v-btn>
+          </v-col>
+
+          <v-col
+            cols="12" md="7"
+            :class="!display.mobile.value && 'd-flex flex-column'"
+            style="height: clamp(640px, 75vh, 900px);"
+          >
+            <div class="text-h5 mb-2">
+              {{ course.title }}
+            </div>
+
+            <CourseTypeChip :type="course.type" class="mb-2"/>
+
+            <div
+              class="align-self-stretch"
+              style="overflow-y: scroll;"
+              v-html="course.description"
+            ></div>
+
+            <div
+              v-if="display.mobile.value"
+              class="text-h5 mx-1 d-inline-flex align-center mt-2"
+            >
+              {{ course.price }} 
+              <v-icon
+                icon="mdi mdi-currency-rub"
+                size="22"
+              />
+            </div>
+
+            <v-btn
+              v-if="display.mobile.value"
+              @click="applyForCourse"
+              variant="flat"
+              color="amber-accent-3 w-50 mt-n2"
+            >
+              Записаться
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-btn
+          @click="overlay = false"
+          variant="plain"
+          class="position-absolute"
+          style="right: 5px; top: 5px;"
+          icon="mdi mdi-close"
+        />
+      </v-card>
+    </v-overlay>
   </v-col>  
-
-
 </template>
 
 <script setup>
 import { useMouseInElement } from '@vueuse/core'
 import { ref, computed } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import useStore from '@/composables/useStore'
 
-const { course } = defineProps({ course: Object })
+const { course, index, data } = defineProps({ 
+  course: Object,
+  index: Number,
+  data: Object,
+})
 
-const { mobile } = useDisplay()
+const display = useDisplay()
 const hover = ref()
 const card = ref()
+const overlay = ref(false)
+const store = useStore()
 
 const {
   elementX,
@@ -68,7 +163,7 @@ const {
 } = useMouseInElement(card)
 
 const cardTransform = computed(() => {
-  if (!mobile.value) {
+  if (!display.mobile.value) {
     const MAX_ROTATION = 4
   
     const rX = (
@@ -86,17 +181,20 @@ const cardTransform = computed(() => {
 
   return ''
 })
+
+function applyForCourse() {
+  store.selectedCourse = course
+  overlay.value = false
+  data.form.$el.scrollIntoView({ 
+    behavior: 'smooth',
+    block: 'center',
+  })
+}
 </script>
 
 <style scoped>
 .course-card {
   height: 380px;
   max-width: 320px;
-}
-
-.card-image {
-  height: calc(50% - 16px);
-  max-height: calc(50% - 16px);
-  width: calc(100% - 16px);
 }
 </style>

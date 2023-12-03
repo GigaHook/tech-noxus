@@ -1,9 +1,45 @@
 <template>
-  <v-footer>
-    <a class="text-grey" href="https://storyset.com/work">Work illustrations by Storyset</a>
+  <v-footer
+    class="text-grey text-center mt-16 pb-16"
+    style="box-shadow: 0px -100px 50px -100px rgba(34, 60, 80, 0.65) inset;"
+  >
+    <v-row justify="center" align="center">
+      <v-col cols="4">
+        Иллюстрации за авторством 
+        <a
+          class="text-grey"
+          href="https://storyset.com/work"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Storyset
+        </a> и
+        <a
+          class="text-grey"
+          href="https://www.freepik.com/vectorjuice"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          vectorjuice
+        </a>
+        с сайта Freepik
+      </v-col>
+
+      <v-col cols="4">
+        <a
+          class="text-grey"
+          href="https://vk.com/technoxus_smol"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ВКонтакте
+        </a><br>
+        +7 (906) 517-74-36
+      </v-col>
+
+      <v-col cols="4">
+        Школа английского языка Express English, г. Смоленск, ул. Попова 125
+      </v-col>
+    </v-row>
   </v-footer>
 </template>
-
-<script setup>
-
-</script>
