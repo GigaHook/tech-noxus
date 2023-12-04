@@ -38,21 +38,16 @@ onMounted(() => {
     scrollTrigger: {
       trigger: '.course-card-container',
       start: 'top+=150px bottom',
-      end: 'bottom-=150px bottom',
+      end: 'bottom-=100px bottom',
       scrub: 1,
     }
   })
-  .set('.course-card', {
+  .fromTo('.course-card', {
     opacity: 0,
-    x: '-100%',
-  })
-  .from('.course-card', {
-    opacity: 0,
-  })
-  .to('.course-card', {
+  }, {
     opacity: 1,
-    x: 0,
-    stagger: 2,
+    stagger: 1,
+    duration: 4,
   })
 })
 </script>

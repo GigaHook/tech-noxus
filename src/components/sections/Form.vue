@@ -191,7 +191,7 @@ function submit() {
   form.value.validate().then(() => {
     if (form.value.isValid) {
       status.value = 'loading'
-      const text = `Новая заявка от *${name.value}* на курс *${course.value.title}*  ${contactBy.value} *${tel.value}*`
+      const text = `Новая заявка от *${name.value}* на курс *${course.value.title}*.  ${contactBy.value} *${tel.value}*`
       const formattedText = encodeURIComponent(text)
         .replaceAll(/\(/g, '\\%28') //хз почему половина скобок не убирается
         .replaceAll(/\)/g, '\\%29')

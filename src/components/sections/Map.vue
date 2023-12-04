@@ -24,11 +24,6 @@
           г. Смоленск, ул. Попова 125
         </div>
 
-        <div class="map-description mb-2">
-          <v-icon icon="fas fa-phone" size="22" class="mb-1"/>
-          +7 (906) 517-74-36 <br>
-        </div>
-
         <a 
           href="https://vk.com/technoxus_smol"
           target="_blank"

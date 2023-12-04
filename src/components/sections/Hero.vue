@@ -63,15 +63,6 @@
               ВКонтакте
             </v-btn>
           </a>
-          
-          <div class="font-weight-bold fade-in">
-            <v-icon
-              size="16"
-              class="ms-4 mb-1"
-              icon="fas fa-phone"
-            />
-            +7 (906) 517-74-36
-          </div>
         </template>
       </v-col>
 
@@ -95,15 +86,6 @@
                 ВКонтакте
               </v-btn>
             </a>
-  
-            <v-btn
-              variant="text"
-              class="font-weight-bold px-2 fade-in"
-              v-ripple="{ class: `text-yellow` }"
-              append-icon="fas fa-phone"
-            >
-              +7 (906) 517-74-36
-            </v-btn>
           </div>
 
           <v-sheet
