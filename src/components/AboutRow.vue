@@ -18,7 +18,7 @@
   <v-col
     cols="12" md="6" lg="4" 
     class="mb-8"
-    :class="index == 3 && 'mb-16'"
+    :class="(index == 3 && !mobile) && 'mb-16'"
     :offset-xl="even ? 1 : 0"
     :order-md="even ? index : index + 1"
     :order="index"
@@ -30,7 +30,7 @@
     <RenderOnScroll style="height: 40vh;">
       <component
         :is="img"
-        :style="index == 3
+        :style="index == 3 && !mobile
           ? {'height': '60vh !important'}
           : {'max-height': '50vh'}
         "/>

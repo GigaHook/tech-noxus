@@ -1,14 +1,16 @@
 <template>
-  <v-col cols="6" md="4" lg="3">
+  <v-col cols="12" sm="6" md="4" lg="3">
     <v-card
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :elevation="hover ? 20 : 8"
       class="course-card d-flex flex-column pa-3"
+      :class="`course-card${index}`"
       ref="card"
       :style="{
         transform: !display.mobile.value && cardTransform,
         transition: 'all .1s ease-out',
+        'max-width': display.smAndDown.value && '100% !important',
       }"
     >
       <div class="h-50 mb-auto">
@@ -138,7 +140,8 @@
 
 <script setup>
 import { useMouseInElement } from '@vueuse/core'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { gsap, ScrollTrigger } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import useStore from '@/composables/useStore'
 
@@ -190,11 +193,28 @@ function applyForCourse() {
     block: 'center',
   })
 }
+
+onMounted(() => {
+  //tl.to(`.course-card${index}`, {
+  //  opacity: 1,
+  //  x: 0,
+  //  stagger: 1,
+  //})
+//
+  //ScrollTrigger.create({
+  //  trigger: `.course-card${index}`,
+  //  start: 'center bottom',
+  //  end: '+=100px',
+  //  animation: tl,
+  //  scrub: 1,
+  //})
+})
 </script>
 
 <style scoped>
 .course-card {
   height: 380px;
   max-width: 320px;
+  opacity: 0;
 }
 </style>

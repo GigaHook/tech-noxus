@@ -13,7 +13,8 @@
               <h2 class=text-h4>
                 Записаться на курс
               </h2>
-              <div class="text-h6">
+
+              <div class="text-h6 text-wrap">
                 Оставьте свою заявку и мы свяжемся с вами
               </div>
             </v-card-title>
@@ -104,8 +105,10 @@
 
                   <v-col cols="12">
                     <v-btn
+                      @mouseover="hover = true"
+                      @mouseleave="hover = false"
+                      :elevation="hover ? 8 : 0"
                       type="submit"
-                      elevation="8"
                       color="amber-accent-3"
                     >
                       Отправить
@@ -137,7 +140,7 @@
                   size="100"
                 />
                 <div class="text-h4">
-                  Заявка принята
+                  Заявка отправлена
                 </div>
 
                 <div class="text-h5">
@@ -158,6 +161,7 @@ import courses from '@/courses'
 import useStore from '@/composables/useStore'
 
 const store = useStore()
+const hover = ref(false)
 
 const contactItems = [
   'Написать в Телеграм',

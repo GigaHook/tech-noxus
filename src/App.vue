@@ -5,7 +5,6 @@
       <v-main>
         <Hero ref="hero" :data="heroData"/>
         <About ref="about"/>
-        <About2 v-if="!mobile"/>
         <Courses ref="courses" :data="coursesData"/>
         <Map ref="map"/>
         <Timetable ref="timetable"/>
@@ -21,7 +20,6 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
-import About2 from '@/components/sections/About2'
 import Timetable from '@/components/sections/Timetable'
 import Courses from '@/components/sections/Courses'
 import Map from '@/components/sections/Map'
