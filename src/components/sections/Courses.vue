@@ -34,21 +34,21 @@ slideLeft('.courses-title')
 const display = useDisplay()
 
 onMounted(() => {
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.course-card-container',
-      start: 'top+=150px bottom',
-      end: 'bottom-=100px bottom',
-      scrub: 1,
-    }
-  })
-  .fromTo('.course-card', {
-    opacity: 0,
-  }, {
-    opacity: 1,
-    stagger: 1,
-    duration: 4,
-  })
+  //gsap.timeline({
+  //  scrollTrigger: {
+  //    trigger: '.course-card-container',
+  //    start: 'top+=150px bottom',
+  //    end: 'bottom-=100px bottom',
+  //    scrub: 1,
+  //  }
+  //})
+  //.fromTo('.course-card', {
+  //  opacity: 0,
+  //}, {
+  //  opacity: 1,
+  //  stagger: 1,
+  //  duration: 4,
+  //})
 })
 </script>
 

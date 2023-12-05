@@ -195,19 +195,19 @@ function applyForCourse() {
 }
 
 onMounted(() => {
-  //tl.to(`.course-card${index}`, {
-  //  opacity: 1,
-  //  x: 0,
-  //  stagger: 1,
-  //})
-//
-  //ScrollTrigger.create({
-  //  trigger: `.course-card${index}`,
-  //  start: 'center bottom',
-  //  end: '+=100px',
-  //  animation: tl,
-  //  scrub: 1,
-  //})
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: `.course-card${index}`,
+      start: 'top+=75px bottom',
+      end: '+=100px',
+      scrub: true,
+    }
+  }).set(`.course-card${index}`, {
+    opacity: 0,
+  })
+  .to(`.course-card${index}`, {
+    opacity: 1,
+  })
 })
 </script>
 

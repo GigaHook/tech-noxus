@@ -1,6 +1,6 @@
 import { gsap } from "gsap/all"
-import { onMounted, watch } from "vue"
-import { useMouseInElement, useScroll } from '@vueuse/core'
+import { ref, onMounted, watch } from "vue"
+import { useMouseInElement, useScroll, useIntersectionObserver } from '@vueuse/core'
 
 export function slideLeft(elem) {
   onMounted(() => {
@@ -17,7 +17,6 @@ export function slideLeft(elem) {
       x: '-100%',
     })
     .to(elem, {
-      delay: 1,
       opacity: 1,
       x: '0',
       duration: 1,
@@ -32,7 +31,7 @@ export function fadeIn(elem) {
         trigger: elem,
         start: 'bottom+=100px bottom',
         end: '+=50px',
-        scrub: 2,
+        scrub: true,
       },
     })
     .set(elem, {
@@ -50,7 +49,7 @@ export function parallax(target, valueX, valueY=valueX) {
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
   const elem = target.value instanceof SVGGElement ? target.value : target.value.$el
 
-  watch ([elementX, elementY], () => !isScrolling.value && gsap.to(elem, {
+  watch ([elementX, elementY], () => (!isScrolling.value /*&& isVisible*/) && gsap.to(elem, {
       x: (elementX.value - elementWidth.value / 2) / valueX,
       y: (elementY.value - elementHeight.value / 2) / valueY
     })
