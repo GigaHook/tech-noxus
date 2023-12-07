@@ -5,7 +5,9 @@
       <v-main>
         <Hero ref="hero" :data="heroData"/>
         <About ref="about"/>
-        <Courses ref="courses" :data="coursesData"/>
+        <Suspense>
+          <Courses ref="courses" :data="coursesData"/>
+        </Suspense>
         <Map ref="map"/>
         <Timetable ref="timetable"/>
         <Form ref="form"/>

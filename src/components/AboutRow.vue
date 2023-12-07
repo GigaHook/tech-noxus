@@ -2,7 +2,7 @@
   <v-col
     cols="12" md="6" lg="5" xl="4"
     class="text-h6 mt-2"
-    :class="index == 3 && 'mt-16 pt-16'"
+    :class="(index == 3 && !mobile) && 'mt-16 pt-16'"
     :order-md="even ? index + 1 : index"
     :order="index + 1"
   >

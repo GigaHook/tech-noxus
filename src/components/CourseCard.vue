@@ -55,15 +55,21 @@
     <v-overlay
       v-model="overlay"
       class="d-flex justify-center align-center"
-      scroll-strategy="none"
+      :scroll-strategy="display.mobile.value ? 'block' : 'none'"
     >
       <v-card
-        class="pa-3 position-relative"
-        style="width: clamp(720px, 75vw, 1080px); height: clamp(640px, 75vh, 900px);"
+        class="pa-3 ma-3 position-relative"
+        :style="!display.mobile.value 
+          ? 'width: clamp(720px, 75vw, 1080px); height: clamp(640px, 75vh, 900px);'
+          : 'max-height: 100%; max-height: calc(100vh - 24px) !important; overflow-y: scroll;'
+        "
       >
-        <v-row :style="display.mobile.value && 'max-height: 100%; overflow-y: scroll;'">
+        <v-row
+          :style="display.mobile.value && 'max-height: 100%;'"
+
+        >
           <v-col cols="12" md="5" class="d-flex flex-column h-100">
-            <v-img :src="course.img" class="align-self-stretch"/>
+            <v-img :src="course.img" class="align-self-stretch" cover/>
 
             <div
               v-if="!display.mobile.value"
@@ -106,7 +112,7 @@
 
             <div
               v-if="display.mobile.value"
-              class="text-h5 mx-1 d-inline-flex align-center mt-2"
+              class="text-h5 d-inline-flex align-center justify-center w-25"
             >
               {{ course.price }} 
               <v-icon
@@ -119,7 +125,8 @@
               v-if="display.mobile.value"
               @click="applyForCourse"
               variant="flat"
-              color="amber-accent-3 w-50 mt-n2"
+              color="amber-accent-3"
+              class="mb-2 w-50"
             >
               Записаться
             </v-btn>

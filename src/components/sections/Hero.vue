@@ -8,7 +8,7 @@
   >
     <v-row justify="end" align="center">
       <v-col cols="12" lg="6">
-        <div
+        <div 
           :style="{
             height: !mobile ? '30%' : '',
             width: !mobile ? '80%' : '90vw',
@@ -67,7 +67,10 @@
       </v-col>
 
       <v-col cols="12" lg="5" class="pt-4">
-        <HeroSvg class="mx-n4"/>
+        <HeroSvg
+          :class="mobile ? 'mt-n16 mb-n4' : 'mx-n4'"
+          :style="mobile && 'max-height: 50vh'"
+        />
 
         <template v-if="mobile">
           <div class="d-flex flex-no-wrap justify-space-between pb-2 fade-in">
@@ -133,7 +136,6 @@
         </v-btn>
       </v-col>
     </v-row>
-    
   </v-container>
 </template>
 
