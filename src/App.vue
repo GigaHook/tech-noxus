@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <Header :menu-items="menuItems" :data="headerData"/>
+    <Header :menu-items="menuItems" :data="headerData" />
     <v-layout>
       <v-main>
-        <Hero ref="hero" :data="heroData"/>
-        <About ref="about"/>
+        <Hero ref="hero" :data="heroData" />
+        <About ref="about" />
         <Suspense>
-          <Courses ref="courses" :data="coursesData"/>
+          <Courses ref="courses" :data="coursesData" />
         </Suspense>
-        <Map ref="map"/>
-        <Timetable ref="timetable"/>
-        <Form ref="form"/>
-        <Footer/>
+        <Map ref="map" />
+        <Timetable ref="timetable" />
+        <Form ref="form" />
+        <Footer />
       </v-main>
     </v-layout>
   </v-app>
@@ -42,7 +42,7 @@ const form = ref()
 const headerData = ref({
   hero: hero,
   form: form,
-}) 
+})
 
 const heroData = ref({
   about: about,
@@ -72,10 +72,3 @@ const menuItems = [
   }
 ]
 </script>
-
-<style>
-@font-face {
-  font-family: 'BrassMono';
-  src: url('@/assets/fonts/BrassMono.ttf');
-}
-</style>
