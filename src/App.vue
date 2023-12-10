@@ -70,7 +70,6 @@ const menuItems = [
     text: 'Мы на карте',
     ref: map,
   }
-
 ]
 </script>
 

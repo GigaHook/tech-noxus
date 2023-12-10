@@ -25,7 +25,7 @@
       </div>
 
       <div>
-        <CourseTypeChip :type="course.type" class=""/>
+        <CourseTypeChip :type="course.type"/>
 
         <div class="text-h6 ms-1">
           {{ course.price }} 
@@ -64,12 +64,9 @@
           : 'max-height: 100%; max-height: calc(100vh - 24px) !important; overflow-y: scroll;'
         "
       >
-        <v-row
-          :style="display.mobile.value && 'max-height: 100%;'"
-
-        >
+        <v-row :style="display.mobile.value && 'max-height: 100%;'">
           <v-col cols="12" md="5" class="d-flex flex-column h-100">
-            <v-img :src="course.img" class="align-self-stretch" cover/>
+            <v-img :src="course.img" class="align-self-stretch" cover eager/>
 
             <div
               v-if="!display.mobile.value"

@@ -29,11 +29,14 @@
         >
           <div>Школа технологий для детей</div>
           <div>г. Смоленск</div>
+          <div class="text-h6 mb-2">
+            Преподаём для детей от 5 до 15 лет
+          </div>
         </div>
 
         <template v-if="!mobile">
           <v-sheet
-            class="mt-6 slide-2 shine"
+            class="slide-2 shine"
             elevation="24"
           >
             <v-btn
@@ -105,6 +108,10 @@
               Записаться
             </v-btn>
           </v-sheet>
+
+          <div class="w-100 text-center">
+            Преподаём для детей от 5 до 15 лет
+          </div>
   
           <div class="d-flex justify-center fade-in">
             <v-btn

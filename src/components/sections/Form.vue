@@ -197,10 +197,12 @@ function submit() {
         .replaceAll(/\)/g, '\\%29')
         .replaceAll(/\%2B/g, '\\%2B')
         .replaceAll(/\-/g, '\\-')
+        .replaceAll(/\./g, '\\.')
 
       fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${formattedText}&parse_mode=MarkdownV2`, {
         method: 'POST',
-      }).then(() => status.value = 'submitted')
+      })
+      .then(() => status.value = 'submitted')
     }
   })
 }
