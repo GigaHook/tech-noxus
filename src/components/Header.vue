@@ -23,6 +23,10 @@
         {{ item.text }}
       </v-btn>
 
+      <v-btn @click="router.push('/partners')">
+        Карта лояльности
+      </v-btn>
+
       <v-btn
         v-if="btnVisible"
         @click="scrollToForm"
@@ -53,6 +57,15 @@
       item-value="ref"
       @update:selected="selected => scrollTo(selected[0])"
     />
+
+    <v-divider/>
+
+    <v-list-item
+      @click="router.push('/partners')" 
+      class="mt-2"
+    >
+      Карта лояльности
+    </v-list-item>
   </v-navigation-drawer>
 </template>
 
@@ -60,10 +73,11 @@
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref, onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
+import { useRouter } from 'vue-router'
 
 const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
-
 const { mobile } = useDisplay()
+const router = useRouter()
 const side = ref(false)
 const btnVisible = ref(false)
 

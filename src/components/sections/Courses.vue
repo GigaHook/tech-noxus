@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import CourseCard from '@/components/CourseCard.vue'
 import { slideLeft } from '@/composables/useAnimations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'

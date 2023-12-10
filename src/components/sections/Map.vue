@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import MapSvg from '@/components/svg/MapSvg.vue'
 import { slideLeft, fadeIn } from '@/composables/useAnimations'
 import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'

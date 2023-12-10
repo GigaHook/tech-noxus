@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import TimetableSvg from '@/components/svg/TimetableSvg.vue'
 import { onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 

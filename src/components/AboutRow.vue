@@ -53,7 +53,7 @@ const { index } = defineProps({
   },
   title: String,
   text: String,
-  img: String,
+  img: Object,
 })
 
 const even = index % 2 == 0

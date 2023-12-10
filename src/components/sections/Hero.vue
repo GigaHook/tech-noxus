@@ -147,12 +147,14 @@
 </template>
 
 <script setup>
+import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 import { ref, onMounted } from 'vue'
 
 const { data } = defineProps({ data: Object })
 const { mobile } = useDisplay()
+
 const slides = ['.slide-0', '.slide-1', '.slide-2']
 const heroBody = ref()
 const heroBtn = ref()
