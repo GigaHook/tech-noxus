@@ -145,14 +145,13 @@
 <script setup>
 import { useMouseInElement } from '@vueuse/core'
 import { ref, computed, onMounted } from 'vue'
-import { gsap, ScrollTrigger } from 'gsap/all'
+import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import useStore from '@/composables/useStore'
 
-const { course, index, data } = defineProps({ 
+const { course, index } = defineProps({ 
   course: Object,
   index: Number,
-  data: Object,
 })
 
 const display = useDisplay()
@@ -192,7 +191,8 @@ const cardTransform = computed(() => {
 function applyForCourse() {
   store.selectedCourse = course
   overlay.value = false
-  data.form.$el.scrollIntoView({ 
+
+  store.homeSections.form.$el.scrollIntoView({ 
     behavior: 'smooth',
     block: 'center',
   })

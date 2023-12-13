@@ -1,18 +1,20 @@
 <template>
-  <v-app-bar>
-    <v-app-bar-title @click="router.push('/')" style="cursor: pointer">
-      <div class="d-flex flex-no-wrap align-center">
-        <v-img
-          src="@/assets/images/logo.png"
-          max-width="60"
-        />
-        <div class="ms-2">TechNoxus</div>
-      </div>
-    </v-app-bar-title>
-  </v-app-bar>
+  <v-layout>
+    <v-main>
+      
+    </v-main>
+  </v-layout>
 </template>
 
 <script setup>
+import Hero from '@/components/sections/Partners/Hero'
+
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
+
 </script>
+
+<style>
+
+</style>

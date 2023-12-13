@@ -147,29 +147,30 @@
 </template>
 
 <script setup>
+import useStore from '@/composables/useStore'
 import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 import { ref, onMounted } from 'vue'
 
-const { data } = defineProps({ data: Object })
 const { mobile } = useDisplay()
-
-const slides = ['.slide-0', '.slide-1', '.slide-2']
+const store = useStore()
 const heroBody = ref()
 const heroBtn = ref()
+
+const slides = ['.slide-0', '.slide-1', '.slide-2']
 
 defineExpose({ heroBody, heroBtn })
 
 function scrollDown() {
-  data.about.title.$el.scrollIntoView({
+  store.homeSections.about.title.$el.scrollIntoView({
     behavior: "smooth",
     block: "center",
   })
 }
 
 function scrollToForm() {
-  data.form.$el.scrollIntoView({
+  store.homeSections.form.$el.scrollIntoView({
     behavior: "smooth",
     block: "center",
   })
@@ -211,7 +212,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .container {
   min-height: calc(90vh - 60px);
   height: fit-content;

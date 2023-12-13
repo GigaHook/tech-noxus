@@ -44,14 +44,46 @@ export function fadeIn(elem) {
   })
 }
 
+function defineElem(target) {
+  return target.value instanceof SVGGElement ? target.value : target.value.$el
+}
+
 export function parallax(target, valueX, valueY=valueX) {  
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-  const elem = target.value instanceof SVGGElement ? target.value : target.value.$el
+  const elem = defineElem(target)
 
   watch ([elementX, elementY], () => (!isScrolling.value /*&& isVisible*/) && gsap.to(elem, {
       x: (elementX.value - elementWidth.value / 2) / valueX,
       y: (elementY.value - elementHeight.value / 2) / valueY
     })
   )
+}
+
+export function parallaxAngle(target, max=2, stopOutside=true) {
+  const {
+    elementX,
+    elementY,
+    isOutside,
+    elementHeight,
+    elementWidth,
+  } = useMouseInElement(target)
+
+  const elem = defineElem(target)
+
+  watch ([elementX, elementY], () => {
+    const rX = (
+      max / 2 - (elementY.value / elementHeight.value) * max
+    ).toFixed(2)
+  
+    const rY = (
+      (elementX.value / elementWidth.value) * max - max / 2
+    ).toFixed(2)
+    
+    if (isOutside.value && stopOutside) {
+      elem.style.transform = ''
+    } else {
+      elem.style.transform = `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg)`
+    }
+  })
 }

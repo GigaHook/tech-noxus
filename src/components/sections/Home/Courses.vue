@@ -13,7 +13,6 @@
         :key="index"
         :course="course"
         :index="index"
-        :data="data"
         class="card"
       />
     </v-row>
@@ -26,8 +25,6 @@ import { slideLeft } from '@/composables/useAnimations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'
-
-defineProps({ data: Object })
 
 slideLeft('.courses-title')
 
@@ -125,24 +122,6 @@ const courses = [
     img: (await import("@/assets/images/robot.jpg")).default,
   }
 ]
-
-onMounted(() => {
-  //gsap.timeline({
-  //  scrollTrigger: {
-  //    trigger: '.course-card-container',
-  //    start: 'top+=150px bottom',
-  //    end: 'bottom-=100px bottom',
-  //    scrub: 1,
-  //  }
-  //})
-  //.fromTo('.course-card', {
-  //  opacity: 0,
-  //}, {
-  //  opacity: 1,
-  //  stagger: 1,
-  //  duration: 4,
-  //})
-})
 </script>
 
 <style>

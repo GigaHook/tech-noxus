@@ -9,6 +9,7 @@
               :style="{
                 opacity: status ? 0 : 1
               }"
+              key="cardTitle"
             >
               <h2 class=text-h4>
                 Записаться на курс
@@ -23,6 +24,7 @@
               :style="{
                 opacity: status ? 0 : 1
               }"
+              key=cardText
             >
               <v-form
                 ref="form"
@@ -121,6 +123,7 @@
             <v-card-text
               v-if="status == 'loading'"
               class="d-flex justify-center align-center center"
+              key="cardText2"
             >
               <v-progress-circular
                 indeterminate
@@ -132,6 +135,7 @@
             <v-card-text
               v-if="status == 'submitted'"
               class="d-flex justify-center align-center center"
+              key="cardText3"
             >
               <div class="text-center">
                 <v-icon

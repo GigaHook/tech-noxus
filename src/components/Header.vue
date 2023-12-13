@@ -23,84 +23,112 @@
         {{ item.text }}
       </v-btn>
 
-      <v-btn @click="router.push('/partners')">
-        Карта лояльности
-      </v-btn>
-
       <v-btn
         v-if="btnVisible"
         @click="scrollToForm"
+        key="signUp"
         flat
         variant="elevated"
         color="amber-accent-3"
       >
         Записаться
       </v-btn>
+
+      <v-divider vertical class="mx-2" key="divider"/>
     </v-slide-x-reverse-transition>
     
     <v-app-bar-nav-icon
-      v-else
       @click="side = !side"
       class="pb-1"
     />
-    
   </v-app-bar>
 
   <v-navigation-drawer
-    v-if="mobile"
     location="right"
     v-model="side"
   >
-    <v-list
-      :items="menuItems"
-      item-title="text"
-      item-value="ref"
-      @update:selected="selected => scrollTo(selected[0])"
-    />
+    <v-list>
+      <template v-if="mobile">
+        <v-list-item
+          v-for="(item, index) in menuItems"
+          :key="index"
+          @click="scrollTo(item.ref)"
+        >
+          {{ item.text }}
+        </v-list-item>
 
-    <v-divider/>
+        <v-divider/>
+      </template>
 
-    <v-list-item
-      @click="router.push('/partners')" 
-      class="mt-2"
-    >
-      Карта лояльности
-    </v-list-item>
+      <v-list-item
+        @click="router.push('/')" 
+        class="mt-2"
+        :active="route.name == 'Home'"
+        prepend-icon="fas fa-home"
+      >
+        Главная
+      </v-list-item>
+
+      <v-list-item
+        @click="router.push('/partners')" 
+        class="mt-2"
+        :active="route.name == 'Partners'"
+        prepend-icon="fas fa-handshake"
+      >
+        Партнёрская программа
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
+import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, onMounted } from 'vue'
+import { ref, toRef, watchEffect } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
+//const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
 const { mobile } = useDisplay()
 const router = useRouter()
+const route = useRoute()
+const store = useStore()
 const side = ref(false)
 const btnVisible = ref(false)
+const sections = ref()
+const menuItems = ref()
 
-onMounted(() => {
-  useIntersectionObserver(
-    data.hero.heroBtn, 
+watchEffect(() => {
+  sections.value = {
+    'Home': store.homeSections,
+    'Partners': store.partnersSections,
+  }[route.name]
+  
+  menuItems.value = {
+    'Home': store.homeMenuItems,
+    'Partners': store.partnersMenuItems,
+  }[route.name]
+
+  sections.value?.hero?.heroBtn && useIntersectionObserver(
+    sections.value.hero.heroBtn, 
     ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
   )
+  //TODO уберать все вотчеры при переходе между страницами
 })
 
 function scrollTo(elem) {
-  elem.value.$el.scrollIntoView({ behavior: "smooth" })
+  elem.$el.scrollIntoView({ behavior: "smooth" })
   side.value = false
 }
 
 function scrollToForm() {
-  data.form.$el.scrollIntoView({
+  sections.value.form.$el.scrollIntoView({
     behavior: "smooth",
     block: "center",
   })
 }
 
 function up() {
-  data.hero.heroBody.$el.scrollIntoView({ behavior: "smooth" })
+  sections.value.hero.heroBody.$el.scrollIntoView({ behavior: "smooth" })
 }
 </script>
