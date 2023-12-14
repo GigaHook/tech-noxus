@@ -53,10 +53,12 @@ export function parallax(target, valueX, valueY=valueX) {
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
   const elem = defineElem(target)
 
-  watch ([elementX, elementY], () => (!isScrolling.value /*&& isVisible*/) && gsap.to(elem, {
-      x: (elementX.value - elementWidth.value / 2) / valueX,
-      y: (elementY.value - elementHeight.value / 2) / valueY
-    })
+  watch ([elementX, elementY], () => {
+      (!isScrolling.value /*&& isVisible*/) && gsap.to(elem, {
+        x: (elementX.value - elementWidth.value / 2) / valueX,
+        y: (elementY.value - elementHeight.value / 2) / valueY
+      })
+    }
   )
 }
 

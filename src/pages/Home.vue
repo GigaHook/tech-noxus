@@ -63,10 +63,4 @@ onMounted(() => {
     },
   ]
 })
-
-/*
-const coursesData = ref({
-  form: form,
-})
-*/
 </script>

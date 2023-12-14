@@ -148,6 +148,7 @@ import { ref, computed, onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import useStore from '@/composables/useStore'
+import { parallaxAngle } from '@/composables/useAnimations'
 
 const { course, index } = defineProps({ 
   course: Object,

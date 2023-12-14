@@ -1,28 +1,31 @@
 <template>
-  <v-container class="pcard-hero-bg">
+  <v-container class="pcard-hero-bg" style="margin-top: 60px">
     <v-row
       justify="space-between"
       justify-xl="space-around"
       align="center"
       :style="!display.mobile.value && 'height: 50vh'"
     >
-      <v-col cols="12" lg="7" xl="6">
+      <v-col cols="12" lg="6" xl="5">
         <div class="text-h2 mb-4">
           Карта лояльности для учащегося
         </div>
 
         <div class="text-h4">
-          Получите доступ к эксклюзивным скидкам и бонусам в десятках магазинов города с нашей новой картой лояльности
+          Получите доступ к скидкам и бонусам в десятках магазинов города
         </div>
       </v-col>
 
       <v-col cols="12" lg="5" xl="4">
-        <v-sheet
-          elevation="10"
+        <v-img
+          src="@/assets/images/partner-card.png"
+          :class="`
+            ${display.xlAndUp.value && 'ps-6'}
+            ${display.lg.value && 'mt-8'}
+          `"
           ref="pcard"
-        >
-          <v-img src="@/assets/images/partner-card.png" cover/>
-        </v-sheet>
+          cover
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -37,19 +40,16 @@ const display = useDisplay()
 const pcard = ref()
 
 onMounted(() => {
-  parallaxAngle(pcard, -4, false)
+  if (!display.mobile.value) {
+    parallaxAngle(pcard, -4, false)
+  }
 })
 </script>
 
 <style scoped>
-.pcard-hero-bg::before {
-  content: '';
-  width: 100vw;
-  height: 50vh;
-  position: absolute;
-  z-index: -1;
+.pcard-hero-bg {
   background-image: url(@/assets/images/partner-hero-bg3.png);
-  background-size: 100vw;
   background-position: center right;
+  background-size: contain;
 }
 </style>

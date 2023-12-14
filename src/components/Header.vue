@@ -24,7 +24,7 @@
       </v-btn>
 
       <v-btn
-        v-if="btnVisible"
+        v-if="btnVisible && route.name == 'Home'"
         @click="scrollToForm"
         key="signUp"
         flat
@@ -109,11 +109,12 @@ watchEffect(() => {
     'Partners': store.partnersMenuItems,
   }[route.name]
 
-  sections.value?.hero?.heroBtn && useIntersectionObserver(
-    sections.value.hero.heroBtn, 
-    ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
-  )
-  //TODO уберать все вотчеры при переходе между страницами
+  if (sections.value?.hero?.heroBtn && route.name == 'Home') {
+    useIntersectionObserver(
+      sections.value.hero.heroBtn, 
+      ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
+    )
+  }
 })
 
 function scrollTo(elem) {
