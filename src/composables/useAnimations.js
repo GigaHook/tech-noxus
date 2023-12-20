@@ -72,6 +72,19 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
   } = useMouseInElement(target)
 
   const elem = defineElem(target)
+  elem.style.position = 'relative'
+
+  const after = document.createElement('div')
+  after.className = '::after'
+  after.style.content = '""'
+  after.style.width = '100%'
+  after.style.height = '100%'
+  after.style.position = 'absolute'
+  after.style.backgroundColor = 'white'
+  after.style.opacity = 0
+  elem.appendChild(after)
+
+  const flareK = 20
 
   watch ([elementX, elementY], () => {
     const rX = (
@@ -86,6 +99,11 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
       elem.style.transform = ''
     } else {
       elem.style.transform = `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg)`
+      gsap.to(after, {
+        opacity: Math.min(
+          (Math.abs(rX / flareK) + Math.abs(rY / flareK)) / 2, 0.8
+        ),
+      })
     }
   })
 }
