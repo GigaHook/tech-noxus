@@ -166,13 +166,15 @@
 <script setup>
 import { ref } from 'vue'
 
-const status = ref(false)
-const hover = ref(false)
-const form = ref()
+const token = '6924203386:AAFuf4p_fRI2gs0h6u9NZ62g0EQo7g2o8rk'
+const chatId = '-4089804866'
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
   tooLong: v => v?.length <= 100 || 'Слишком длинное значение',
 }
+const status = ref(false)
+const hover = ref(false)
+const form = ref()
 
 function submit() {
 

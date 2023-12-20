@@ -30,7 +30,7 @@
               class="button w-100"
               v-ripple="{ class: `text-yellow` }"
             >
-              Записаться
+              Оформить
             </v-btn>
           </v-sheet>
 
