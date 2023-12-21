@@ -2,7 +2,7 @@
   <v-container
     class="pcard-hero-bg"
     style="margin-top: 60px;"
-    :style="!display.mobile.value && 'margin-bottom: 130px'"
+    :style="!mobile && 'margin-bottom: 130px'"
   >
     <v-row
       justify="space-between"
@@ -18,37 +18,6 @@
         <div class="text-h4 partners-hero-title-2">
           Получите доступ к скидкам и бонусам в десятках магазинов города
         </div>
-
-        <v-sheet
-            class="my-4 slide-2 shine w-50"
-            elevation="24"
-          >
-            <v-btn
-              @click="scrollToForm"
-              size="x-large"
-              color="amber-accent-3"
-              class="button w-100"
-              v-ripple="{ class: `text-yellow` }"
-            >
-              Оформить
-            </v-btn>
-          </v-sheet>
-
-        <a
-          href="https://vk.com/technoxus_smol"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-black"
-        >
-          <v-btn
-            variant="text"
-            class="font-weight-bold px-2"
-            v-ripple="{ class: `text-yellow` }"
-            append-icon="fas fa-arrow-up-right-from-square"
-          >
-            ВКонтакте
-          </v-btn>
-        </a>
       </v-col>
 
       <v-col cols="12" lg="5" xl="4">
@@ -87,6 +56,7 @@ onMounted(() => {
     x: 0,
     opacity: 1,
     delay: .5,
+    ease: 'back.out',
   })
 
   gsap.fromTo('.partners-hero-title-2', {
@@ -96,6 +66,7 @@ onMounted(() => {
     x: 0,
     opacity: 1,
     delay: 1,
+    ease: 'back.out',
   })
 })
 </script>

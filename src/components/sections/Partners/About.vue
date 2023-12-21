@@ -1,37 +1,34 @@
 <template>
   <v-container>
     <v-row justify="center" align="center">
-      <v-col cols="12" lg="5" xl="4">
-        <RenderOnScroll style="height: 50vh;">
-          <PartnersCardSvg />
-        </RenderOnScroll>
-      </v-col>
-
-      <v-col cols="12" lg="6" xl="5" class="text-h6">
-        <h3 class="text-h4 partners-about-title">
-          В чём суть?
-        </h3>
-
-        Мы рады представить вам нашу карту лояльности, которая призвана сделать вашу учебу в нашей школе еще более впечатляющей и выгодной.
-        Эта карта дает вам доступ к эксклюзивным скидкам и бонусам в магазинах-партнерах по всему городу.
-      </v-col>
+      <AboutRow
+        v-for="(row, index) in rows"
+        :key="index"
+        :index="index"
+        :title="row.title"
+        :text="row.text"
+        :img="row.img"
+      />
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { gsap } from 'gsap/all'
-import PartnersCardSvg from '@/components/svg/PartnersCardSvg.vue'
+import AboutRow from '@/components/AboutRow.vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 
-onMounted(() => {
-  gsap.fromTo('.partners-about-title', {
-    x: '100%',
-    opacity: 0,
-  }, {
-    x: 0,
-    opacity: 1,
-    delay: 2,
-  })
-})
+const { mobile } = useDisplay()
+
+const rows = [
+  {
+    title: 'В чём суть?',
+    text: 'Мы рады представить вам нашу карту лояльности, которая призвана сделать вашу учебу в нашей школе еще более впечатляющей и выгодной. Эта карта дает вам доступ к эксклюзивным скидкам и бонусам у партнерёв по всему городу.',
+    img: (await import("@/components/svg/PartnersCardSvg.vue")).default
+  },
+  {
+    title: 'Как получить карту?',
+    text: 'Всё очень просто. Каждый ученик нашей школы может бесплатно получить нашу карту. Она выдаётся при поступлении на их первый курс.',
+    img: (await import("@/components/svg/GuideSvg.vue")).default
+  },
+]
 </script>

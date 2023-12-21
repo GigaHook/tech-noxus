@@ -34,6 +34,14 @@
         Записаться
       </v-btn>
 
+      <v-btn
+        v-if="route.name != 'Home' && !mobile"
+        key="goBack"
+        @click="router.push('/')"
+      >
+        На главную
+      </v-btn>
+
       <v-divider vertical class="mx-2" key="divider"/>
     </v-slide-x-reverse-transition>
     
@@ -84,7 +92,7 @@
 <script setup>
 import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, toRef, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -99,15 +107,22 @@ const sections = ref()
 const menuItems = ref()
 
 watchEffect(() => {
-  sections.value = {
-    'Home': store.homeSections,
-    'Partners': store.partnersSections,
-  }[route.name]
-  
-  menuItems.value = {
-    'Home': store.homeMenuItems,
-    'Partners': store.partnersMenuItems,
-  }[route.name]
+  if (route.name == 'Home') {
+    sections.value = store.homeSections
+    menuItems.value = store.homeMenuItems
+  } else {
+    menuItems.value = []
+  }
+
+  //sections.value = {
+  //  'Home': store.homeSections,
+  //  'Partners': store.partnersSections,
+  //}[route.name]
+  //
+  //menuItems.value = {
+  //  'Home': store.homeMenuItems,
+  //  'Partners': store.partnersMenuItems,
+  //}[route.name]
 
   if (sections.value?.hero?.heroBtn && route.name == 'Home') {
     useIntersectionObserver(
