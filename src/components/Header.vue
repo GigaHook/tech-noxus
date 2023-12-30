@@ -1,6 +1,6 @@
 <template>
   <v-app-bar ref="header" scroll-behavior="elevate">
-    <v-app-bar-title @click="up" style="cursor: pointer">
+    <v-app-bar-title style="cursor: pointer" v-scroll-to="'#hero'">
       <div class="d-flex flex-no-wrap align-center">
         <v-img
           src="@/assets/images/logo.png"
@@ -15,17 +15,19 @@
       group
       leave-absolute
     >
-      <v-btn
-        v-for="(item, index) in menuItems"
-        :key="index"
-        @click="scrollTo(item.ref)"
-      >
-        {{ item.text }}
-      </v-btn>
+      <template v-if="route.name == 'Home'">
+        <v-btn
+          v-for="item in menuItems"
+          :key="item.id"
+          v-scroll-to="item.id"
+        >
+          {{ item.text }}
+        </v-btn>
+      </template>
 
       <v-btn
         v-if="btnVisible && route.name == 'Home'"
-        @click="scrollToForm"
+        v-scroll-to="'#form'"
         key="signUp"
         flat
         variant="elevated"
@@ -34,35 +36,78 @@
         Записаться
       </v-btn>
 
+      <v-divider
+        v-if="route.name != 'Partners'"
+        vertical
+        class="mx-2"
+        key="divider"
+      />
+
       <v-btn
-        v-if="route.name != 'Home' && !mobile"
-        key="goBack"
-        @click="router.push('/')"
+        @click="router.push('/')" 
+        :active="route.name == 'Home'"
+        key="toHome"
+        class="rounded me-2"
+        icon
       >
-        На главную
+        <v-icon icon="fas fa-home" class="mb-1 me-1"/>
+
+        <v-tooltip activator="parent" location="bottom">
+          Главная
+        </v-tooltip>
       </v-btn>
 
-      <v-divider vertical class="mx-2" key="divider"/>
+      <v-btn
+        @click="router.push('/partners')"
+        :active="route.name == 'Partners'"
+        key="toPartners"
+        class="rounded"
+        icon
+      >
+        <v-icon icon="fas fa-handshake" class="mb-1 me-1"/>
+
+        <v-tooltip activator="parent" location="bottom">
+          Партнёрская программа
+        </v-tooltip>
+      </v-btn>
+
     </v-slide-x-reverse-transition>
     
     <v-app-bar-nav-icon
+      v-else
       @click="side = !side"
       class="pb-1"
     />
   </v-app-bar>
 
   <v-navigation-drawer
+    v-if="mobile"
     location="right"
     v-model="side"
   >
     <v-list>
-      <template v-if="mobile">
+      <template v-if="route.name == 'Home'">
         <v-list-item
-          v-for="(item, index) in menuItems"
-          :key="index"
-          @click="scrollTo(item.ref)"
+          v-for="item in menuItems"
+          :key="item.id"
+          v-scroll-to="item.id"
+          @click="side = !side"
         >
           {{ item.text }}
+        </v-list-item>
+
+        <v-list-item
+          class="px-1 ma-1"
+          v-scroll-to="'#form'"
+          @click="side = !side"
+        >
+          <v-card
+            variant="flat"
+            class="rounded w-100 py-2 px-3"
+            color="amber-accent-3"
+          >
+            Записаться
+          </v-card>
         </v-list-item>
 
         <v-divider/>
@@ -90,61 +135,43 @@
 </template>
 
 <script setup>
-import useStore from '@/composables/useStore'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
+import useStore from '@/composables/useStore'
 
-//const { menuItems, data } = defineProps({ menuItems: Array, data: Object })
 const { mobile } = useDisplay()
 const router = useRouter()
 const route = useRoute()
 const store = useStore()
 const side = ref(false)
 const btnVisible = ref(false)
-const sections = ref()
-const menuItems = ref()
+const menuItems = [
+  {
+    text: 'О нас',
+    id: '#about',
+  },
+  {
+    text: 'Курсы',
+    id: '#courses',
+  },
+  {
+    text: 'Расписание',
+    id: '#timetable',
+  },
+  {
+    text: 'Где нас найти',
+    id: '#map',
+  }
+]
 
 watchEffect(() => {
-  if (route.name == 'Home') {
-    sections.value = store.homeSections
-    menuItems.value = store.homeMenuItems
-  } else {
-    menuItems.value = []
-  }
-
-  //sections.value = {
-  //  'Home': store.homeSections,
-  //  'Partners': store.partnersSections,
-  //}[route.name]
-  //
-  //menuItems.value = {
-  //  'Home': store.homeMenuItems,
-  //  'Partners': store.partnersMenuItems,
-  //}[route.name]
-
-  if (sections.value?.hero?.heroBtn && route.name == 'Home') {
+  if (store.heroBtn && route.name == 'Home') {
     useIntersectionObserver(
-      sections.value.hero.heroBtn, 
-      ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
+      store.heroBtn, ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
     )
   }
 })
 
-function scrollTo(elem) {
-  elem.$el.scrollIntoView({ behavior: "smooth" })
-  side.value = false
-}
-
-function scrollToForm() {
-  sections.value.form.$el.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-  })
-}
-
-function up() {
-  sections.value.hero.heroBody.$el.scrollIntoView({ behavior: "smooth" })
-}
 </script>

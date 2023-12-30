@@ -2,10 +2,7 @@ import { reactive } from "vue"
 
 const store = reactive({
   selectedCourse: null,
-  homeSections: null,
-  homeMenuItems: null,
-  partnersSections: null,
-  partnersMenuItems: null,
+  heroBtn: null,
 })
 
 export default function useStore() {

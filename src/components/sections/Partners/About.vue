@@ -15,9 +15,6 @@
 
 <script setup>
 import AboutRow from '@/components/AboutRow.vue'
-import { useDisplay } from 'vuetify/lib/framework.mjs'
-
-const { mobile } = useDisplay()
 
 const rows = [
   {
@@ -27,7 +24,7 @@ const rows = [
   },
   {
     title: 'Как получить карту?',
-    text: 'Всё очень просто. Каждый ученик нашей школы может бесплатно получить нашу карту. Она выдаётся при поступлении на их первый курс.',
+    text: 'Всё очень просто. Каждый ученик нашей школы может бесплатно получить карту. Она выдаётся на первом занятии.',
     img: (await import("@/components/svg/GuideSvg.vue")).default
   },
 ]

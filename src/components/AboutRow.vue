@@ -11,7 +11,7 @@
     </Title>
 
     <div :class="`text text${index}`">
-      {{ text }}
+      <slot>{{ text }}</slot>
     </div>
   </v-col>
 

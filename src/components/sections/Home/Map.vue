@@ -1,5 +1,5 @@
 <template>
-  <v-container class="my-16">
+  <v-container class="my-16" id="map">
     <v-row justify="center" align="center">
       <v-col cols="12" lg="8" xl="6" :class="!display.mobile.value && 'pe-8'">
         <h2 class="text-h4 mb-6 map-title">

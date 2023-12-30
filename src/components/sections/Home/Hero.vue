@@ -4,7 +4,7 @@
     class="container"
     :class="!mobile && 'image'"
     :style="mobile && 'margin-top: 60px'"
-    ref="heroBody"
+    id="hero"
   >
     <v-row justify="end" align="center">
       <v-col cols="12" lg="6">
@@ -40,7 +40,7 @@
             elevation="24"
           >
             <v-btn
-              @click="scrollToForm"
+              v-scroll-to="'#form'"
               size="x-large"
               color="amber-accent-3"
               class="button"
@@ -99,7 +99,7 @@
             elevation="24"
           >
             <v-btn
-              @click="scrollToForm"
+              v-scroll-to="'#form'"
               size="x-large"
               color="amber-accent-3"
               class="button w-100"
@@ -109,13 +109,13 @@
             </v-btn>
           </v-sheet>
 
-          <div class="w-100 text-center">
+          <div class="w-100 text-center mt-4 fade-in">
             Преподаём для детей от 5 до 15 лет
           </div>
   
           <div class="d-flex justify-center fade-in">
             <v-btn
-              @click="scrollDown"
+              v-scroll-to="'#about'"
               append-icon="fa fa-arrow-down"
               variant="text"
               size="x-large"
@@ -133,7 +133,7 @@
       <v-col cols="12" class="text-center">
         <v-btn
           v-if="!mobile"
-          @click="scrollDown"
+          v-scroll-to="'#about'"
           variant="text"
           append-icon="fa fa-arrow-down"
           v-ripple="{ class: `text-yellow` }"
@@ -155,28 +155,13 @@ import { ref, onMounted } from 'vue'
 
 const { mobile } = useDisplay()
 const store = useStore()
-const heroBody = ref()
 const heroBtn = ref()
 
 const slides = ['.slide-0', '.slide-1', '.slide-2']
 
-defineExpose({ heroBody, heroBtn })
-
-function scrollDown() {
-  store.homeSections.about.title.$el.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-  })
-}
-
-function scrollToForm() {
-  store.homeSections.form.$el.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-  })
-}
-
 onMounted(() => {
+  store.heroBtn = heroBtn
+
   gsap.timeline()
     .set(slides, {
       opacity: 0,

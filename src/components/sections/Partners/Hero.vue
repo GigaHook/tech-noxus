@@ -1,8 +1,9 @@
 <template>
   <v-container
-    class="pcard-hero-bg"
+    class="mb-4"
+    :class="!display.mobile.value && 'pcard-hero-bg'"
     style="margin-top: 60px;"
-    :style="!mobile && 'margin-bottom: 130px'"
+    id="partners-hero"
   >
     <v-row
       justify="space-between"
@@ -16,7 +17,28 @@
         </div>
 
         <div class="text-h4 partners-hero-title-2">
-          Получите доступ к скидкам и бонусам в десятках магазинов города
+          Получите доступ к скидкам и бонусам в десятках заведений города
+        </div>
+
+        <v-sheet
+          class="slide-2 shine my-3 partners-hero-title-3"
+          :class="display.mobile.value && 'w-100'"
+          elevation="24"
+        >
+          <v-btn
+            @click="goToForm"
+            size="x-large"
+            color="amber-accent-3"
+            class="button"
+            :class="display.mobile.value && 'w-100'"
+            ref="heroBtn"
+          >
+            Записаться
+          </v-btn>
+        </v-sheet>
+
+        <div class="text-body-1 partners-hero-title-2">
+          Запишитесь на курс, чтобы бесплатно получить карту
         </div>
       </v-col>
 
@@ -40,6 +62,7 @@ import { ref, onMounted } from 'vue'
 import { parallaxAngle } from '@/composables/useAnimations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
+import router from '@/plugins/router'
 
 const display = useDisplay()
 const pcard = ref()
@@ -68,7 +91,23 @@ onMounted(() => {
     delay: 1,
     ease: 'back.out',
   })
+
+  gsap.fromTo('.partners-hero-title-3', {
+    x: '-100%',
+    opacity: 0,
+  }, {
+    x: 0,
+    opacity: 1,
+    delay: 1.5,
+    ease: 'back.out',
+  })
 })
+
+function goToForm() {
+  router.push('/').then(() => {
+    document.querySelector('#form').scrollIntoView({ block: 'center' })
+  })
+}
 </script>
 
 <style scoped>

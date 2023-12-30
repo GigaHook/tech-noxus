@@ -6,12 +6,12 @@
       :elevation="hover ? 20 : 8"
       class="course-card d-flex flex-column pa-3"
       :class="`course-card${index}`"
-      ref="card"
       :style="{
         transform: !display.mobile.value && cardTransform,
         transition: 'all .1s ease-out',
         'max-width': display.smAndDown.value && '100% !important',
       }"
+      ref="card"
     >
       <div class="h-50 mb-auto">
         <v-img
@@ -39,6 +39,7 @@
         <div class="d-flex justify-space-between align-center w-100">
           <v-btn
             @click="applyForCourse"
+            v-scroll-to="'#form'"
             variant="flat"
             color="amber-accent-3"
           >
@@ -52,6 +53,7 @@
       </div>
     </v-card>
 
+    <!--ПОДРОБНОЕ ОПИСАНИЕ-->
     <v-overlay
       v-model="overlay"
       class="d-flex justify-center align-center"
@@ -83,6 +85,7 @@
             <v-btn
               v-if="!display.mobile.value"
               @click="applyForCourse"
+              v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3 w-50"
             >
@@ -121,6 +124,7 @@
             <v-btn
               v-if="display.mobile.value"
               @click="applyForCourse"
+              v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3"
               class="mb-2 w-50"
@@ -148,7 +152,6 @@ import { ref, computed, onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import useStore from '@/composables/useStore'
-import { parallaxAngle } from '@/composables/useAnimations'
 
 const { course, index } = defineProps({ 
   course: Object,
@@ -169,6 +172,7 @@ const {
   elementWidth,
 } = useMouseInElement(card)
 
+//TODO переделать с parallax angle
 const cardTransform = computed(() => {
   if (!display.mobile.value) {
     const MAX_ROTATION = 4
@@ -192,11 +196,6 @@ const cardTransform = computed(() => {
 function applyForCourse() {
   store.selectedCourse = course
   overlay.value = false
-
-  store.homeSections.form.$el.scrollIntoView({ 
-    behavior: 'smooth',
-    block: 'center',
-  })
 }
 
 onMounted(() => {

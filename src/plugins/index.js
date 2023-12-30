@@ -1,11 +1,13 @@
 import vuetify from './vuetify'
-import { gsap, ScrollTrigger, TextPlugin } from 'gsap/all'
-import VueTheMask from 'vue-the-mask'
 import router from './router'
+import VueTheMask from 'vue-the-mask'
+import VueScrollTo from 'vue-scrollto'
+import { gsap, ScrollTrigger, TextPlugin } from 'gsap/all'
 
 export function registerPlugins (app) {
   app.use(vuetify)
     .use(VueTheMask)
+    .use(VueScrollTo)
     .use(router)
 
   gsap.registerPlugin(ScrollTrigger)
