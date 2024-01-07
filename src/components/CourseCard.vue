@@ -7,15 +7,13 @@
       class="course-card d-flex flex-column pa-3"
       :class="`course-card${index}`"
       :style="{
-        transform: !display.mobile.value && cardTransform,
-        transition: 'all .1s ease-out',
         'max-width': display.smAndDown.value && '100% !important',
       }"
-      ref="card"
+      :ref="el => card = el"
     >
       <div class="h-50 mb-auto">
         <v-img
-          :src="course.img"
+          :src="assetImageUrl(course.img)"
           class="h-100"
         />
         
@@ -68,7 +66,12 @@
       >
         <v-row :style="display.mobile.value && 'max-height: 100%;'">
           <v-col cols="12" md="5" class="d-flex flex-column h-100">
-            <v-img :src="course.img" class="align-self-stretch" cover eager/>
+            <v-img
+              :src="assetImageUrl(course.img)"
+              class="align-self-stretch"
+              cover
+              eager
+            />
 
             <div
               v-if="!display.mobile.value"
@@ -147,10 +150,10 @@
 </template>
 
 <script setup>
-import { useMouseInElement } from '@vueuse/core'
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import { parallaxAngle } from '@/composables/useAnimations'
 import useStore from '@/composables/useStore'
 
 const { course, index } = defineProps({ 
@@ -160,38 +163,9 @@ const { course, index } = defineProps({
 
 const display = useDisplay()
 const hover = ref()
-const card = ref()
+const card = ref(null)
 const overlay = ref(false)
 const store = useStore()
-
-const {
-  elementX,
-  elementY,
-  isOutside,
-  elementHeight,
-  elementWidth,
-} = useMouseInElement(card)
-
-//TODO переделать с parallax angle
-const cardTransform = computed(() => {
-  if (!display.mobile.value) {
-    const MAX_ROTATION = 4
-  
-    const rX = (
-      MAX_ROTATION / 2 - (elementY.value / elementHeight.value) * MAX_ROTATION
-    ).toFixed(2)
-  
-    const rY = (
-      (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
-    ).toFixed(2)
-  
-    return isOutside.value 
-      ? ''
-      : `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg) scale(1.05)`
-  }
-
-  return ''
-})
 
 function applyForCourse() {
   store.selectedCourse = course
@@ -199,26 +173,23 @@ function applyForCourse() {
 }
 
 onMounted(() => {
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: `.course-card${index}`,
-      start: 'top+=75px bottom',
-      end: '+=100px',
-      scrub: true,
-    }
-  }).set(`.course-card${index}`, {
-    opacity: 0,
-  })
-  .to(`.course-card${index}`, {
-    opacity: 1,
-  })
+  if (!display.mobile.value) {
+    parallaxAngle(card, 4)
+  }
 })
+
+function assetImageUrl(image) {
+  return new URL(`../assets/images/${image}`, import.meta.url).href
+}
 </script>
 
 <style scoped>
 .course-card {
   height: 380px;
   max-width: 320px;
-  opacity: 0;
+  transition: all .1s ease-out;
+}
+.course-card:hover {
+  scale: 1.02
 }
 </style>

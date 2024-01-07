@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import Hero from '@/components/sections/Partners/Hero'
+import Hero from '@/components/sections/Partners/Hero.vue'
 import About from '@/components/sections/Partners/About.vue'
 import Footer from '@/components/Footer.vue'
 </script>

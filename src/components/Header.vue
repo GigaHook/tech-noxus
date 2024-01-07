@@ -114,7 +114,7 @@
       </template>
 
       <v-list-item
-        @click="router.push('/')" 
+        @click="mobileRouter('/')" 
         class="mt-2"
         :active="route.name == 'Home'"
         prepend-icon="fas fa-home"
@@ -123,7 +123,7 @@
       </v-list-item>
 
       <v-list-item
-        @click="router.push('/partners')" 
+        @click="mobileRouter('/partners')" 
         class="mt-2"
         :active="route.name == 'Partners'"
         prepend-icon="fas fa-handshake"
@@ -147,6 +147,7 @@ const route = useRoute()
 const store = useStore()
 const side = ref(false)
 const btnVisible = ref(false)
+
 const menuItems = [
   {
     text: 'О нас',
@@ -173,5 +174,11 @@ watchEffect(() => {
     )
   }
 })
+
+function mobileRouter(route) {
+  router.push(route).then(() => {
+    window.scrollTo(0, 0)
+  })
+}
 
 </script>

@@ -19,7 +19,7 @@
         class="card"
       />
     </v-row>
-  </v-container>  
+  </v-container>
 </template>
 
 <script setup>

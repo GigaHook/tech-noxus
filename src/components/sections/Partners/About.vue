@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center" align="center">
+    <v-row justify-md="space-around" justify-lg="center">
       <AboutRow
         v-for="(row, index) in rows"
         :key="index"

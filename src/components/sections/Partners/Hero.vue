@@ -21,7 +21,7 @@
         </div>
 
         <v-sheet
-          class="slide-2 shine my-3 partners-hero-title-3"
+          class="slide-2 shine my-3 partners-hero-title-3 rounded"
           :class="display.mobile.value && 'w-100'"
           elevation="24"
         >
