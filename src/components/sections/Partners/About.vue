@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="partners-about">
     <v-row justify-md="space-around" justify-lg="center">
       <AboutRow
         v-for="(row, index) in rows"

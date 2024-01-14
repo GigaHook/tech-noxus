@@ -35,6 +35,15 @@
           ВКонтакте
           <v-icon icon="fas fa-arrow-up-right-from-square" size="16" class="mb-1"/>
         </a>
+
+        <div class="mt-2">
+          <iframe
+            src="https://yandex.ru/sprav/widget/rating-badge/127607219934?type=rating"
+            width="150"
+            height="50"
+            frameborder="0"
+          ></iframe>
+        </div>
       </v-col>
     </v-row>
   </v-container>

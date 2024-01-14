@@ -15,6 +15,7 @@
         <v-img
           :src="assetImageUrl(course.img)"
           class="h-100"
+          eager
         />
         
         <div class="text-h6">
