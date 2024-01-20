@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
+import Auth from '@/pages/Auth.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -15,5 +16,10 @@ export default createRouter({
       name: 'Partners',
       component: Partners,
     },
+    {
+      path: '/auth',
+      name: 'Auth',
+      component: Auth
+    }
   ],
 })

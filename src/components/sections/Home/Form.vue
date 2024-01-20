@@ -189,8 +189,7 @@ function submit() {
 
       fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${formattedText}&parse_mode=MarkdownV2`, {
         method: 'POST',
-      })
-      .then(() => status.value = 'submitted')
+      }).then(() => status.value = 'submitted')
     }
   })
 }

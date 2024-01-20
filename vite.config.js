@@ -17,7 +17,10 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
-  define: { 'process.env': {} },
+  define: { 
+    'process.env': {},
+    apiUrl: JSON.stringify('http://localhost:8000/'), //TODO ПОМЕНЯТЬ В ПРОДЕ
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
