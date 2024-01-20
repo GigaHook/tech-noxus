@@ -33,11 +33,7 @@
                 <v-row>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      density="comfortable"
                       v-model="name"
-                      variant="outlined"
-                      elevation="6"
-                      color="amber-accent-3"
                       label="Имя"
                       :rules="[rules.required, rules.tooLong]"
                     >
@@ -49,13 +45,9 @@
 
                   <v-col cols="12" md="6">
                     <v-text-field
-                      density="comfortable"
                       v-model="tel"
                       type="tel"
                       v-mask="'+7 (###) ###-##-##'"
-                      variant="outlined"
-                      elevation="6"
-                      color="amber-accent-3"
                       label="Телефон"
                       :rules="[rules.required]"
                     >
@@ -67,11 +59,7 @@
 
                   <v-col cols="12" md="6">
                     <v-select
-                      density="comfortable"
                       v-model="course"
-                      variant="outlined"
-                      elevation="6"
-                      color="amber-accent-3"
                       label="Курс"
                       :rules="[rules.required]"
                       :items="courses"
@@ -90,11 +78,7 @@
 
                   <v-col cols="12" md="6">
                     <v-select
-                      density="comfortable"
                       v-model="contactBy"
-                      variant="outlined"
-                      elevation="6"
-                      color="amber-accent-3"
                       label="Предпочтительный способ связи"
                       :rules="[rules.required]"
                       :items="contactItems"
@@ -195,7 +179,7 @@ function submit() {
   form.value.validate().then(() => {
     if (form.value.isValid) {
       status.value = 'loading'
-      const text = `Новая заявка от *${name.value}* на курс *${course.value.title}*.  ${contactBy.value} *${tel.value}*`
+      const text = `Новая заявка от *${name.value}* на курс *${course.value.title}*. ${contactBy.value} *${tel.value}*`
       const formattedText = encodeURIComponent(text)
         .replaceAll(/\(/g, '\\%28') //хз почему половина скобок не убирается
         .replaceAll(/\)/g, '\\%29')
