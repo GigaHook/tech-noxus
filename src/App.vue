@@ -13,6 +13,12 @@
 import Header from '@/components/Header'
 import { useFetch } from '@vueuse/core'
 
-useFetch('http://127.0.0.1:8000/check')
-  .then(response => console.log(response.data.value))
+//useFetch(import.meta.env.VITE_API_URL + '/check').then(response => console.log(response.data.value))
+const { isFetching, data, error, execute } = useFetch(import.meta.env.VITE_API_URL + '/check', {
+  immediate: false
+})
+
+execute().then(() => {
+  console.log(data.value)
+})
 </script>

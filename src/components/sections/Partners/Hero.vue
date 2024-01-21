@@ -51,6 +51,7 @@
           `"
           ref="pcard"
           cover
+          eager
         />
       </v-col>
     </v-row>

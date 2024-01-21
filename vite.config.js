@@ -19,7 +19,6 @@ export default defineConfig({
   ],
   define: { 
     'process.env': {},
-    apiUrl: JSON.stringify('http://localhost:8000/'), //TODO ПОМЕНЯТЬ В ПРОДЕ
   },
   resolve: {
     alias: {
