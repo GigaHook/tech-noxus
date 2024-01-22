@@ -32,6 +32,12 @@
               />
             </v-form>
           </v-card-text>
+
+          <v-card-actions>
+            <v-btn @click="getToken">
+              get token
+            </v-btn>
+          </v-card-actions>
         </v-card>
 
         <v-card class="mt-2" v-if="user">
@@ -91,7 +97,6 @@ const { execute: logout } = useFetch(import.meta.env.VITE_API_URL + '/logout', {
   },
   afterFetch() {
     user.value = null
-    //TODO КАКОГО ХУЯ НЕ РЕСЕТАЕТСЯ АЛО 0 ПОМОЩИ БЛЯЯЯЯТЬ
     //apiToken.value = ''
   }
 })
@@ -121,6 +126,5 @@ function submit() {
     }
   })
 }
-
 
 </script>
