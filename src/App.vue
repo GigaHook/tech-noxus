@@ -3,7 +3,9 @@
     <Header/>
     <v-layout>
       <v-main>
-        <router-view/>
+        <Suspense>
+          <router-view/>
+        </Suspense>
       </v-main>
     </v-layout>
   </v-app>

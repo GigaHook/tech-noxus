@@ -58,6 +58,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useFetch, useStorage } from '@vueuse/core'
+import { useCookies } from '@vueuse/integrations/useCookies'
 import axios from 'axios'
 
 const rules = {
@@ -85,7 +86,12 @@ const { execute: getUser } = useFetch(import.meta.env.VITE_API_URL + '/user', {
   }
 })
 
-getUser()
+//getUser()
+
+const { execute: getToken } = useFetch(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie', {
+  immediate: false,
+  credentials: 'include',
+})
 
 const { execute: logout } = useFetch(import.meta.env.VITE_API_URL + '/logout', {
   immediate: false,
@@ -101,28 +107,50 @@ const { execute: logout } = useFetch(import.meta.env.VITE_API_URL + '/logout', {
   }
 })
 
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
+//axios.defaults.withCredentials = true
+//axios.defaults.withXSRFToken = true
+//
+//axios.get(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie')
 
 //TODO пофиксить этот ад
 function submit() {
-  form.value.validate().then(() => {
+  form.value.validate().then(async () => {
     if (form.value.isValid) {
-      axios.get(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie').then(() => {
-        axios.post(import.meta.env.VITE_API_URL + '/login', {
+      await useFetch(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie', {
+        credentials: 'include',
+      })
+
+      const cookies = useCookies(["XSRF-TOKEN"])
+
+      await useFetch(import.meta.env.VITE_API_URL + '/login', {
+        credentials: "include",
+        body: {
           login: login.value,
           password: password.value,
-        }).then(response => {
-          apiToken.value = response.data['token']
-          console.log(apiToken.value)
-          getUser()
-          axios.get(import.meta.env.VITE_API_URL + '/user').then(response => {
-            console.log(response.data)
-          })
-        }).catch(error => {
-          console.log(error)
-        })
-      })
+        },
+        beforeFetch({ options }) {
+          options.headers = {
+            ...options.headers,
+            "X-XSRF-TOKEN": cookies.get("XSRF-TOKEN"),
+          }
+        },
+      }).post()
+      //axios.get(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie').then(response => {
+      //  console.log(response)
+      //  axios.post(import.meta.env.VITE_API_URL + '/login', {
+      //    login: login.value,
+      //    password: password.value,
+      //  }).then(response => {
+      //    apiToken.value = response.data['token']
+      //    console.log(apiToken.value)
+      //    getUser()
+      //    axios.get(import.meta.env.VITE_API_URL + '/user').then(response => {
+      //      console.log(response.data)
+      //    })
+      //  }).catch(error => {
+      //    console.log(error)
+      //  })
+      //})
     }
   })
 }
