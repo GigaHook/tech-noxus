@@ -75,10 +75,7 @@ const formData = ref({
 async function submit() {
   if (!(await form.value.validate())) return
   errors.value = await login(formData)
-  if (errors.value.login) {
-  } else {
-    router.push('/admin')
-  }
+  if (!errors.value.login) router.push('/')
 }
 
 </script>

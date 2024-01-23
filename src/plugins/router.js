@@ -6,6 +6,8 @@ import Admin from '@/pages/Admin.vue'
 import useStore from '@/composables/useStore'
 const store = useStore()
 
+const adminGuard = () => !!store.user
+
 export default createRouter({
   history: createWebHistory(),
   routes: [
@@ -25,10 +27,21 @@ export default createRouter({
       component: Auth
     },
     {
-      path: '/admin',
-      name: 'Admin',
-      component: Admin,
-      beforeEnter: () => !!store.user,
-    }
+      path: '/posts',
+      name: 'Posts',
+      component: {} //TODO
+    },
+    {
+      path: '/posts/create',
+      name: 'PostsCreate',
+      component: {}, //TODO
+      beforeEnter: adminGuard,
+    },
+    {
+      path: '/posts/update',
+      name: 'PostsUpdate',
+      component: {}, //TODO
+      beforeEnter: adminGuard,
+    },
   ],
 })

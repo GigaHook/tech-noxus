@@ -61,7 +61,7 @@
         @click="router.push('/partners')"
         :active="route.name == 'Partners'"
         key="toPartners"
-        class="rounded"
+        class="rounded me-2"
         icon
       >
         <v-icon icon="fas fa-handshake" class="mb-1 me-1"/>
@@ -78,6 +78,17 @@
       @click="side = !side"
       class="pb-1"
     />
+
+    <v-btn
+      v-if="store.user"
+      :active="adminSide"
+      @click="adminSide = !adminSide"
+      key="adminSide"
+      class="rounded me-2"
+      icon
+    >
+      <v-icon icon="fas fa-key" class="mb-1"/>
+    </v-btn>
   </v-app-bar>
 
   <v-navigation-drawer
@@ -132,6 +143,31 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
+
+  <v-navigation-drawer
+    v-if="store.user"
+    location="right"
+    v-model="adminSide"
+  >
+    <v-list>
+      <v-list-item
+        @click="router.push('/posts/create')"
+        :active="route.name == 'PostsCreate'"
+        prepend-icon="mdi mdi-plus-box"
+      >
+        Добавить пост
+      </v-list-item>
+
+      <v-divider/>
+      
+      <v-list-item
+        @click="logout"
+        prepend-icon="mdi mdi-logout"
+      >
+        Выйти
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup>
@@ -139,14 +175,17 @@ import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
+import { useAuth } from '@/composables/api'
 import useStore from '@/composables/useStore'
 
 const { mobile } = useDisplay()
+const { logout } = useAuth()
 const router = useRouter()
 const route = useRoute()
 const store = useStore()
 const side = ref(false)
 const btnVisible = ref(false)
+const adminSide = ref(false)
 
 const menuItems = [
   {
