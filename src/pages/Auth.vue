@@ -16,6 +16,8 @@
                 v-model="formData.login"
                 label="Логин"
                 :rules="[rules.required, rules.range]"
+                :error-messages="errors.login"
+                @update:model-value="errors.login = null"
               />
 
               <v-text-field
@@ -33,13 +35,13 @@
           </v-card-text>
         </v-card>
 
-        <v-card class="mt-2" v-if="user">
+        <v-card class="mt-2" v-if="store.user">
           <v-card-text>
-            {{ user }}
+            {{ store.user }}
           </v-card-text>
 
           <v-card-actions>
-            <v-btn @click="asd">
+            <v-btn @click="logout">
               Выйти
             </v-btn>
           </v-card-actions>
@@ -50,41 +52,33 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive } from 'vue'
-import { useFetch, useStorage } from '@vueuse/core'
+import { ref } from 'vue'
 import { useAuth } from '@/composables/api'
+import { useRouter } from 'vue-router'
+import useStore from '@/composables/useStore'
 
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
   range: v => (v?.length <= 20 && v?.length >= 4) || 'От 4 до 20 символов',
 }
 
+const { login, logout } = useAuth()
+const router = useRouter()
+const store = useStore()
 const form = ref()
+const errors = ref({})
 const formData = ref({
   login: '',
   password: '',
 })
 
-const user = useStorage('user')
-const { login, logout } = useAuth()
-
 async function submit() {
-  await form.value.validate()
-
-  if (!form.value.isValid) return
-
-  try {
-    await login(formData)
-  } catch (error) {
-
+  if (!(await form.value.validate())) return
+  errors.value = await login(formData)
+  if (errors.value.login) {
+  } else {
+    router.push('/admin')
   }
-}
-
-async function asd() {
-  await logout()
-  console.log(user.value)
-  const user2 = useStorage('user')
-  console.log(user2.value)
 }
 
 </script>
