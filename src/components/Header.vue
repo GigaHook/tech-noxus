@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar ref="header" scroll-behavior="elevate">
+  <v-app-bar scroll-behavior="elevate">
     <v-app-bar-title style="cursor: pointer" v-scroll-to="'#hero'">
       <div class="d-flex flex-no-wrap align-center">
         <v-img
@@ -37,7 +37,7 @@
       </v-btn>
 
       <v-divider
-        v-if="route.name != 'Partners'"
+        v-if="route.name == 'Home'"
         vertical
         class="mx-2"
         key="divider"
@@ -48,29 +48,31 @@
         :active="route.name == 'Home'"
         key="toHome"
         class="rounded me-2"
-        icon
-      >
-        <v-icon icon="fas fa-home" class="mb-1 me-1"/>
-
-        <v-tooltip activator="parent" location="bottom">
-          Главная
-        </v-tooltip>
-      </v-btn>
+        text="Главная"
+        prepend-icon="fas fa-home"
+        stacked
+        
+      />
 
       <v-btn
         @click="router.push('/partners')"
         :active="route.name == 'Partners'"
         key="toPartners"
         class="rounded me-2"
-        icon
-      >
-        <v-icon icon="fas fa-handshake" class="mb-1 me-1"/>
+        prepend-icon="fas fa-handshake"
+        text="Партнёры"
+        stacked
+      />
 
-        <v-tooltip activator="parent" location="bottom">
-          Партнёрская программа
-        </v-tooltip>
-      </v-btn>
-
+      <v-btn
+        @click="router.push('/partners')"
+        :active="route.name == 'Partners'"
+        key="toPartners"
+        class="rounded me-2"
+        prepend-icon="mdi mdi-post"
+        text="Блог"
+        stacked
+      />
     </v-slide-x-reverse-transition>
     
     <v-app-bar-nav-icon
@@ -86,6 +88,8 @@
       key="adminSide"
       class="rounded me-2"
       icon
+      variant="flat"
+      color="amber-accent-3"
     >
       <v-icon icon="fas fa-key" class="mb-1"/>
     </v-btn>
@@ -151,7 +155,7 @@
   >
     <v-list>
       <v-list-item
-        @click="router.push('/posts/create')"
+        @click="router.push('/posts/create'); adminSide = !adminSide"
         :active="route.name == 'PostsCreate'"
         prepend-icon="mdi mdi-plus-box"
       >
@@ -161,7 +165,7 @@
       <v-divider/>
       
       <v-list-item
-        @click="logout"
+        @click="handleLogout"
         prepend-icon="mdi mdi-logout"
       >
         Выйти
@@ -206,6 +210,7 @@ const menuItems = [
   }
 ]
 
+//желтая кнопочка "записаться" в хедере
 watchEffect(() => {
   if (store.heroBtn && route.name == 'Home') {
     useIntersectionObserver(
@@ -220,4 +225,13 @@ function mobileRouter(route) {
   })
 }
 
+function handleLogout() {
+  adminSide.value = false
+  //редирект после логаута если
+  logout().then(() => {
+    if (route.matched[0].beforeEnter.name == 'adminGuard') {
+      router.push('/')
+    }
+  })
+}
 </script>

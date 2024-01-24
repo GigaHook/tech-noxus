@@ -11,6 +11,7 @@
             <v-form
               ref="form"
               @submit.prevent="submit"
+              :readonly="loading"
             >
               <v-text-field
                 v-model="formData.login"
@@ -32,6 +33,7 @@
                 text="Войти"
                 variant="flat"
                 color="amber-accent-3"
+                :loading="loading"
               />
             </v-form>
           </v-card-text>
@@ -54,6 +56,7 @@ const rules = {
 const { login } = useAuth()
 const router = useRouter()
 const form = ref()
+const loading = ref(false)
 const errors = ref({})
 const formData = ref({
   login: '',
@@ -61,8 +64,12 @@ const formData = ref({
 })
 
 async function submit() {
-  if (!(await form.value.validate())) return
+  await form.value.validate()
+  if (!form.value.isValid) return
+  loading.value = true
   errors.value = await login(formData.value)
+  loading.value = false
+  form.value.items[1].reset()
   if (!errors.value.login) router.push('/')
 }
 

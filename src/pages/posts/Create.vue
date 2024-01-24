@@ -9,8 +9,9 @@
 
           <v-card-text>
             <v-form
-              ret=form
+              ref=form
               @submit.prevent="submit"
+              :readonly="loading"
             >
               <v-text-field
                 v-model="formData.title"
@@ -44,6 +45,7 @@
                 text="Добавить"
                 variant="flat"
                 color="amber-accent-3"
+                :loading="loading"
               />
             </v-form>
           </v-card-text>
@@ -63,9 +65,10 @@ const rules = {
   image: v => !!v?.[0] || 'Это поле нужно заполнить',
 }
 
-const { create } = usePosts()
+const { create: createPost } = usePosts()
 const router = useRouter()
 const form = ref()
+const loading = ref(false)
 const errors = ref({})
 
 const formData = ref({
@@ -75,7 +78,12 @@ const formData = ref({
 })
 
 async function submit() {
-  console.log(formData.value)
+  await form.value.validate()
+  if (!form.value.isValid) return
+  loading.value = true
+  errors.value = await createPost(formData.value)
+  loading.value = false
+  if (!Object.keys(errors.value).length) router.push('/posts')
 }
 
 </script>

@@ -6,7 +6,13 @@ import PostsCreate from '@/pages/posts/Create.vue'
 import useStore from '@/composables/useStore'
 const store = useStore()
 
-const adminGuard = () => !!store.user
+function adminGuard() {
+  return !!store.user
+}
+
+function guestGuard() {
+  return !store.user
+}
 
 export default createRouter({
   history: createWebHistory(),
@@ -24,7 +30,8 @@ export default createRouter({
     {
       path: '/auth',
       name: 'Auth',
-      component: Auth
+      component: Auth,
+      beforeEnter: guestGuard,
     },
     {
       path: '/posts',
@@ -34,7 +41,7 @@ export default createRouter({
     {
       path: '/posts/create',
       name: 'PostsCreate',
-      component: PostsCreate, //TODO
+      component: PostsCreate,
       beforeEnter: adminGuard,
     },
     {

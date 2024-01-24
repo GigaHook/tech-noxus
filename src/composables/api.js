@@ -31,21 +31,16 @@ export function useAuth() {
   }
 
   async function logout() {
-    await axios.get(import.meta.env.VITE_API_URL + '/logout')
+    axios.get(import.meta.env.VITE_API_URL + '/logout')
     store.user = null
     user.value = null
     apiToken.value = null
     cookies.remove('XSRF-TOKEN')
   }
 
-  async function register() {
-
-  }
-
   return {
     login,
     logout,
-    register,
   }
 }
 
@@ -55,7 +50,25 @@ export function usePosts() {
   }
 
   async function create(formData) {
-
+    const errors = {}
+    console.log(formData)
+    try {
+      const response = await axios(import.meta.env.VITE_API_URL + '/posts', {
+        data: {
+          title: formData.title,
+          text: formData.text,
+          image: formData.image[0],
+        },
+        method: 'post',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log(response)
+    } catch (error) {
+      //TODO errors return
+      console.log(error.response.data)
+    }
   }
 
   async function update(formData) {
