@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
-import Admin from '@/pages/Admin.vue'
+import PostsCreate from '@/pages/posts/Create.vue'
 import useStore from '@/composables/useStore'
 const store = useStore()
 
@@ -34,7 +34,7 @@ export default createRouter({
     {
       path: '/posts/create',
       name: 'PostsCreate',
-      component: {}, //TODO
+      component: PostsCreate, //TODO
       beforeEnter: adminGuard,
     },
     {

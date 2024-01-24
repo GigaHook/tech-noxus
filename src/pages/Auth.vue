@@ -2,7 +2,7 @@
   <v-container class="mt-15">
     <v-row justify="center">
       <v-col cols="12" lg="4" xl="3">
-        <v-card elevation="4">
+        <v-card>
           <v-card-title class="text-h5 mb-4">
             Авторизация
           </v-card-title>
@@ -30,21 +30,11 @@
               <v-btn
                 type="submit"
                 text="Войти"
+                variant="flat"
+                color="amber-accent-3"
               />
             </v-form>
           </v-card-text>
-        </v-card>
-
-        <v-card class="mt-2" v-if="store.user">
-          <v-card-text>
-            {{ store.user }}
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn @click="logout">
-              Выйти
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -55,16 +45,14 @@
 import { ref } from 'vue'
 import { useAuth } from '@/composables/api'
 import { useRouter } from 'vue-router'
-import useStore from '@/composables/useStore'
 
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
   range: v => (v?.length <= 20 && v?.length >= 4) || 'От 4 до 20 символов',
 }
 
-const { login, logout } = useAuth()
+const { login } = useAuth()
 const router = useRouter()
-const store = useStore()
 const form = ref()
 const errors = ref({})
 const formData = ref({
@@ -74,7 +62,7 @@ const formData = ref({
 
 async function submit() {
   if (!(await form.value.validate())) return
-  errors.value = await login(formData)
+  errors.value = await login(formData.value)
   if (!errors.value.login) router.push('/')
 }
 

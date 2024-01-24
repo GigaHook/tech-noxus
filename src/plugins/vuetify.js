@@ -9,7 +9,6 @@ import { createVuetify } from 'vuetify'
 const formFieldDefaults = {
   variant: "outlined",
   density: "comfortable",
-  elevation: 6,
   color: "amber-accent-3",
 }
 
@@ -34,6 +33,10 @@ export default createVuetify({
   defaults: {
     VTextField: formFieldDefaults,
     VSelect: formFieldDefaults,
-    
+    VTextarea: formFieldDefaults,
+    VFileInput: formFieldDefaults,
+    VCard: {
+      elevation: 4,
+    }
   },
 })

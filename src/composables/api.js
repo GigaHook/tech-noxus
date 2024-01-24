@@ -17,8 +17,8 @@ export function useAuth() {
     await axios.get(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie')
     try {
       const response = await axios.post(import.meta.env.VITE_API_URL + '/login', {
-        login: formData.value.login,
-        password: formData.value.password,
+        login: formData.login,
+        password: formData.password,
       })
       user.value = JSON.stringify(response.data.user)
       store.user = user
@@ -49,8 +49,27 @@ export function useAuth() {
   }
 }
 
-export function useApi() {
-  return {
+export function usePosts() {
+  async function getAll() {
     
+  }
+
+  async function create(formData) {
+
+  }
+
+  async function update(formData) {
+
+  }
+
+  async function destroy(id) {
+
+  }
+
+  return {
+    getAll,
+    create,
+    update,
+    destroy,
   }
 }

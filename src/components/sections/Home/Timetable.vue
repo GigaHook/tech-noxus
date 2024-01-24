@@ -14,7 +14,7 @@
           </v-col>
     
           <v-col cols="12" md="6">
-            <v-card variant="outlined">
+            <v-card variant="outlined" elevation="0">
               <v-card-title class="text-h5 timetable-title">
                 Суббота
               </v-card-title>
@@ -28,7 +28,7 @@
           </v-col>
     
           <v-col cols="12" md="6">
-            <v-card variant="outlined">
+            <v-card variant="outlined" elevation="0">
               <v-card-title class="text-h5 timetable-title">
                 Воскресенье
               </v-card-title>
