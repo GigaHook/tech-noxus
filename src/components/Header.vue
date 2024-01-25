@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar scroll-behavior="elevate">
+  <v-app-bar :scroll-behavior="['Home', 'Partners', 'Posts'].includes(route.name) ? 'elevate' : 'default'">
     <v-app-bar-title style="cursor: pointer" v-scroll-to="'#hero'">
       <div class="d-flex flex-no-wrap align-center">
         <v-img

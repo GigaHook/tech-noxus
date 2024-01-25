@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-15">
+  <v-container class="mt-16">
     <v-row justify="center">
       <v-col cols="12" lg="5" xl="4">
         <v-card>
@@ -37,7 +37,6 @@
                 @update:model-value="errors.image = null"
                 prepend-icon="mdi mdi-image-plus"
                 show-size
-                return-value="object"
               />
 
               <v-btn

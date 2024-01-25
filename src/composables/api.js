@@ -51,7 +51,6 @@ export function usePosts() {
 
   async function create(formData) {
     const errors = {}
-    console.log(formData)
     try {
       const response = await axios(import.meta.env.VITE_API_URL + '/posts', {
         data: {
@@ -66,9 +65,10 @@ export function usePosts() {
       })
       console.log(response)
     } catch (error) {
-      //TODO errors return
-      console.log(error.response.data)
+      Object.assign(errors, error.response.data.errors)
     }
+
+    return errors
   }
 
   async function update(formData) {
