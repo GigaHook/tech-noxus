@@ -27,5 +27,4 @@ const { data, execute } = useFetch(import.meta.env.VITE_API_URL + '/check',{
 execute().then(() => {
   console.log(data.value)
 })
-
 </script>

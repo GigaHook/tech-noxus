@@ -43,16 +43,18 @@
       </v-col>
 
       <v-col cols="12" lg="5" xl="4">
-        <v-img
-          src="@/assets/images/partner-card.png"
-          :class="`
-            ${display.xlAndUp.value && 'ps-6'}
-            ${display.lg.value && 'mt-8'}
-          `"
-          ref="pcard"
-          cover
-          eager
-        />
+        <keep-alive>
+          <v-img
+            src="@/assets/images/partner-card.png"
+            :class="`
+              ${display.xlAndUp.value && 'ps-6'}
+              ${display.lg.value && 'mt-8'}
+            `"
+            ref="pcard"
+            cover
+            eager
+          />
+        </keep-alive>
       </v-col>
     </v-row>
   </v-container>

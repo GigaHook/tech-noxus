@@ -9,11 +9,11 @@ import useStore from '@/composables/useStore'
 const store = useStore()
 
 function adminGuard() {
-  return !!store.user
+  return !store.user && { name: 'Home' }
 }
 
 function guestGuard() {
-  return !store.user
+  return store.user && { name: 'Home' }
 }
 
 export default createRouter({
@@ -38,7 +38,7 @@ export default createRouter({
     {
       path: '/posts',
       name: 'Posts',
-      component: PostsIndex //TODO
+      component: PostsIndex,
     },
     {
       path: '/posts/create',

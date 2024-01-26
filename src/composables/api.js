@@ -1,6 +1,7 @@
 import { useFetch, useStorage } from "@vueuse/core"
-import useStore from '@/composables/useStore'
 import { useCookies } from "@vueuse/integrations/useCookies"
+import { useRoute, useRouter } from "vue-router"
+import useStore from '@/composables/useStore'
 import axios from 'axios'
 
 const user = useStorage('user')
@@ -31,7 +32,7 @@ export function useAuth() {
   }
 
   async function logout() {
-    axios.get(import.meta.env.VITE_API_URL + '/logout')
+    await axios.get(import.meta.env.VITE_API_URL + '/logout')
     store.user = null
     user.value = null
     apiToken.value = null

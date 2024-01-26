@@ -1,11 +1,15 @@
 <template>
   <v-app-bar>
-    <v-app-bar-title style="cursor: pointer" v-scroll-to="'#hero'">
-      <div class="d-flex flex-no-wrap align-center">
+    <v-app-bar-title>
+      <div
+        class="d-flex flex-no-wrap align-center"
+        style="max-width: fit-content; !important"
+      >
         <v-img
           src="@/assets/images/logo.png"
-          max-width="60"
+          width="60"
         />
+
         <div class="ms-2">TechNoxus</div>
       </div>
     </v-app-bar-title>
@@ -67,7 +71,7 @@
       <v-btn
         @click="router.push('/posts')"
         :active="route.name == 'Posts'"
-        key="toPartners"
+        key="toPosts"
         class="rounded me-2"
         prepend-icon="mdi mdi-post"
         text="Блог"
