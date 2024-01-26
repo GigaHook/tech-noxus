@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :scroll-behavior="['Home', 'Partners', 'Posts'].includes(route.name) ? 'elevate' : 'default'">
+  <v-app-bar>
     <v-app-bar-title style="cursor: pointer" v-scroll-to="'#hero'">
       <div class="d-flex flex-no-wrap align-center">
         <v-img
@@ -65,8 +65,8 @@
       />
 
       <v-btn
-        @click="router.push('/partners')"
-        :active="route.name == 'Partners'"
+        @click="router.push('/posts')"
+        :active="route.name == 'Posts'"
         key="toPartners"
         class="rounded me-2"
         prepend-icon="mdi mdi-post"
@@ -77,14 +77,14 @@
     
     <v-app-bar-nav-icon
       v-else
-      @click="side = !side"
+      @click="side = !side; adminSide = false"
       class="pb-1"
     />
 
     <v-btn
       v-if="store.user"
       :active="adminSide"
-      @click="adminSide = !adminSide"
+      @click="adminSide = !adminSide; side = false"
       key="adminSide"
       class="rounded me-2"
       icon
@@ -227,7 +227,7 @@ function mobileRouter(route) {
 
 function handleLogout() {
   adminSide.value = false
-  //редирект после логаута если
+  //редирект после логаута
   logout().then(() => {
     if (route.matched[0].beforeEnter.name == 'adminGuard') {
       router.push('/')

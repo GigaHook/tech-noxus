@@ -1,17 +1,25 @@
 <template>
   <v-container class="mt-16">
-    <v-row>
+    <v-row justify="center">
       <v-col
-        v-for="post in posts.data"
-        cols="1"
+        v-for="post in posts?.data"
+        cols="12" lg="6"
       >
-        <v-card>
-          <v-card-text>
-            {{ post }}
+        <v-card
+          :title="post.title"
+          :text="post.text"
+        >
+          <v-img 
+            :src="post.image"
+          />
+          <v-card-actions>
+            <v-btn
+              text="Побробнее"
+            />
             <v-btn
               text="Удалить"
             />
-          </v-card-text>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -23,10 +31,5 @@ import { ref, onBeforeMount } from 'vue'
 import { usePosts } from '@/composables/api'
 import { useFetch, useStorage } from '@vueuse/core'
 
-const { data: posts } = useFetch(import.meta.env.VITE_API_URL + '/posts', {
-  afterFetch(ctx) {
-    posts.value = JSON.parse(ctx.posts)
-  }
-})
-//TOTO shit
+const { data: posts } = useFetch(import.meta.env.VITE_API_URL + '/posts').json()
 </script>

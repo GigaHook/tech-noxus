@@ -36,7 +36,7 @@ export default createVuetify({
     VTextarea: formFieldDefaults,
     VFileInput: formFieldDefaults,
     VCard: {
-      elevation: 5,
+      elevation: 4,
     }
   },
 })
