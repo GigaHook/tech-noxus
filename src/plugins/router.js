@@ -3,6 +3,8 @@ import Home from '@/pages/Home.vue'
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
+import PostsIndex from '@/pages/posts/Index.vue'
+
 import useStore from '@/composables/useStore'
 const store = useStore()
 
@@ -36,7 +38,7 @@ export default createRouter({
     {
       path: '/posts',
       name: 'Posts',
-      component: {} //TODO
+      component: PostsIndex //TODO
     },
     {
       path: '/posts/create',
