@@ -9,9 +9,6 @@ const apiToken = useStorage('api-token')
 const cookies = useCookies()
 const store = useStore()
 
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
-
 export function useAuth() {
   async function login(formData) {
     const errors = {}

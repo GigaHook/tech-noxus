@@ -2,18 +2,18 @@ import { createWebHistory, createRouter } from "vue-router"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
-import PostsCreate from '@/pages/posts/Create.vue'
 import PostsIndex from '@/pages/posts/Index.vue'
+import PostsCreate from '@/pages/posts/Create.vue'
 
 import useStore from '@/composables/useStore'
 const store = useStore()
 
-function adminGuard() {
-  return !store.user && { name: 'Home' }
+function adminGuard(to) {
+  return !store.user ? { name: 'Home' } : true
 }
 
-function guestGuard() {
-  return store.user && { name: 'Home' }
+function guestGuard(to) {
+  return store.user ? { name: 'Home' } : true
 }
 
 export default createRouter({
@@ -46,11 +46,11 @@ export default createRouter({
       component: PostsCreate,
       beforeEnter: adminGuard,
     },
-    {
-      path: '/posts/update',
-      name: 'PostsUpdate',
-      component: {}, //TODO
-      beforeEnter: adminGuard,
-    },
+    //{
+    //  path: '/posts/update',
+    //  name: 'PostsUpdate',
+    //  component: {}, //TODO
+    //  beforeEnter: adminGuard,
+    //},
   ],
 })
