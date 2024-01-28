@@ -1,13 +1,13 @@
-import { useFetch, useStorage } from "@vueuse/core"
+import { useStorage } from "@vueuse/core"
 import { useCookies } from "@vueuse/integrations/useCookies"
-import { useRoute, useRouter } from "vue-router"
 import useStore from '@/composables/useStore'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true
+axios.defaults.withXSRFToken = true
+
 const user = useStorage('user')
 const apiToken = useStorage('api-token')
-const cookies = useCookies()
-const store = useStore()
 
 export function useAuth() {
   async function login(formData) {
@@ -19,8 +19,8 @@ export function useAuth() {
         password: formData.password,
       })
       user.value = JSON.stringify(response.data.user)
-      store.user = user
-      apiToken.value = response.data.token    
+      apiToken.value = response.data.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken.value
     } catch (error) {
       errors.login = error.response.data.message 
     }
@@ -30,10 +30,10 @@ export function useAuth() {
 
   async function logout() {
     await axios.get(import.meta.env.VITE_API_URL + '/logout')
-    store.user = null
+    axios.defaults.headers.common['Authorization'] = null
     user.value = null
     apiToken.value = null
-    cookies.remove('XSRF-TOKEN')
+    //cookies.remove('XSRF-TOKEN')
   }
 
   return {

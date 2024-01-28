@@ -55,7 +55,6 @@
         text="Главная"
         prepend-icon="fas fa-home"
         stacked
-        
       />
 
       <v-btn
@@ -86,7 +85,7 @@
     />
 
     <v-btn
-      v-if="store.user"
+      v-if="user"
       :active="adminSide"
       @click="adminSide = !adminSide; side = false"
       key="adminSide"
@@ -153,7 +152,7 @@
   </v-navigation-drawer>
 
   <v-navigation-drawer
-    v-if="store.user"
+    v-if="user"
     location="right"
     v-model="adminSide"
   >
@@ -169,10 +168,14 @@
       <v-divider/>
       
       <v-list-item
-        @click="handleLogout"
+        @click="handleLogout(); adminSide = !adminSide"
         prepend-icon="mdi mdi-logout"
       >
         Выйти
+      </v-list-item>
+
+      <v-list-item>
+        {{ user }}
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -180,8 +183,8 @@
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, watchEffect } from 'vue'
-import { useIntersectionObserver } from '@vueuse/core'
+import { ref, toRef, watchEffect } from 'vue'
+import { useIntersectionObserver, useStorage } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/api'
 import useStore from '@/composables/useStore'
@@ -194,6 +197,7 @@ const store = useStore()
 const side = ref(false)
 const btnVisible = ref(false)
 const adminSide = ref(false)
+const user = useStorage('user', null)
 
 const menuItems = [
   {
@@ -229,13 +233,14 @@ function mobileRouter(route) {
   })
 }
 
-function handleLogout() {
-  adminSide.value = false
-  //редирект после логаута
-  logout().then(() => {
-    if (route.matched[0].beforeEnter.name == 'adminGuard') {
-      router.push('/')
-    }
-  })
+//редирект после логаута
+async function handleLogout() {
+  await logout()
+
+  if (route.matched[0]?.beforeEnter?.name == 'adminGuard') {
+    router.push('/')
+  }
+
+  user.value = null
 }
 </script>
