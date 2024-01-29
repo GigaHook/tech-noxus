@@ -173,17 +173,13 @@
       >
         Выйти
       </v-list-item>
-
-      <v-list-item>
-        {{ user }}
-      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, toRef, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver, useStorage } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/api'

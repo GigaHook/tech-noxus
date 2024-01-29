@@ -17,8 +17,8 @@
                 v-model="formData.login"
                 label="Логин"
                 :rules="[rules.required, rules.range]"
-                :error-messages="errors.login"
-                @update:model-value="errors.login = null"
+                :error-messages="loginError"
+                @update:model-value="loginError = null"
               />
 
               <v-text-field
@@ -57,7 +57,7 @@ const { login } = useAuth()
 const router = useRouter()
 const form = ref()
 const loading = ref(false)
-const errors = ref({})
+const loginError = ref()
 const formData = ref({
   login: '',
   password: '',
@@ -65,12 +65,21 @@ const formData = ref({
 
 async function submit() {
   await form.value.validate()
+
   if (!form.value.isValid) return
+
   loading.value = true
-  errors.value = await login(formData.value)
-  loading.value = false
-  form.value.items[1].reset()
-  if (!errors.value.login) router.push('/')
+
+  try {
+    await login(formData.value)
+  } catch (error) {
+    loginError.value = error.response?.data.message
+    form.value.items[1].reset()
+  } finally {
+    loading.value = false
+  }
+  
+  if (!loginError.value) router.push('/')
 }
 
 </script>

@@ -13,12 +13,10 @@
 
 <script setup>
 import Header from '@/components/Header'
-import { useFetch, useStorage } from '@vueuse/core'
-import useStore from './composables/useStore'
+import { useFetch } from '@vueuse/core'
+import { useAuth } from './composables/api'
 
-const store = useStore()
-
-store.user = useStorage('user', null)
+const { verifySession } = useAuth()
 
 const { data, execute } = useFetch(import.meta.env.VITE_API_URL + '/check',{
   immediate: false,
@@ -26,5 +24,6 @@ const { data, execute } = useFetch(import.meta.env.VITE_API_URL + '/check',{
 
 execute().then(() => {
   console.log(data.value)
+  verifySession()
 })
 </script>

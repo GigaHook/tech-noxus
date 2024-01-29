@@ -1,22 +1,22 @@
 import { createWebHistory, createRouter } from "vue-router"
+import { useStorage } from '@vueuse/core'
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
 import PostsIndex from '@/pages/posts/Index.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
 
-import useStore from '@/composables/useStore'
-const store = useStore()
+const user = useStorage('user')
 
 function adminGuard(to) {
-  return !store.user ? { name: 'Home' } : true
+  return !user?.value ? { name: 'Home' } : true
 }
 
 function guestGuard(to) {
-  return store.user ? { name: 'Home' } : true
+  return user.value ? { name: 'Home' } : true
 }
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
@@ -54,3 +54,9 @@ export default createRouter({
     //},
   ],
 })
+
+router.beforeEach(() => {
+
+})
+
+export default router

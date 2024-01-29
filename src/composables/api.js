@@ -1,44 +1,62 @@
 import { useStorage } from "@vueuse/core"
-import { useCookies } from "@vueuse/integrations/useCookies"
-import useStore from '@/composables/useStore'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
-
-const user = useStorage('user')
-const apiToken = useStorage('api-token')
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
 export function useAuth() {
-  async function login(formData) {
-    const errors = {}
-    await axios.get(import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie')
-    try {
-      const response = await axios.post(import.meta.env.VITE_API_URL + '/login', {
-        login: formData.login,
-        password: formData.password,
-      })
-      user.value = JSON.stringify(response.data.user)
-      apiToken.value = response.data.token
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken.value
-    } catch (error) {
-      errors.login = error.response.data.message 
-    }
+  const user = useStorage('user')
+  const apiToken = useStorage('api-token', null)
+  let isSessionVerified = false
 
-    return errors
+  async function login(formData) {
+    await axios.get('/sanctum/csrf-cookie')
+    const { data } = await axios.post('/login', {
+      login: formData.login,
+      password: formData.password,
+    })
+    user.value = JSON.stringify(data.user)
+    apiToken.value = data.token
+    storeApiToken()
   }
 
   async function logout() {
-    await axios.get(import.meta.env.VITE_API_URL + '/logout')
-    axios.defaults.headers.common['Authorization'] = null
+    await axios.get('/logout')
+    removeApiToken()
     user.value = null
     apiToken.value = null
-    //cookies.remove('XSRF-TOKEN')
+  }
+
+  //TODO clear smt 
+  async function verifySession() {
+    if (user.value && !isSessionVerified) {
+      isSessionVerified = true
+      storeApiToken()
+      try {
+        const { data } = await axios.get('/user')
+        console.log('Session has been continued.')
+      } catch (error) {
+        console.log('Session has ended. Log in again.')
+        user.value = null
+        apiToken.value = null
+        removeApiToken()
+      }
+    }
+  }
+
+  function storeApiToken() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${apiToken.value}`
+  }
+
+  function removeApiToken() {
+    axios.defaults.headers.common['Authorization'] = null
   }
 
   return {
     login,
     logout,
+    verifySession,
   }
 }
 
@@ -50,7 +68,7 @@ export function usePosts() {
   async function create(formData) {
     const errors = {}
     try {
-      const response = await axios(import.meta.env.VITE_API_URL + '/posts', {
+      const response = await axios('/posts', {
         data: {
           title: formData.title,
           text: formData.text,
@@ -61,7 +79,6 @@ export function usePosts() {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log(response)
     } catch (error) {
       Object.assign(errors, error.response.data.errors)
     }
