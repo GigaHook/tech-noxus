@@ -9,16 +9,18 @@
     <Title class="courses-title pb-4">
       Все курсы
     </Title>
-
-    <v-row justify="center" class="course-card-container">
-      <CourseCard
-        v-for="(course, index) in courses"
-        :key="index"
-        :course="course"
-        :index="index"
-        class="card"
-      />
-    </v-row>
+  
+    <KeepAlive>
+      <v-row justify="center" class="course-card-container">
+        <CourseCard
+          v-for="(course, index) in courses"
+          :key="index"
+          :course="course"
+          :index="index"
+          class="card"
+        />
+      </v-row>
+    </KeepAlive>
   </v-container>
 </template>
 

@@ -1,9 +1,7 @@
 import { useStorage } from "@vueuse/core"
-import axios from 'axios'
+import { useAxios } from "@/composables/axios"
 
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
-axios.defaults.baseURL = import.meta.env.VITE_API_URL
+const axios = useAxios()
 
 export function useAuth() {
   const user = useStorage('user')
@@ -18,38 +16,37 @@ export function useAuth() {
     })
     user.value = JSON.stringify(data.user)
     apiToken.value = data.token
-    storeApiToken()
+    addBearerHeader()
   }
 
   async function logout() {
     await axios.get('/logout')
-    removeApiToken()
+    removeBearerHeader()
     user.value = null
     apiToken.value = null
   }
 
-  //TODO clear smt 
   async function verifySession() {
     if (user.value && !isSessionVerified) {
       isSessionVerified = true
-      storeApiToken()
+      addBearerHeader()
       try {
-        const { data } = await axios.get('/user')
+        await axios.get('/user')
         console.log('Session has been continued.')
       } catch (error) {
         console.log('Session has ended. Log in again.')
         user.value = null
         apiToken.value = null
-        removeApiToken()
+        removeBearerHeader()
       }
     }
   }
 
-  function storeApiToken() {
+  function addBearerHeader() {
     axios.defaults.headers.common['Authorization'] = `Bearer ${apiToken.value}`
   }
 
-  function removeApiToken() {
+  function removeBearerHeader() {
     axios.defaults.headers.common['Authorization'] = null
   }
 
@@ -68,13 +65,11 @@ export function usePosts() {
   async function create(formData) {
     const errors = {}
     try {
-      const response = await axios('/posts', {
-        data: {
-          title: formData.title,
-          text: formData.text,
-          image: formData.image[0],
-        },
-        method: 'post',
+      const response = await axios.post('/posts', {
+        title: formData.title,
+        text: formData.text,
+        image: formData.image[0],
+      }, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
