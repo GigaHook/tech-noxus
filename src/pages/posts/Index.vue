@@ -3,7 +3,7 @@
     <v-row justify="center" wrap="nowrap">
       <v-col
         v-for="post in posts?.data"
-        cols="12" lg="8" xl="6"
+        cols="12" lg="8" xl="7"
       >
         <v-card
           :title="post.title"

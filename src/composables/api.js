@@ -9,19 +9,16 @@ export function useAuth() {
   let isSessionVerified = false
 
   async function login(formData) {
-    await axios.get('/sanctum/csrf-cookie')
     const { data } = await axios.post('/login', {
       login: formData.login,
       password: formData.password,
     })
     user.value = JSON.stringify(data.user)
     apiToken.value = data.token
-    addBearerHeader()
   }
 
   async function logout() {
     await axios.get('/logout')
-    removeBearerHeader()
     user.value = null
     apiToken.value = null
   }
@@ -29,7 +26,6 @@ export function useAuth() {
   async function verifySession() {
     if (user.value && !isSessionVerified) {
       isSessionVerified = true
-      addBearerHeader()
       try {
         await axios.get('/user')
         console.log('Session has been continued.')
@@ -37,17 +33,8 @@ export function useAuth() {
         console.log('Session has ended. Log in again.')
         user.value = null
         apiToken.value = null
-        removeBearerHeader()
       }
     }
-  }
-
-  function addBearerHeader() {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${apiToken.value}`
-  }
-
-  function removeBearerHeader() {
-    axios.defaults.headers.common['Authorization'] = null
   }
 
   return {
@@ -75,7 +62,7 @@ export function usePosts() {
         }
       })
     } catch (error) {
-      Object.assign(errors, error.response.data.errors)
+      Object.assign(errors, error.response?.data.errors)
     }
 
     return errors

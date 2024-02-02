@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import { useStorage } from '@vueuse/core'
 
 export function useAxios() {
   const axios = Axios.create({
@@ -11,8 +12,18 @@ export function useAxios() {
     },
   })
 
+  axios.interceptors.request.use(config => {
+    const apiToken = useStorage('api-token', null)
+
+    //if (apiToken.value) {
+    //  config.headers['Authorization'] = `Bearer ${apiToken.value}`
+    //}
+    
+    return config
+  })
+
   axios.interceptors.response.use(null, err => {
-    console.error(err)
+    console.log(err)
     return Promise.reject(err)
   })
 
