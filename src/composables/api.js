@@ -9,6 +9,7 @@ export function useAuth() {
   let isSessionVerified = false
 
   async function login(formData) {
+    await axios.get('/sanctum/csrf-cookie')
     const { data } = await axios.post('/login', {
       login: formData.login,
       password: formData.password,
@@ -27,12 +28,12 @@ export function useAuth() {
     if (user.value && !isSessionVerified) {
       isSessionVerified = true
       try {
-        await axios.get('/user')
+        await axios.post('/user')
         console.log('Session has been continued.')
       } catch (error) {
-        console.log('Session has ended. Log in again.')
         user.value = null
         apiToken.value = null
+        console.log('Session has ended. Log in again.')
       }
     }
   }
