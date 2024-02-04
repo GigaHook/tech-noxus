@@ -65,7 +65,6 @@ const formData = ref({
 
 async function submit() {
   await form.value.validate()
-
   if (!form.value.isValid) return
 
   loading.value = true

@@ -18,7 +18,7 @@
                 label="Заголовок"
                 :rules="[rules.required]"
                 :error-messages="errors.title"
-                @update:model-value="errors.title = null"
+                @update:model-value="delete errors.title"
               />
 
               <v-textarea
@@ -26,7 +26,7 @@
                 label="Содержание"
                 :rules="[rules.required]"
                 :error-messages="errors.text"
-                @update:model-value="errors.text = null"
+                @update:model-value="delete errors.text"
               />
 
               <v-file-input
@@ -34,7 +34,7 @@
                 label="Изображение"
                 :rules="[rules.image]"
                 :error-messages="errors.image"
-                @update:model-value="errors.image = null"
+                @update:model-value="delete errors.image"
                 prepend-icon="mdi mdi-image-plus"
                 show-size
               />
@@ -79,9 +79,17 @@ const formData = ref({
 async function submit() {
   await form.value.validate()
   if (!form.value.isValid) return
+
   loading.value = true
-  errors.value = await createPost(formData.value)
-  loading.value = false
+
+  try {
+    await createPost(formData.value)
+  } catch (error) {
+    errors.value = error.response?.data.errors
+  } finally {
+    loading.value = false
+  }
+  
   if (!Object.keys(errors.value).length) router.push('/posts')
 }
 

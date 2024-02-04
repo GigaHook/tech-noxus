@@ -1,11 +1,12 @@
 import { useStorage } from "@vueuse/core"
 import { useAxios } from "@/composables/axios"
+import { useRouter } from "vue-router"
 
 const axios = useAxios()
+const router = useRouter()
 
 export function useAuth() {
   const user = useStorage('user')
-  const apiToken = useStorage('api-token', null)
   let isSessionVerified = false
 
   async function login(formData) {
@@ -15,25 +16,21 @@ export function useAuth() {
       password: formData.password,
     })
     user.value = JSON.stringify(data.user)
-    apiToken.value = data.token
   }
 
   async function logout() {
     await axios.get('/logout')
     user.value = null
-    apiToken.value = null
   }
 
   async function verifySession() {
     if (user.value && !isSessionVerified) {
       isSessionVerified = true
       try {
-        await axios.post('/user')
-        console.log('Session has been continued.')
+        await axios.get('/user')
       } catch (error) {
         user.value = null
-        apiToken.value = null
-        console.log('Session has ended. Log in again.')
+        router.push('/login')
       }
     }
   }
@@ -51,22 +48,15 @@ export function usePosts() {
   }
 
   async function create(formData) {
-    const errors = {}
-    try {
-      const response = await axios.post('/posts', {
-        title: formData.title,
-        text: formData.text,
-        image: formData.image[0],
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-    } catch (error) {
-      Object.assign(errors, error.response?.data.errors)
-    }
-
-    return errors
+    await axios.post('/posts', {
+      title: formData.title,
+      text: formData.text,
+      image: formData.image[0],
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
 
   async function update(formData) {
