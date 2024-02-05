@@ -6,11 +6,13 @@
           Мы на карте
         </h2>
         <v-card elevation="12" class="map-container">
-          <iframe
-            class="map w-100"
-            src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=127607219934"
-            frameborder="0"
-          ></iframe>
+          <KeepAlive>
+            <iframe
+              class="map w-100"
+              src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=127607219934"
+              frameborder="0"
+            ></iframe>
+          </KeepAlive>
         </v-card>
       </v-col>
 
