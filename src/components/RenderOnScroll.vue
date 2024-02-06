@@ -1,8 +1,12 @@
 <template>
   <div :class="triggerClass">
-    <v-fade-transition group>
-      <slot v-if="visible"/>
-    </v-fade-transition>
+    <div v-if="visible">
+      <slot/>
+    </div>
+
+    <div v-else style="opacity: 0;">
+      <slot/>
+    </div>
   </div>
 </template>
 
@@ -11,7 +15,7 @@ import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap/all'
 
 const visible = ref(false)
-const triggerClass = `render-trigger${Math.round(Math.random().toFixed(2) * 100)}`
+const triggerClass = `render-trigger-${gsap.utils.random(-100, 100, 1, false)}`
 
 onMounted(() => {
   gsap.timeline({

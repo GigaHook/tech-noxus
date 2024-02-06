@@ -13,11 +13,9 @@
   <Form/>
   <Map/>
   <CardBanner/>
-  <Footer/>
 </template>
 
 <script setup>
-import Footer from '@/components/Footer'
 import Hero from '@/components/sections/Home/Hero'
 import About from '@/components/sections/Home/About'
 import Timetable from '@/components/sections/Home/Timetable'

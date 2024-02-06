@@ -37,24 +37,22 @@
           </v-btn>
         </v-sheet>
 
-        <div class="text-body-1 partners-hero-title-2">
+        <div class="text-body-1 partners-hero-slide-up">
           Запишитесь на курс, чтобы бесплатно получить карту
         </div>
       </v-col>
 
       <v-col cols="12" lg="5" xl="4">
-        <keep-alive>
-          <v-img
-            src="@/assets/images/partner-card.png"
-            :class="`
-              ${display.xlAndUp.value && 'ps-6'}
-              ${display.lg.value && 'mt-8'}
-            `"
-            ref="pcard"
-            cover
-            eager
-          />
-        </keep-alive>
+        <v-img
+          src="@/assets/images/partner-card.png"
+          :class="`
+            ${display.xlAndUp.value && 'ps-6'}
+            ${display.lg.value && 'mt-8'}
+          `"
+          ref="pcard"
+          cover
+          eager
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -102,6 +100,16 @@ onMounted(() => {
     x: 0,
     opacity: 1,
     delay: 1.5,
+    ease: 'back.out',
+  })
+
+  gsap.fromTo('.partners-hero-slide-up', {
+    y: '100%',
+    opacity: 0,
+  }, {
+    y: 0,
+    opacity: 1,
+    delay: 2.5,
     ease: 'back.out',
   })
 })

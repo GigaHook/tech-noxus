@@ -28,6 +28,9 @@ const router = createRouter({
       path: '/partners',
       name: 'Partners',
       component: Partners,
+      meta: {
+        keepAlive: true,
+      }
     },
     {
       path: '/auth',

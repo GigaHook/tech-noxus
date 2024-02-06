@@ -27,7 +27,7 @@
       {{ title }}
     </Title>
     
-    <RenderOnScroll style="height: 40vh;">
+    <RenderOnScroll>
       <component
         :is="img"
         :style="index == 3 && !mobile
