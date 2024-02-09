@@ -2,13 +2,13 @@
   <v-app>
     <Header/>
     <v-layout>
-      <v-main class="main">
+      <v-main>
         <Suspense>
           <router-view/>
         </Suspense>
-        <Footer/>
       </v-main>
     </v-layout>
+    <Footer/>
   </v-app>
 </template>
 
@@ -19,7 +19,6 @@ import { useFetch } from '@vueuse/core'
 import { useAuth } from './composables/api'
 
 const { verifySession } = useAuth()
-
 const { data, execute } = useFetch(import.meta.env.VITE_API_URL + '/check',{
   immediate: false,
 })
@@ -29,11 +28,3 @@ execute().then(() => {
   verifySession()
 })
 </script>
-
-<style>
-.main {
-  min-height: 100vh !important;
-  display: grid;
-  grid-template-rows: 1fr auto;
-}
-</style>

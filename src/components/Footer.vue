@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    class="text-grey text-center mt-16 pb-16"
+    class="text-grey text-center mt-8 pb-16"
     style="box-shadow: 0px -100px 50px -100px rgba(34, 60, 80, 0.65) inset;"
   >
     <v-row justify="center" align="center">

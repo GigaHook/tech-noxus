@@ -30,10 +30,8 @@
     <RenderOnScroll>
       <component
         :is="img"
-        :style="index == 3 && !mobile
-          ? {'height': '60vh !important'}
-          : {'max-height': '50vh'}
-        "/>
+        :style="(index == 3 && !mobile) && {'height': '60vh !important'}"
+      />
     </RenderOnScroll>
   </v-col>
 </template>

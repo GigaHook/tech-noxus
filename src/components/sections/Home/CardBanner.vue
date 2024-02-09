@@ -1,5 +1,5 @@
 <template>
-  <v-container class="px-8" id="partners">
+  <v-container class="px-8 mb-8" id="partners">
     <v-row justify-md="space-around" justify-lg="center">
       <AboutRow 
         title="Партнёрская программа"

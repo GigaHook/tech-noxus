@@ -21,7 +21,7 @@
     >
       <template v-if="route.name == 'Home'">
         <v-btn
-          v-for="item in menuItems"
+          v-for="item in homeMenu"
           :key="item.id"
           v-scroll-to="item.id"
         >
@@ -48,33 +48,14 @@
       />
 
       <v-btn
-        @click="router.push('/')" 
-        :active="route.name == 'Home'"
-        key="toHome"
-        class="rounded me-2"
-        text="Главная"
-        prepend-icon="fas fa-home"
+        v-for="(item, index) in navMenu"
+        @click="router.push(item.path)"
+        :active="route.path == item.path"
+        :key="index"
+        :prepend-icon="item.icon"
+        :text="item.text"
         stacked
-      />
-
-      <v-btn
-        @click="router.push('/partners')"
-        :active="route.name == 'Partners'"
-        key="toPartners"
         class="rounded me-2"
-        prepend-icon="fas fa-handshake"
-        text="Партнёры"
-        stacked
-      />
-
-      <v-btn
-        @click="router.push('/posts')"
-        :active="route.name == 'Posts'"
-        key="toPosts"
-        class="rounded me-2"
-        prepend-icon="mdi mdi-post"
-        text="Блог"
-        stacked
       />
     </v-slide-x-reverse-transition>
     
@@ -104,9 +85,20 @@
     v-model="side"
   >
     <v-list>
+      <v-list-item
+        v-for="(item, index) in navMenu"
+        @click="router.push(item.path)"
+        :active="route.path == item.path"
+        :key="index"
+        :prepend-icon="item.icon"
+      >
+        {{ item.text }}
+      </v-list-item>
+
       <template v-if="route.name == 'Home'">
+        <v-divider/>
         <v-list-item
-          v-for="item in menuItems"
+          v-for="item in homeMenu"
           :key="item.id"
           v-scroll-to="item.id"
           @click="side = !side"
@@ -127,27 +119,7 @@
             Записаться
           </v-card>
         </v-list-item>
-
-        <v-divider/>
       </template>
-
-      <v-list-item
-        @click="mobileRouter('/')" 
-        class="mt-2"
-        :active="route.name == 'Home'"
-        prepend-icon="fas fa-home"
-      >
-        Главная
-      </v-list-item>
-
-      <v-list-item
-        @click="mobileRouter('/partners')" 
-        class="mt-2"
-        :active="route.name == 'Partners'"
-        prepend-icon="fas fa-handshake"
-      >
-        Партнёрская программа
-      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 
@@ -195,7 +167,7 @@ const btnVisible = ref(false)
 const adminSide = ref(false)
 const user = useStorage('user', null)
 
-const menuItems = [
+const homeMenu = [
   {
     text: 'О нас',
     id: '#about',
@@ -212,6 +184,24 @@ const menuItems = [
     text: 'Где нас найти',
     id: '#map',
   }
+]
+
+const navMenu = [
+  {
+    text: 'Главная',
+    path: '/',
+    icon: 'fas fa-home',
+  },
+  {
+    text: 'Блог',
+    path: '/posts',
+    icon: 'mdi mdi-post',
+  },
+  {
+    text: 'Партнёры',
+    path: '/partners',
+    icon: 'fas fa-handshake',
+  },
 ]
 
 //желтая кнопочка "записаться" в хедере

@@ -3,8 +3,8 @@
     <v-img 
       :src="post.image"
       width="100%"
-      eager
       class="mb-2"
+      eager
     />
 
     <v-card-title class="d-inline">

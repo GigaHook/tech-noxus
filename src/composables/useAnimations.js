@@ -48,13 +48,25 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
+//function observe(target) {
+//  const isVisible = ref(false)
+//  useIntersectionObserver(
+//    target, ([{ isIntersecting }]) => isVisible.value = isIntersecting
+//  )
+//
+//  console.log(isVisible.value);
+//
+//  return isVisible
+//}
+
 export function parallax(target, valueX, valueY=valueX) {  
+  //const isVisible = observe(target) //TODO fix shit
+  const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-  const elem = defineElem(target)
 
   watch ([elementX, elementY], () => {
-      (!isScrolling.value /*&& isVisible*/) && gsap.to(elem, {
+      (!isScrolling.value /*&& isVisible.value*/) && gsap.to(elem, {
         x: (elementX.value - elementWidth.value / 2) / valueX,
         y: (elementY.value - elementHeight.value / 2) / valueY
       })
