@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-4">
+  <v-card class="my-4">
     <v-img 
       :src="post.image"
       width="100%"
@@ -21,13 +21,14 @@
   
     <!--TODO: complete crud-->
     <v-card-actions class="mt-n4">
-      <v-btn
-        text="Подробнее"
-      />
+      <v-btn text="Подробнее"/>
 
       <template v-if="user">
         <v-btn
-          @click=""
+          @click="$router.push({
+            name: 'post-edit',
+            params: { id: post.id } 
+          })"
           text="Изменить"
         />              
   

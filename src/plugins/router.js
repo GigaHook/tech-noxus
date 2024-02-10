@@ -49,17 +49,13 @@ const router = createRouter({
       component: PostsCreate,
       beforeEnter: adminGuard,
     },
-    //{
-    //  path: '/posts/update',
-    //  name: 'PostsUpdate',
-    //  component: {}, //TODO
-    //  beforeEnter: adminGuard,
-    //},
+    {
+      path: '/posts/:id/edit',
+      name: 'PostsUpdate',
+      component: PostsCreate,
+      beforeEnter: adminGuard,
+    },
   ],
-})
-
-router.beforeEach(() => {
-
 })
 
 export default router

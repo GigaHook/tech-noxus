@@ -10,17 +10,15 @@
       Все курсы
     </Title>
   
-    <KeepAlive>
-      <v-row justify="center" class="course-card-container">
-        <CourseCard
-          v-for="(course, index) in courses"
-          :key="index"
-          :course="course"
-          :index="index"
-          class="card"
-        />
-      </v-row>
-    </KeepAlive>
+    <v-row justify="center" class="course-card-container">
+      <CourseCard
+        v-for="(course, index) in courses"
+        :key="index"
+        :course="course"
+        :index="index"
+        class="card"
+      />
+    </v-row>
   </v-container>
 </template>
 

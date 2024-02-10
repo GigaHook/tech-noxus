@@ -59,6 +59,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePosts } from '@/composables/api'
 
+const { id } = defineProps({ id: Number })
+
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
   image: v => !!v?.[0] || 'Это поле нужно заполнить',
