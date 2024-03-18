@@ -3,9 +3,9 @@ import { useAxios } from "@/composables/axios"
 import { useRouter } from "vue-router"
 
 const axios = useAxios()
-const router = useRouter()
 
 export function useAuth() {
+  const router = useRouter()
   const user = useStorage('user')
   let isSessionVerified = false
 

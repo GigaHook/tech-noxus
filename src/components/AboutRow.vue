@@ -5,12 +5,13 @@
     :class="(index == 3 && !mobile) && 'mt-16 pt-16'"
     :order-md="even ? index + 1 : index"
     :order="index + 1"
+    style="max-width: 100vw !important; overflow: hidden !important;"
   >
-    <Title v-if="!mobile" :class="`title${index}`">
+    <div v-if="!mobile" class="text-h4" :class="`title-${index}`">
       {{ title }}
-    </Title>
+    </div>
 
-    <div :class="`text text${index}`">
+    <div :class="`text-${index}`">
       <slot>{{ text }}</slot>
     </div>
   </v-col>
@@ -22,17 +23,18 @@
     :offset-xl="even ? 1 : 0"
     :order-md="even ? index : index + 1"
     :order="index"
+    style="max-width: 100vw !important; overflow: hidden !important;"
   >
-    <Title v-if="mobile" :class="`title${index}`">
+    <div v-if="mobile" class="text-h5" :class="`title-${index}`">
       {{ title }}
-    </Title>
+    </div>
     
-    <RenderOnScroll>
-      <component
-        :is="img"
-        :style="(index == 3 && !mobile) && {'height': '60vh !important'}"
-      />
-    </RenderOnScroll>
+    <component
+      :is="img"
+      :style="(index == 3 && !mobile) && {'height': '60vh !important'}"
+      v-animate-on-scroll
+      v-once
+    />
   </v-col>
 </template>
 
@@ -59,27 +61,27 @@ const even = index % 2 == 0
 onMounted(() => {
   gsap.timeline({
     scrollTrigger: {
-      trigger: `.title${index}`,
+      trigger: `.title-${index}`,
       start: 'top+=150px bottom',
       end: '+=150px',
       scrub: 1.5,
     }
   })
-  .set(`.title${index}`, {
+  .set(`.title-${index}`, {
     opacity: 0,
     x: even ? 300 : -300,
   })
-  .set(`.text${index}`, {
+  .set(`.text-${index}`, {
     opacity: 0,
     x: even ? 300 : -300,
   })
-  .to(`.title${index}`, {
+  .to(`.title-${index}`, {
     opacity: 1,
     x: 0,
     duration: 1,
     delay: 0.2,
   })
-  .to(`.text${index}`, {
+  .to(`.text-${index}`, {
     opacity: 1,
     x: 0,
     duration: 1,
@@ -89,7 +91,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text, .title {
+.text {
   opacity: 0
 }
 </style>

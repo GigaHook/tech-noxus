@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header/>
-      <v-main>
+      <v-main class="main">
         <Suspense>
           <router-view/>
         </Suspense>
@@ -14,15 +14,21 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useFetch } from '@vueuse/core'
-import { useAuth } from './composables/api'
+import { useAuth } from '@/composables/api'
 
 const { verifySession } = useAuth()
-const { data, execute } = useFetch(import.meta.env.VITE_API_URL + '/check',{
+const { data, execute: checkApi } = useFetch(import.meta.env.VITE_API_URL + '/check',{
   immediate: false,
 })
 
-execute().then(() => {
+checkApi().then(() => {
   console.log(data.value)
   verifySession()
 })
 </script>
+
+<style scoped>
+.main {
+  min-height: calc(100vh - 152px) !important;
+}
+</style>

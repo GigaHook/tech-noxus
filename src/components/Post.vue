@@ -1,5 +1,5 @@
 <template>
-  <v-card class="my-4">
+  <v-card class="mb-4">
     <v-img 
       :src="post.image"
       width="100%"
@@ -7,7 +7,7 @@
       eager
     />
 
-    <v-card-title class="d-inline">
+    <v-card-title>
       {{ post.title }}
     </v-card-title>
 
@@ -19,7 +19,6 @@
       {{ post.text }}
     </v-card-text>
   
-    <!--TODO: complete crud-->
     <v-card-actions class="mt-n4">
       <v-btn text="Подробнее"/>
 
@@ -43,6 +42,7 @@
 
 <script setup>
 import { useStorage } from '@vueuse/core'
+
 const user = useStorage('user', null)
 const { post } = defineProps({ post: Object })
 </script>

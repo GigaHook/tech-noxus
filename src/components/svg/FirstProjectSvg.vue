@@ -1217,7 +1217,7 @@ svg#freepik_stories-code-typing.animated #freepik--speech-bubbles--inject-16 {
 
 <script setup> 
 import { ref, onMounted } from 'vue'
-import { parallax } from '@/composables/useAnimations'
+import { parallax } from '@/composables/animations'
 
 const aboutTag1 = ref()
 const aboutTag2 = ref()

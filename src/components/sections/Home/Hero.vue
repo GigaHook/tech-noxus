@@ -3,7 +3,6 @@
     fluid
     class="container"
     :class="!mobile && 'image'"
-    :style="mobile && 'margin-top: 60px'"
     id="hero"
   >
     <v-row justify="end" align="center">
@@ -13,12 +12,11 @@
             height: !mobile ? '30%' : '',
             width: !mobile ? '80%' : '90vw',
           }"
-          :class="mobile && 'mt-n4'"
         >
           <v-img
             src="@/assets/images/technoxus_logo_2.png"
             class="slide-0"
-            :class="!mobile && 'ms-n9'"
+            :class="!mobile ? 'ms-n9' : 'mt-n4'"
             eager
           />
         </div>
@@ -43,7 +41,7 @@
               v-scroll-to="'#form'"
               size="x-large"
               color="amber-accent-3"
-              class="button"
+              class="button w-100"
               ref="heroBtn"
             >
               Записаться
@@ -147,7 +145,7 @@
 </template>
 
 <script setup>
-import useStore from '@/composables/useStore'
+import useStore from '@/composables/store'
 import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
@@ -161,7 +159,6 @@ const slides = ['.slide-0', '.slide-1', '.slide-2']
 
 onMounted(() => {
   store.heroBtn = heroBtn
-
   gsap.timeline()
     .set(slides, {
       opacity: 0,
@@ -204,22 +201,10 @@ onMounted(() => {
 
 .image {
   position: relative;
-}
-
-.image::after {
   background-image: url('@/assets/images/hero_circuits.png');
-  background-position: start center;
-  background-size: contain;
+  background-position: 0 center;
+  background-size: 55vw 80%;
   background-repeat: no-repeat;
-  content: '';
-  opacity: 0.75;
-  z-index: -1;
-  position: absolute;
-  top: 50%; 
-  left: 0;
-  translate: 0 -50%;
-  width: 55vw;
-  height: 80%;
 }
 
 .shine {

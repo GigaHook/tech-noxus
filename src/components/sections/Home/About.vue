@@ -26,7 +26,7 @@
 <script setup>
 import AboutRow from '@/components/AboutRow.vue'
 import { ref } from 'vue'
-import { slideLeft } from '@/composables/useAnimations'
+import { slideLeft } from '@/composables/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()

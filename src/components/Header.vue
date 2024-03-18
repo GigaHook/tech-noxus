@@ -1,15 +1,8 @@
 <template>
-  <v-app-bar>
+  <v-app-bar style="max-width: 100vw !important;">
     <v-app-bar-title>
-      <div
-        class="d-flex flex-no-wrap align-center"
-        style="max-width: fit-content; !important"
-      >
-        <v-img
-          src="@/assets/images/logo.png"
-          width="60"
-        />
-
+      <div class="d-flex flex-no-wrap align-center" style="max-width: fit-content !important;">
+        <v-img src="@/assets/images/logo.png" width="64"/>
         <div class="ms-2">TechNoxus</div>
       </div>
     </v-app-bar-title>
@@ -155,7 +148,7 @@ import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver, useStorage } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/api'
-import useStore from '@/composables/useStore'
+import useStore from '@/composables/store'
 
 const { mobile } = useDisplay()
 const { logout } = useAuth()

@@ -1,5 +1,5 @@
 <template>
-  <svg class="animated" id="freepik_stories-developer-activity" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
+  <svg ref="rootSvg" class="animated" id="freepik_stories-developer-activity" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
     version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs">
     <g id="freepik--background-simple--inject-10" class="animable animator-hidden"
       style="transform-origin: 250px 220.489px;">
@@ -422,12 +422,13 @@ svg#freepik_stories-developer-activity.animated #freepik--Character--inject-10 {
 }</style>
 
 <script setup>
-import { parallax } from '@/composables/useAnimations'
+import { parallax } from '@/composables/animations'
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()
 
+const rootSvg = ref()
 const heroCard1 = ref()
 const heroCard2 = ref()
 const heroCard2Back = ref()

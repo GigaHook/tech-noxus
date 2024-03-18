@@ -25,7 +25,7 @@
 <script setup>
 import CourseCard from '@/components/CourseCard.vue'
 import courses from '@/courses'
-import { slideLeft } from '@/composables/useAnimations'
+import { slideLeft } from '@/composables/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 slideLeft('.courses-title')

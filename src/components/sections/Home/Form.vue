@@ -146,7 +146,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import courses from '@/courses'
-import useStore from '@/composables/useStore'
+import useStore from '@/composables/store'
 
 const store = useStore()
 const hover = ref(false)

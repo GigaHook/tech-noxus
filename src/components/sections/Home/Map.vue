@@ -17,9 +17,9 @@
       </v-col>
 
       <v-col cols="12" lg="4">
-        <RenderOnScroll style="height: 40vh; max-height: 600px;">
-          <MapSvg style="max-height: 100%;"/>
-        </RenderOnScroll>
+        <!--<RenderOnScroll style="height: 40vh; max-height: 600px;">-->
+          <MapSvg style="max-height: 100%;" v-animate-on-scroll/>
+        <!--</RenderOnScroll>-->
 
         <div class="map-description mb-2">
           <v-icon icon="fas fa-location-dot" size="24" class="mb-1"/>
@@ -53,7 +53,7 @@
 
 <script setup>
 import MapSvg from '@/components/svg/MapSvg.vue'
-import { slideLeft, fadeIn } from '@/composables/useAnimations'
+import { slideLeft, fadeIn } from '@/composables/animations'
 import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'

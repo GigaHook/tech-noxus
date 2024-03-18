@@ -2240,7 +2240,8 @@
   </defs>
 </svg></template>
 
-<style>svg#freepik_stories-video-files:not(.animated) .animable {
+<style>
+svg#freepik_stories-video-files:not(.animated) .animable {
   opacity: 0;
 }
 

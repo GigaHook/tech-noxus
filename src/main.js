@@ -3,14 +3,15 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 
 import Title from './components/Title.vue'
-import RenderOnScroll from './components/RenderOnScroll.vue'
 import CourseTypeChip from './components/CourseTypeChip.vue'
+import { animateOnScroll } from './directives/animateOnScroll'
+
 
 const app = createApp(App)
 
 app.component('Title', Title)
-  .component('RenderOnScroll', RenderOnScroll)
   .component('CourseTypeChip', CourseTypeChip)
+  .directive('animateOnScroll', animateOnScroll)
 
 registerPlugins(app)
 

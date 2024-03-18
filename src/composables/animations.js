@@ -1,6 +1,6 @@
 import { gsap } from "gsap/all"
-import { ref, onMounted, watch } from "vue"
-import { useMouseInElement, useScroll, useIntersectionObserver } from '@vueuse/core'
+import { ref, toValue, computed, onMounted, watch } from "vue"
+import { useMouseInElement, useScroll, useElementVisibility, useAnimate } from '@vueuse/core'
 
 export function slideLeft(elem) {
   onMounted(() => {
@@ -48,24 +48,13 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
-//function observe(target) {
-//  const isVisible = ref(false)
-//  useIntersectionObserver(
-//    target, ([{ isIntersecting }]) => isVisible.value = isIntersecting
-//  )
-//
-//  console.log(isVisible.value);
-//
-//  return isVisible
-//}
-
 export function parallax(target, valueX, valueY=valueX) {  
   //const isVisible = observe(target) //TODO fix shit
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
 
-  watch ([elementX, elementY], () => {
+  watch([elementX, elementY], () => {
       (!isScrolling.value /*&& isVisible.value*/) && gsap.to(elem, {
         x: (elementX.value - elementWidth.value / 2) / valueX,
         y: (elementY.value - elementHeight.value / 2) / valueY
@@ -85,7 +74,7 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
 
   const elem = defineElem(target)
 
-  watch ([elementX, elementY], () => {
+  watch([elementX, elementY], () => {
     const rX = (
       max / 2 - (elementY.value / elementHeight.value) * max
     ).toFixed(2)
@@ -100,4 +89,25 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
       elem.style.transform = `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg)`
     }
   })
+}
+
+//start and stop css animations
+
+export function useAnimations(target) {
+  const animations = computed(() => {
+    return Array.from(toValue(target).querySelectorAll('*')).flatMap(elem => elem.getAnimations())
+  })
+
+  function startAnimation() {
+    animations.value.forEach(animation => animation.play())
+  }
+
+  function stopAnimation() {
+    animations.value.forEach(animation => animation.cancel())
+  }
+
+  return {
+    startAnimation,
+    stopAnimation,
+  }
 }

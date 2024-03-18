@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router"
 import { useStorage } from '@vueuse/core'
+import { defineAsyncComponent } from "vue"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
-import PostsIndex from '@/pages/posts/Index.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
 
 const user = useStorage('user')
@@ -41,7 +41,7 @@ const router = createRouter({
     {
       path: '/posts',
       name: 'Posts',
-      component: PostsIndex,
+      component: () => import('@/pages/posts/Index.vue'),
     },
     {
       path: '/posts/create',
