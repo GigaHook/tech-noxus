@@ -19,7 +19,8 @@ export const animateOnScroll = el => {
       onLeaveBack: () => {
         gsap.fromTo(el, { opacity: 1 }, { opacity: 0 })
         stopAnimation()
-      }
-    }
+      },
+      markers: true,
+    },
   })
 }

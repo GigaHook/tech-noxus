@@ -5,6 +5,7 @@
         <h2 class="text-h4 mb-6 map-title">
           Мы на карте
         </h2>
+
         <v-card elevation="12" class="map-container">
           <KeepAlive>
             <iframe
@@ -17,9 +18,7 @@
       </v-col>
 
       <v-col cols="12" lg="4">
-        <!--<RenderOnScroll style="height: 40vh; max-height: 600px;">-->
-          <MapSvg style="max-height: 100%;" v-animate-on-scroll/>
-        <!--</RenderOnScroll>-->
+        <MapSvg style="max-height: 100%;" v-animate-on-scroll/>
 
         <div class="map-description mb-2">
           <v-icon icon="fas fa-location-dot" size="24" class="mb-1"/>

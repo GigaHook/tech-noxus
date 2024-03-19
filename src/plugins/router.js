@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router"
 import { useStorage } from '@vueuse/core'
-import { defineAsyncComponent } from "vue"
+import useStore from "@/composables/store"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
@@ -18,6 +18,9 @@ function guestGuard(to) {
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior() {
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',

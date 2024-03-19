@@ -64,28 +64,25 @@ onMounted(() => {
       trigger: `.title-${index}`,
       start: 'top+=150px bottom',
       end: '+=150px',
-      scrub: 1.5,
+      scrub: 2,
     }
   })
-  .set(`.title-${index}`, {
+  .fromTo(`.title-${index}`, {
     opacity: 0,
     x: even ? 300 : -300,
-  })
-  .set(`.text-${index}`, {
-    opacity: 0,
-    x: even ? 300 : -300,
-  })
-  .to(`.title-${index}`, {
+  }, {
     opacity: 1,
     x: 0,
     duration: 1,
-    delay: 0.2,
   })
-  .to(`.text-${index}`, {
+  .fromTo(`.text-${index}`, {
+    opacity: 0,
+    x: even ? 300 : -300,
+  }, {
     opacity: 1,
     x: 0,
-    duration: 1,
-    delay: 0.4,
+    delay: 1,
+    duration: 2,
   })
 })
 </script>

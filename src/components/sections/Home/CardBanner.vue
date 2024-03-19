@@ -7,11 +7,10 @@
       >
         Наши ученики имеют возможность получить карту лояльности, дающую множество скидок в разных заведениях нашего города
         <br>
-
         <v-btn
-          class="my-2"
+          class="ma-4"
           :class="mobile && 'w-100'"
-          elevation="24"
+          elevation="16"
           size="large"
           color="amber-accent-3"
           @click="handleClick"

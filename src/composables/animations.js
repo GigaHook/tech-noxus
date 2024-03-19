@@ -1,6 +1,6 @@
 import { gsap } from "gsap/all"
-import { ref, toValue, computed, onMounted, watch } from "vue"
-import { useMouseInElement, useScroll, useElementVisibility, useAnimate } from '@vueuse/core'
+import { toValue, computed, onMounted, watch } from "vue"
+import { useMouseInElement, useScroll, useElementVisibility } from '@vueuse/core'
 
 export function slideLeft(elem) {
   onMounted(() => {
@@ -12,11 +12,10 @@ export function slideLeft(elem) {
         scrub: 2,
       },
     })
-    .set(elem, {
+    .fromTo(elem, {
       opacity: 0,
       x: '-100%',
-    })
-    .to(elem, {
+    }, {
       opacity: 1,
       x: '0',
       duration: 1,
@@ -34,10 +33,9 @@ export function fadeIn(elem) {
         scrub: true,
       },
     })
-    .set(elem, {
+    .fromTo(elem, {
       opacity: 0,
-    })
-    .to(elem, {
+    }, {
       opacity: 1,
       duration: 1,
     })

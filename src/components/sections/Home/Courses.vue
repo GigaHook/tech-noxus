@@ -6,9 +6,9 @@
       'max-width': display.xl.value && '1320px'
     }"
   >
-    <Title class="courses-title pb-4">
+    <div class="courses-title pb-4 text-h4">
       Все курсы
-    </Title>
+    </div>
   
     <v-row justify="center" class="course-card-container">
       <CourseCard
@@ -17,6 +17,7 @@
         :course="course"
         :index="index"
         class="card"
+        v-once
       />
     </v-row>
   </v-container>

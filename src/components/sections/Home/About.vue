@@ -6,9 +6,9 @@
         class="text-h4"
         :class="mobile ? 'mb-0' : 'mb-16'"
       >
-        <Title class="about-title text-no-wrap" ref="title">
+        <div class="about-title text-no-wrap text-h4">
           Мы научим
-        </Title>
+        </div>
       </v-col>
       
       <AboutRow
@@ -18,6 +18,7 @@
         :title="row.title"
         :text="row.text"
         :img="row.img"
+        v-once
       />
     </v-row>
   </v-container>
@@ -25,14 +26,10 @@
 
 <script setup>
 import AboutRow from '@/components/AboutRow.vue'
-import { ref } from 'vue'
 import { slideLeft } from '@/composables/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()
-const title = ref()
-
-defineExpose({ title })
 
 const rows = [
   {
@@ -59,9 +56,3 @@ const rows = [
 
 slideLeft('.about-title')
 </script>
-
-<style scoped>
-.about-title {
-  opacity: 0;
-}
-</style>
