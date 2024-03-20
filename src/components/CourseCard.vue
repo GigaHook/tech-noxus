@@ -5,15 +5,14 @@
       @mouseleave="hover = false"
       :elevation="hover ? 20 : 8"
       class="course-card d-flex flex-column pa-3"
-      :class="`course-card${index}`"
       :style="{
         'max-width': display.smAndDown.value && '100% !important',
       }"
-      :ref="el => card = el"
+      ref="card"
     >
       <div class="h-50 mb-auto">
         <v-img
-          :src="assetImageUrl(course.img)"
+          :src="img"
           class="h-100"
           eager
         />
@@ -60,15 +59,12 @@
     >
       <v-card
         class="pa-3 ma-3 position-relative"
-        :style="!display.mobile.value 
-          ? 'width: clamp(720px, 75vw, 1080px); height: clamp(640px, 75vh, 900px);'
-          : 'max-height: 100%; max-height: calc(100vh - 24px) !important; overflow-y: scroll;'
-        "
+        :class="!display.mobile.value ? 'overlay-desktop' : 'overlay-mobile'"
       >
         <v-row :style="display.mobile.value && 'max-height: 100%;'">
           <v-col cols="12" md="5" class="d-flex flex-column h-100">
             <v-img
-              :src="assetImageUrl(course.img)"
+              :src="img"
               class="align-self-stretch"
               cover
               eager
@@ -152,7 +148,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { parallaxAngle } from '@/composables/animations'
 import useStore from '@/composables/store'
@@ -161,6 +156,8 @@ const { course, index } = defineProps({
   course: Object,
   index: Number,
 })
+
+const img = new URL(`../assets/images/${course.img}`, import.meta.url).href
 
 const display = useDisplay()
 const hover = ref()
@@ -177,11 +174,8 @@ onMounted(() => {
   if (!display.mobile.value) {
     parallaxAngle(card, 4)
   }
+  console.log('course card mounted')
 })
-
-function assetImageUrl(image) {
-  return new URL(`../assets/images/${image}`, import.meta.url).href
-}
 </script>
 
 <style scoped>
@@ -192,5 +186,14 @@ function assetImageUrl(image) {
 }
 .course-card:hover {
   scale: 1.02
+}
+.overlay-desktop {
+  width: clamp(720px, 75vw, 1080px);
+  height: clamp(640px, 75vh, 900px);
+}
+.overlay-mobile {
+  max-height: 100%;
+  max-height: calc(100vh - 24px) !important;
+  overflow-y: scroll;
 }
 </style>

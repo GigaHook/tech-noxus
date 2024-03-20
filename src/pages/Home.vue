@@ -1,9 +1,7 @@
 <template>
   <Hero/>
 
-  <Suspense>
-    <About/>
-  </Suspense>
+  <About/>
 
   <Suspense>
     <Courses/>

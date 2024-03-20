@@ -2,10 +2,9 @@
   <v-col
     cols="12" md="6" lg="5" xl="4"
     class="text-h6 mt-2"
-    :class="(index == 3 && !mobile) && 'mt-16 pt-16'"
+    :class="mobile && 'mobile-limit-length'"
     :order-md="even ? index + 1 : index"
     :order="index + 1"
-    style="max-width: 100vw !important; overflow: hidden !important;"
   >
     <div v-if="!mobile" class="text-h4" :class="`title-${index}`">
       {{ title }}
@@ -19,22 +18,16 @@
   <v-col
     cols="12" md="6" lg="4" 
     class="mb-8"
-    :class="(index == 3 && !mobile) && 'mb-16'"
+    :class="mobile && 'mobile-limit-length'"
     :offset-xl="even ? 1 : 0"
     :order-md="even ? index : index + 1"
     :order="index"
-    style="max-width: 100vw !important; overflow: hidden !important;"
   >
     <div v-if="mobile" class="text-h5" :class="`title-${index}`">
       {{ title }}
     </div>
     
-    <component
-      :is="img"
-      :style="(index == 3 && !mobile) && {'height': '60vh !important'}"
-      v-animate-on-scroll
-      v-once
-    />
+    <component :is="img" v-animate-on-scroll/>
   </v-col>
 </template>
 
@@ -90,5 +83,10 @@ onMounted(() => {
 <style scoped>
 .text {
   opacity: 0
+}
+
+.limit-length {
+  max-width: 100vw !important;
+  overflow: hidden !important;
 }
 </style>

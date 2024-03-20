@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar style="max-width: 100vw !important;">
+  <v-app-bar>
     <v-app-bar-title>
       <div class="d-flex flex-no-wrap align-center" style="max-width: fit-content !important;">
         <v-img src="@/assets/images/logo.png" width="64"/>

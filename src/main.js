@@ -3,7 +3,7 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 
 import CourseTypeChip from './components/CourseTypeChip.vue'
-import { animateOnScroll } from './directives/animateOnScroll'
+import animateOnScroll from './directives/animateOnScroll'
 
 const app = createApp(App)
 
