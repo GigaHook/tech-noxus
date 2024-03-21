@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { parallaxAngle } from '@/composables/animations'
+import { parallaxAngle } from '@/scripts/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 import router from '@/plugins/router'

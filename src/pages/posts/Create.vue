@@ -57,7 +57,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { usePosts } from '@/composables/api'
+import { usePosts } from '@/scripts/api'
 
 const { id } = defineProps({ id: Number })
 

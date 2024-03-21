@@ -1,14 +1,17 @@
-import { useAnimations } from "@/composables/animations"
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-import { gsap } from 'gsap/all'
+import { useAnimations } from "@/scripts/animations"
+import { breakpointsTailwind, useBreakpoints, useElementSize  } from '@vueuse/core'
+import { gsap, ScrollTrigger } from 'gsap/all'
+import { watch } from "vue"
 
 const timelines = []
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const mobile = breakpoints.smallerOrEqual('md')
+const { height } = useElementSize(document.querySelector('body'))
+const stop = mobile.value ? watch(height, () => ScrollTrigger.refresh()) : null
 
 const animateOnScroll = {
   mounted(el) {
     const { startAnimation, stopAnimation } = useAnimations(el)
-    const breakpoints = useBreakpoints(breakpointsTailwind)
-    const mobile = breakpoints.smallerOrEqual('md')
     gsap.set(el, { opacity: 0 })
     timelines.push(gsap.timeline({
       scrollTrigger: {
@@ -26,10 +29,10 @@ const animateOnScroll = {
       },
     }))
   },
-
   unmounted() {
     timelines.forEach(tl => tl.kill())
     timelines.length = 0
+    stop?.()
   },
 }
 

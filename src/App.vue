@@ -14,7 +14,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useFetch } from '@vueuse/core'
-import { useAuth } from '@/composables/api'
+import { useAuth } from '@/scripts/api'
 
 const { verifySession } = useAuth()
 const { data, execute: checkApi } = useFetch(import.meta.env.VITE_API_URL + '/check',{
@@ -30,5 +30,12 @@ checkApi().then(() => {
 <style scoped>
 .main {
   min-height: calc(100vh - 152px) !important;
+}
+</style>
+
+<style>
+.limit-length {
+  max-width: 100vw !important;
+  overflow: hidden !important;
 }
 </style>

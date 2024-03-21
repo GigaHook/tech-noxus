@@ -94,6 +94,7 @@
           v-for="item in homeMenu"
           :key="item.id"
           v-scroll-to="item.id"
+          v-once
           @click="side = !side"
         >
           {{ item.text }}
@@ -147,8 +148,8 @@ import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref, watchEffect } from 'vue'
 import { useIntersectionObserver, useStorage } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuth } from '@/composables/api'
-import useStore from '@/composables/store'
+import { useAuth } from '@/scripts/api'
+import useStore from '@/scripts/store'
 
 const { mobile } = useDisplay()
 const { logout } = useAuth()
@@ -205,12 +206,6 @@ watchEffect(() => {
     )
   }
 })
-
-function mobileRouter(route) {
-  router.push(route).then(() => {
-    window.scrollTo(0, 0)
-  })
-}
 
 //редирект после логаута
 async function handleLogout() {

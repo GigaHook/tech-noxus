@@ -30,7 +30,7 @@ import LayoutSvg from "@/components/svg/LayoutSvg.vue"
 import ModelingSvg from "@/components/svg/ModelingSvg.vue"
 import VideoSvg from "@/components/svg/VideoSvg.vue"
 import FirstProjectSvg from "@/components/svg/FirstProjectSvg.vue"
-import { slideLeft } from '@/composables/animations'
+import { slideLeft } from '@/scripts/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const { mobile } = useDisplay()

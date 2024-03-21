@@ -1,10 +1,11 @@
 import { gsap } from "gsap/all"
-import { toValue, computed, onMounted, watch } from "vue"
-import { useMouseInElement, useScroll, useElementVisibility } from '@vueuse/core'
+import { toValue, ref, onMounted, watch, onUnmounted, getCurrentInstance } from "vue"
+import { useMouseInElement, useScroll, useElementVisibility, useIntersectionObserver } from '@vueuse/core'
 
+//вжух слева
 export function slideLeft(elem) {
   onMounted(() => {
-    gsap.timeline({
+    useTimeline({
       scrollTrigger: {
         trigger: elem,
         start: 'bottom+=100px bottom',
@@ -23,9 +24,10 @@ export function slideLeft(elem) {
   })
 }
 
+//плавное появление
 export function fadeIn(elem) {
   onMounted(() => {
-    gsap.timeline({
+    useTimeline({
       scrollTrigger: {
         trigger: elem,
         start: 'bottom+=100px bottom',
@@ -46,21 +48,42 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
-export function parallax(target, valueX, valueY=valueX) {  
-  //const isVisible = observe(target) //TODO fix shit
+const observers = []
+
+function useSingletonObserver(elem) {
+
+}
+
+//движение к курсору
+//TODO сделать единственный синглтон обсервер для каждого родителя 
+//чтобы избежать повторения тк они 100% есть
+export function parallax(target, valueX, valueY=valueX) {
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
+  
+  console.log(getCurrentInstance().parent.ctx.$el)
 
+  if (false) {
+    const isVisible = ref(false)
+    //useIntersectionObserver(
+    //  parent,
+    //  ([{ isIntersecting }]) => isVisible.value = isIntersecting
+    //)
+
+    watch(isVisible, () => console.log(isVisible.value))
+  }
+  
   watch([elementX, elementY], () => {
-      (!isScrolling.value /*&& isVisible.value*/) && gsap.to(elem, {
-        x: (elementX.value - elementWidth.value / 2) / valueX,
-        y: (elementY.value - elementHeight.value / 2) / valueY
-      })
-    }
-  )
+    if (isScrolling.value) return
+    gsap.to(elem, {
+      x: (elementX.value - elementWidth.value / 2) / valueX,
+      y: (elementY.value - elementHeight.value / 2) / valueY,
+    })
+  })
 }
 
+//наклон к курсору
 export function parallaxAngle(target, max=2, stopOutside=true) {
   const {
     elementX,
@@ -89,23 +112,31 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
   })
 }
 
-//start and stop css animations
-
+//начать/остановить css анимации
 export function useAnimations(target) {
-  const animations = computed(() => {
-    return Array.from(toValue(target).querySelectorAll('*')).flatMap(elem => elem.getAnimations())
-  })
+  const animations = Array.from(
+    toValue(target)
+      .querySelectorAll('*'))
+      .flatMap(elem => elem.getAnimations()
+  )
 
   function startAnimation() {
-    animations.value.forEach(animation => animation.play())
+    animations.forEach(animation => animation.play())
   }
 
   function stopAnimation() {
-    animations.value.forEach(animation => animation.cancel())
+    animations.forEach(animation => animation.cancel())
   }
 
   return {
     startAnimation,
     stopAnimation,
   }
+}
+
+//выносим мусор
+export function useTimeline(...args) {
+  const tl = gsap.timeline(...args)
+  onUnmounted(() => tl.kill())
+  return tl
 }

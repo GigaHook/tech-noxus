@@ -52,7 +52,7 @@
 
 <script setup>
 import MapSvg from '@/components/svg/MapSvg.vue'
-import { slideLeft, fadeIn } from '@/composables/animations'
+import { slideLeft, fadeIn } from '@/scripts/animations'
 import { gsap } from 'gsap/all'
 import { onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'

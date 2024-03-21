@@ -18,7 +18,7 @@
               </v-card-title>
             
               <v-card-text class="text-h6">
-                <div v-for="day in saturday" class="text-h6 timetable-text">
+                <div v-for="day in saturday" class="text-h6 timetable-text" v-once>
                   {{ day.title }} - {{ day.time }}
                 </div>
               </v-card-text>
@@ -32,7 +32,7 @@
               </v-card-title>
             
               <v-card-text class="text-h6">
-                <div v-for="day in sunday" class="text-h6 timetable-text">
+                <div v-for="day in sunday" class="text-h6 timetable-text" v-once>
                   {{ day.title }} - {{ day.time }}
                 </div>
               </v-card-text>
@@ -47,28 +47,23 @@
 <script setup>
 import TimetableSvg from '@/components/svg/TimetableSvg.vue'
 import { onMounted } from 'vue'
-import { gsap } from 'gsap/all'
+import { useTimeline } from '@/scripts/animations'
 
 onMounted(() => {
-  gsap.timeline({
+  const tl = () => useTimeline({
     scrollTrigger: {
       trigger: '.timetable-trigger',
       start: 'center bottom',
     }
   })
-  .from('.timetable-title', {
+  
+  tl().from('.timetable-title', {
     duration: 3,
     text: '***********',
     stagger: .3,
   })
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.timetable-trigger',
-      start: 'center bottom',
-    }
-  })
-  .from('.timetable-text', {
+  tl().from('.timetable-text', {
     duration: 3,
     text: '*****************************',
     stagger: .4,

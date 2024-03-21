@@ -69,7 +69,7 @@
 import { ref, onBeforeMount } from 'vue'
 import { useFetch } from '@vueuse/core'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import useStore from '@/composables/store'
+import useStore from '@/scripts/store'
 import Post from '@/components/Post.vue'
 
 const url = import.meta.env.VITE_API_URL

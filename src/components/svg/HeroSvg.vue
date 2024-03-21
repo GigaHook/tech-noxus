@@ -419,10 +419,11 @@ svg#freepik_stories-developer-activity.animated #freepik--Character--inject-10 {
 
 .animator-hidden {
   display: none;
-}</style>
+}
+</style>
 
 <script setup>
-import { parallax } from '@/composables/animations'
+import { parallax } from '@/scripts/animations'
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 

@@ -1,5 +1,5 @@
 import { useStorage } from "@vueuse/core"
-import { useAxios } from "@/composables/axios"
+import { useAxios } from "@/scripts/axios"
 import { useRouter } from "vue-router"
 
 const axios = useAxios()

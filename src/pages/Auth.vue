@@ -45,7 +45,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useAuth } from '@/composables/api'
+import { useAuth } from '@/scripts/api'
 import { useRouter } from 'vue-router'
 
 const rules = {

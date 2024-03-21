@@ -2,7 +2,7 @@
   <v-col
     cols="12" md="6" lg="5" xl="4"
     class="text-h6 mt-2"
-    :class="mobile && 'mobile-limit-length'"
+    :class="mobile && 'limit-length'"
     :order-md="even ? index + 1 : index"
     :order="index + 1"
   >
@@ -18,7 +18,7 @@
   <v-col
     cols="12" md="6" lg="4" 
     class="mb-8"
-    :class="mobile && 'mobile-limit-length'"
+    :class="mobile && 'limit-length'"
     :offset-xl="even ? 1 : 0"
     :order-md="even ? index : index + 1"
     :order="index"
@@ -33,8 +33,8 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { gsap } from 'gsap/all'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import { useTimeline } from '@/scripts/animations'
 
 const { mobile } = useDisplay()
 
@@ -45,14 +45,18 @@ const { index } = defineProps({
     default: 0,
   },
   title: String,
-  text: String,
+  text: {
+    type: String,
+    required: false,
+    default: '',
+  },
   img: Object,
 })
 
 const even = index % 2 == 0
 
 onMounted(() => {
-  gsap.timeline({
+  useTimeline({
     scrollTrigger: {
       trigger: `.title-${index}`,
       start: 'top+=150px bottom',
@@ -83,10 +87,5 @@ onMounted(() => {
 <style scoped>
 .text {
   opacity: 0
-}
-
-.limit-length {
-  max-width: 100vw !important;
-  overflow: hidden !important;
 }
 </style>

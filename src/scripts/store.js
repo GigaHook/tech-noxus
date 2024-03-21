@@ -7,7 +7,7 @@ const store = reactive({
   heroBtn: null,
 })
 
-const sharedStore = createSharedComposable()
+//const sharedStore = createSharedComposable()
 
 export default function useStore() {
   return store

@@ -8,9 +8,9 @@
         Наши ученики имеют возможность получить карту лояльности, дающую множество скидок в разных заведениях нашего города
         <br>
         <v-btn
-          class="ma-4"
+          class="my-6"
           :class="mobile && 'w-100'"
-          elevation="16"
+          :elevation="mobile ? 9 : 16"
           size="large"
           color="amber-accent-3"
           @click="handleClick"
@@ -33,7 +33,7 @@ const router = useRouter()
 
 function handleClick() {
   router.push('/partners').then(() => {
-    window.scrollTo(0, 0)
+    //window.scrollTo(0, 0)
   })
 }
 </script>

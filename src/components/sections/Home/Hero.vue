@@ -2,7 +2,7 @@
   <v-container
     fluid
     class="container"
-    :class="!mobile && 'image'"
+    :class="mobile ? 'limit-length' : 'image'"
     id="hero"
   >
     <v-row justify="end" align="center">
@@ -145,51 +145,51 @@
 </template>
 
 <script setup>
-import useStore from '@/composables/store'
+import useStore from '@/scripts/store'
 import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { gsap } from 'gsap/all'
 import { ref, onMounted } from 'vue'
+import { useTimeline } from '@/scripts/animations'
 
 const { mobile } = useDisplay()
 const store = useStore()
 const heroBtn = ref()
 
 const slides = ['.slide-0', '.slide-1', '.slide-2']
+const tl = useTimeline()
 
 onMounted(() => {
   store.heroBtn = heroBtn
-  gsap.timeline()
-    .set(slides, {
-      opacity: 0,
-      x: '-100%',
-      stagger: true,
-    })
-    .set('.fade-in', {
-      opacity: 0
-    })
-    .to('.slide-0', {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      ease: 'back.out',
-    })
-    .to('.slide-1', {
-      opacity: 1,
-      x: 0,
-      duration: .5,
-      ease: 'back.out',
-    })
-    .to('.slide-2', {
-      opacity: 1,
-      x: 0,
-      duration: .5,
-      ease: 'back.out',
-    })
-    .to('.fade-in', {
-      opacity: 1,
-      duration: .5,
-    })
+  tl.set(slides, {
+    opacity: 0,
+    x: '-100%',
+    stagger: true,
+  })
+  .set('.fade-in', {
+    opacity: 0
+  })
+  .to('.slide-0', {
+    opacity: 1,
+    x: 0,
+    duration: 1,
+    ease: 'back.out',
+  })
+  .to('.slide-1', {
+    opacity: 1,
+    x: 0,
+    duration: .5,
+    ease: 'back.out',
+  })
+  .to('.slide-2', {
+    opacity: 1,
+    x: 0,
+    duration: .5,
+    ease: 'back.out',
+  })
+  .to('.fade-in', {
+    opacity: 1,
+    duration: .5,
+  })
 })
 </script>
 
