@@ -63,10 +63,11 @@ import { ref, onMounted } from 'vue'
 import { parallaxAngle } from '@/scripts/animations'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
-import router from '@/plugins/router'
+import { useRouter } from 'vue-router'
 
 const display = useDisplay()
 const pcard = ref()
+const router = useRouter()
 
 onMounted(() => {
   if (!display.mobile.value) {
@@ -127,6 +128,7 @@ function goToForm() {
   background-position: center right;
   background-size: contain;
 }
+
 .shine {
   width: 186px; 
   position: relative; 
@@ -145,6 +147,7 @@ function goToForm() {
   animation: shine 3s ease-out infinite 2s; 
   transform: skewX(-25deg);
 }
+
 @keyframes shine {
   from {
     left: -50%;
@@ -153,6 +156,7 @@ function goToForm() {
     left: 600%;
   } 
 }
+
 .button:hover {
   background-color: #FF8F00 !important;
 }

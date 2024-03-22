@@ -142,7 +142,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { parallaxAngle } from '@/scripts/animations'
+import { parallaxAngle, getParentComponent } from '@/scripts/animations'
 import useStore from '@/scripts/store'
 
 const { course, index } = defineProps({ 
@@ -163,7 +163,10 @@ function applyForCourse() {
   overlay.value = false
 }
 
-onMounted(() => !display.mobile.value && parallaxAngle(card, 4))
+onMounted(() => {
+  !display.mobile.value && parallaxAngle(card, 4)
+  getParentComponent(cardpcour)
+})
 </script>
 
 <style scoped>

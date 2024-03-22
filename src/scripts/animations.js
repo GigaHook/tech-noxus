@@ -50,8 +50,9 @@ function defineElem(target) {
 
 const observers = []
 
-function useSingletonObserver(elem) {
-
+export function getParentComponent(elem) {
+  const parent = getCurrentInstance().parent.ctx.$el
+  console.log(parent)
 }
 
 //движение к курсору
@@ -61,8 +62,6 @@ export function parallax(target, valueX, valueY=valueX) {
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-  
-  console.log(getCurrentInstance().parent.ctx.$el)
 
   if (false) {
     const isVisible = ref(false)
