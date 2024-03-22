@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" sm="6" md="4" lg="3" v-once>
+  <v-col cols="12" sm="6" md="4" lg="3" v-once ref="cardRoot">
     <v-card
       @mouseover="hover = true"
       @mouseleave="hover = false"
@@ -21,6 +21,7 @@
       </div>
 
       <div>
+        {{ index == 0 && getParentComponent(cardRoot) }}
         <CourseTypeChip :type="course.type"/>
 
         <div class="text-h6 ms-1">
@@ -154,7 +155,8 @@ const img = new URL(`../assets/images/${course.img}`, import.meta.url).href
 
 const display = useDisplay()
 const hover = ref()
-const card = ref(null)
+const card = ref()
+const cardRoot = ref()
 const overlay = ref(false)
 const store = useStore()
 
@@ -165,7 +167,7 @@ function applyForCourse() {
 
 onMounted(() => {
   !display.mobile.value && parallaxAngle(card, 4)
-  getParentComponent(cardpcour)
+  
 })
 </script>
 

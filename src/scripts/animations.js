@@ -48,31 +48,30 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
-const observers = []
-
-export function getParentComponent(elem) {
-  const parent = getCurrentInstance().parent.ctx.$el
-  console.log(parent)
-}
+const observables = []
 
 //движение к курсору
 //TODO сделать единственный синглтон обсервер для каждого родителя 
 //чтобы избежать повторения тк они 100% есть
-export function parallax(target, valueX, valueY=valueX) {
+
+//TODO передавать компонент - один из родителей, который сувать в обсервер
+
+export function parallax(target, valueX, valueY=valueX, observable=getCurrentInstance().parent.ctx.$el) {
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-
-  if (false) {
-    const isVisible = ref(false)
-    //useIntersectionObserver(
-    //  parent,
-    //  ([{ isIntersecting }]) => isVisible.value = isIntersecting
-    //)
-
-    watch(isVisible, () => console.log(isVisible.value))
+  const isVisible = ref(false)
+  if (!observable) {
+    //TODO
   }
-  
+  let stopObserving = observables.find(elem => elem == observable)
+  if (!stopObserving) {
+    stopObserving = { stop } = useIntersectionObserver(
+      observable, ([{ isIntersecting }]) => isVisible.value = isIntersecting
+    )
+    observables.push(observable)
+  }
+  watch(isVisible, () => console.log(isVisible.value))
   watch([elementX, elementY], () => {
     if (isScrolling.value) return
     gsap.to(elem, {

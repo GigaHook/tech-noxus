@@ -59,11 +59,9 @@ function expandCourses() {
   courses.value = rawCourses
 }
 
-watch(isCollapsed, collapsed => {
+display.mobile.value && watch(isCollapsed, collapsed => {
   collapsed ? collapseCourses() : expandCourses()
 }, { immediate: true })
-
-display.mobile.value && collapseCourses()
 </script>
 
 <style scoped>
