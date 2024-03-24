@@ -118,6 +118,7 @@
   </v-navigation-drawer>
 
   <v-navigation-drawer
+    temporary
     v-if="user"
     location="right"
     v-model="adminSide"

@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    class="text-grey text-center mt-8 pb-16"
+    class="text-grey text-center mt-n4"
     style="box-shadow: 0px -100px 50px -100px rgba(34, 60, 80, 0.65) inset;"
   >
     <v-row justify="center" align="center">
@@ -33,7 +33,7 @@
         >
           ВКонтакте
         </a><br>
-        Тех. поддержка +7 985 688 0241
+        Тех. поддержка +7 (985) 688-02-41
       </v-col>
 
       <v-col cols="4">

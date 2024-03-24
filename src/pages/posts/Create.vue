@@ -1,6 +1,6 @@
 <template>
-  <v-container class="mt-16">
-    <v-row justify="center">
+  <v-container class="h-100">
+    <v-row justify="center" align="center" class="h-100">
       <v-col cols="12" lg="5" xl="4">
         <v-card>
           <v-card-title>
@@ -74,7 +74,7 @@ const errors = ref({})
 
 const formData = ref({
   title: null,
-  text: null,
+  text:  null,
   image: null,
 })
 

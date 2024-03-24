@@ -1,8 +1,6 @@
 import { gsap } from "gsap/all"
-import { toValue, ref, onMounted, watch, onUnmounted, getCurrentInstance } from "vue"
-import { useMouseInElement, useScroll, useElementVisibility, useIntersectionObserver, whenever, watchPausable } from '@vueuse/core'
-import { reactive } from "vue"
-import { toRef } from "vue"
+import { toValue, onMounted, watch, onUnmounted, getCurrentInstance } from "vue"
+import { useMouseInElement, useScroll, useElementVisibility, whenever, watchPausable } from '@vueuse/core'
 
 //вжух слева
 export function slideLeft(elem) {

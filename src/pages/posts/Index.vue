@@ -2,53 +2,37 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" lg="7" xl="5">
-        <template v-if="isFetching">
-          <v-skeleton-loader
-            v-for="post in 4"
-            type="article, image"
-            elevation="4"
-            :height="mobile ? '35vh' : '70vh'"
-            class="ma-4"
-          />
-        </template>
-
-        <template v-else-if="error">
-          <div class="text-center">
-            Не удалось загрузить посты
-          </div>
-        </template>
-
-        <template v-else-if="posts.data.length == 0">
-          <div class="text-center">
-            У нас пока нет новостей для вас
-          </div>
-        </template>
-
-        <template v-else>
-          <Post
-            v-for="post, index in posts.data"
-            :key="index"
-            :post="post"
-          />
-        </template>
-        
-        <!--<Suspense>
-          <Post
-            v-for="post, index in posts.data"
-            :key="index"
-            :post="post"
-          />
-
-          <template #fallback>
+        <v-fade-transition group>
+          <template v-if="isFetching">
             <v-skeleton-loader
               v-for="post in 4"
               type="article, image"
               elevation="4"
-              :height="mobile ? '35vh' : '70vh'"
+              :height="mobile ? '44vh' : '70vh'"
               class="ma-4"
             />
           </template>
-        </Suspense>-->
+  
+          <template v-else-if="error">
+            <div class="text-center">
+              Не удалось загрузить посты
+            </div>
+          </template>
+  
+          <template v-else-if="posts.data.length == 0">
+            <div class="text-center">
+              У нас пока нет новостей для вас
+            </div>
+          </template>
+  
+          <template v-else>
+            <Post
+              v-for="post, index in posts.data"
+              :key="index"
+              :post="post"
+            />
+          </template>
+        </v-fade-transition>
       </v-col>
       
       <v-col cols="12" v-if="!isFetching && !error">

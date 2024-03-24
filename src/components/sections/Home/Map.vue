@@ -7,13 +7,7 @@
         </h2>
 
         <v-card elevation="12" class="map-container">
-          <KeepAlive>
-            <iframe
-              class="map w-100"
-              src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=127607219934"
-              frameborder="0"
-            ></iframe>
-          </KeepAlive>
+          <ActualMap/>
         </v-card>
       </v-col>
 
@@ -52,9 +46,10 @@
 
 <script setup>
 import MapSvg from '@/components/svg/MapSvg.vue'
+import ActualMap from '@/components/ActualMap.vue'
 import { slideLeft, fadeIn } from '@/scripts/animations'
 import { gsap } from 'gsap/all'
-import { onMounted } from 'vue'
+import { onMounted, onActivated } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const display = useDisplay()
@@ -79,10 +74,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.map {
-  height: 400px;
-}
-
 .map-title {
   opacity: 0;
 }

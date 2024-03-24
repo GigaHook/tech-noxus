@@ -1,11 +1,17 @@
 <template>
   <v-app>
     <Header/>
-      <v-main class="main">
-        <Suspense>
-          <router-view/>
-        </Suspense>
-      </v-main>
+    <!--жопа-->
+    <v-main style="min-height: calc(100vh - 152px) !important;">
+      <router-view>
+        <template v-slot="{ Component }">
+          <KeepAlive>
+            <component :is="Component"/>
+          </KeepAlive>
+        </template>
+      </router-view>
+    </v-main>
+    
     <Footer/>
   </v-app>
 </template>
@@ -13,6 +19,7 @@
 <script setup>
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Home from '@/pages/Home.vue'
 import { useFetch } from '@vueuse/core'
 import { useAuth } from '@/scripts/api'
 
@@ -26,12 +33,6 @@ checkApi().then(() => {
   verifySession()
 })
 </script>
-
-<style scoped>
-.main {
-  min-height: calc(100vh - 152px) !important;
-}
-</style>
 
 <style>
 .limit-length {

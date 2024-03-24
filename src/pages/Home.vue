@@ -1,12 +1,7 @@
 <template>
   <Hero/>
-
   <About/>
-
-  <Suspense>
-    <Courses/>
-  </Suspense>
-
+  <Courses/>
   <Timetable/>
   <Form/>
   <Map/>
