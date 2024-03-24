@@ -1,8 +1,6 @@
 <template>
-  <Hero ref="hero"/>
-  <Suspense>
-    <About ref="about"/>
-  </Suspense>
+  <Hero/>
+  <About/>
 </template>
 
 <script setup>

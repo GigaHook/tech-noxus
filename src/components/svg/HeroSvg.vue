@@ -370,7 +370,8 @@
       </feColorMatrix>
     </filter>
   </defs>
-</svg></template>
+</svg>
+</template>
 
 <style>svg#freepik_stories-developer-activity:not(.animated) .animable {
   opacity: 0;
@@ -423,7 +424,7 @@ svg#freepik_stories-developer-activity.animated #freepik--Character--inject-10 {
 </style>
 
 <script setup>
-import { parallax, getParentComponent } from '@/scripts/animations'
+import { parallax } from '@/scripts/animations'
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
@@ -437,7 +438,6 @@ const heroCard3 = ref()
 
 onMounted(() => {
   if (mobile.value) return
-  getParentComponent(heroCard1)
   parallax(heroCard1, 35)
   parallax(heroCard2, 20)
   parallax(heroCard2Back, 30)

@@ -21,7 +21,6 @@
       </div>
 
       <div>
-        {{ index == 0 && getParentComponent(cardRoot) }}
         <CourseTypeChip :type="course.type"/>
 
         <div class="text-h6 ms-1">
@@ -143,7 +142,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { parallaxAngle, getParentComponent } from '@/scripts/animations'
+import { parallaxAngle } from '@/scripts/animations'
 import useStore from '@/scripts/store'
 
 const { course, index } = defineProps({ 

@@ -1,6 +1,6 @@
 <template>
   <v-container id="partners-about">
-    <v-row justify-md="space-around" justify-lg="center">
+    <v-row justify-md="space-around" justify-lg="center" class="mt-2">
       <AboutRow
         v-for="(row, index) in rows"
         :key="index"
@@ -15,17 +15,19 @@
 
 <script setup>
 import AboutRow from '@/components/AboutRow.vue'
+import PartnersCardSvg from "@/components/svg/PartnersCardSvg.vue"
+import GuideSvg from "@/components/svg/GuideSvg.vue"
 
 const rows = [
   {
     title: 'В чём суть?',
     text: 'Мы рады представить вам нашу карту лояльности, которая призвана сделать вашу учебу в нашей школе еще более впечатляющей и выгодной. Эта карта дает вам доступ к эксклюзивным скидкам и бонусам у партнерёв по всему городу.',
-    img: (await import("@/components/svg/PartnersCardSvg.vue")).default
+    img: PartnersCardSvg,
   },
   {
     title: 'Как получить карту?',
     text: 'Всё очень просто. Каждый ученик нашей школы может бесплатно получить карту. Она выдаётся на первом занятии.',
-    img: (await import("@/components/svg/GuideSvg.vue")).default
-  },
+    img: GuideSvg,
+  }
 ]
 </script>

@@ -1,6 +1,8 @@
 import { gsap } from "gsap/all"
 import { toValue, ref, onMounted, watch, onUnmounted, getCurrentInstance } from "vue"
-import { useMouseInElement, useScroll, useElementVisibility, useIntersectionObserver } from '@vueuse/core'
+import { useMouseInElement, useScroll, useElementVisibility, useIntersectionObserver, whenever, watchPausable } from '@vueuse/core'
+import { reactive } from "vue"
+import { toRef } from "vue"
 
 //вжух слева
 export function slideLeft(elem) {
@@ -48,37 +50,42 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
-const observables = []
+const observedParents = new Map()
 
-//движение к курсору
-//TODO сделать единственный синглтон обсервер для каждого родителя 
-//чтобы избежать повторения тк они 100% есть
-
-//TODO передавать компонент - один из родителей, который сувать в обсервер
-
-export function parallax(target, valueX, valueY=valueX, observable=getCurrentInstance().parent.ctx.$el) {
+export function parallax(
+  target,
+  valueX,
+  valueY=valueX,
+  parent=getCurrentInstance().parent.ctx.$el //передавать только в случае использования вне SVG
+) {
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-  const isVisible = ref(false)
-  if (!observable) {
-    //TODO
-  }
-  let stopObserving = observables.find(elem => elem == observable)
-  if (!stopObserving) {
-    stopObserving = { stop } = useIntersectionObserver(
-      observable, ([{ isIntersecting }]) => isVisible.value = isIntersecting
-    )
-    observables.push(observable)
-  }
-  watch(isVisible, () => console.log(isVisible.value))
-  watch([elementX, elementY], () => {
-    if (isScrolling.value) return
+
+  !observedParents.has(parent) && observedParents.set(parent, useElementVisibility(parent))
+  const isVisible = observedParents.get(parent)
+  
+  const animation = watchPausable([elementX, elementY], () => {
     gsap.to(elem, {
       x: (elementX.value - elementWidth.value / 2) / valueX,
       y: (elementY.value - elementHeight.value / 2) / valueY,
     })
   })
+
+  animation.pause()
+
+  whenever(
+    () => !isScrolling.value && isVisible.value,
+    (newVal, oldVal, onCleanup) => {
+      animation.resume()
+      onCleanup(() => {
+        console.log('paused')
+        animation.pause()
+      })
+    }
+  )
+
+  onUnmounted(animation.stop)
 }
 
 //наклон к курсору

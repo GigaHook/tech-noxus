@@ -1181,7 +1181,8 @@
       </feColorMatrix>
     </filter>
   </defs>
-</svg></template>
+</svg>
+</template>
 
 <style>svg#freepik_stories-code-typing:not(.animated) .animable {
   opacity: 0;
