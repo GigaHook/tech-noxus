@@ -6,8 +6,8 @@
           Мы на карте
         </h2>
 
-        <v-card elevation="12" class="map-container">
-          <ActualMap/>
+        <v-card elevation="12" class="map-container" id="actual-map-container">
+          <div></div>
         </v-card>
       </v-col>
 
@@ -49,13 +49,15 @@ import MapSvg from '@/components/svg/MapSvg.vue'
 import ActualMap from '@/components/ActualMap.vue'
 import { slideLeft, fadeIn } from '@/scripts/animations'
 import { gsap } from 'gsap/all'
-import { onMounted, onActivated } from 'vue'
+import { onMounted, onActivated, ref } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const display = useDisplay()
 
 slideLeft('.map-title')
 fadeIn('.map-description')
+
+
 
 onMounted(() => {
   gsap.timeline({

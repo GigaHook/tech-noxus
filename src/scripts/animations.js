@@ -77,7 +77,6 @@ export function parallax(
     (newVal, oldVal, onCleanup) => {
       animation.resume()
       onCleanup(() => {
-        console.log('paused')
         animation.pause()
       })
     }

@@ -43,10 +43,6 @@ export function useAuth() {
 }
 
 export function usePosts() {
-  async function getAll() {
-    
-  }
-
   async function create(formData) {
     await axios.post('/posts', {
       title: formData.title,
@@ -68,7 +64,6 @@ export function usePosts() {
   }
 
   return {
-    getAll,
     create,
     update,
     destroy,

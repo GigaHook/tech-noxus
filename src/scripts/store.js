@@ -5,10 +5,13 @@ import { createSharedComposable } from "@vueuse/core"
 const store = reactive({
   selectedCourse: null,
   heroBtn: null,
+  yMapData: null,
 })
 
-//const sharedStore = createSharedComposable()
-
-export default function useStore() {
+function useStoreFn() {
   return store
 }
+
+const useStore = createSharedComposable(useStoreFn)
+
+export default useStore
