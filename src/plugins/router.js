@@ -13,7 +13,7 @@ function adminGuard(to) {
 }
 
 function guestGuard(to) {
-  return user.value ? { name: 'Home' } : true
+  return user?.value ? { name: 'Home' } : true
 }
 
 const router = createRouter({

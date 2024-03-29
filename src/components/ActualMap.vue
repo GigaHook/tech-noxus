@@ -1,20 +1,10 @@
 <template>
-  <div>
-    <iframe
-      class="w-100"
-      style="height: 400px;"
-      frameborder="0"
-    ></iframe>
   
-    <div>
-      {{ count }}
-      <v-btn text="+" @click="inc(1)"/>
-      <v-btn text="-" @click="dec(1)"/>
-    </div>
-  </div>
 </template>
 
 <script setup>
-import { useCounter } from '@vueuse/core'
-const { count, inc, dec } = useCounter()
+import { ref, onMounted } from 'vue'
+//api '1df66a5c-62ed-4df9-8d8e-3e909e56c73b'
+//coords 54.756194, 32.115095
+
 </script>

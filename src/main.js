@@ -8,7 +8,7 @@ import animateOnScroll from './directives/animateOnScroll'
 const app = createApp(App)
 
 app.component('CourseTypeChip', CourseTypeChip)
-app.directive('animateOnScroll', animateOnScroll)
+   .directive('animateOnScroll', animateOnScroll)
 
 registerPlugins(app)
 

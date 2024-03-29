@@ -76,9 +76,7 @@ export function parallax(
     () => !isScrolling.value && isVisible.value,
     (newVal, oldVal, onCleanup) => {
       animation.resume()
-      onCleanup(() => {
-        animation.pause()
-      })
+      onCleanup(animation.pause)
     }
   )
 
@@ -116,11 +114,8 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
 
 //начать/остановить css анимации
 export function useAnimations(target) {
-  const animations = Array.from(
-    toValue(target)
-      .querySelectorAll('*'))
-      .flatMap(elem => elem.getAnimations()
-  )
+  const animations = Array.from(toValue(target).querySelectorAll('*'))
+    .flatMap(elem => elem.getAnimations())
 
   function startAnimation() {
     animations.forEach(animation => animation.play())
