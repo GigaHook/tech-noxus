@@ -10,7 +10,7 @@
     >
       <div class="h-50 mb-auto">
         <v-img
-          :src="img"
+          :src="assetImageUrl(course.img)"
           class="h-100"
           eager
         />
@@ -143,14 +143,14 @@
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { parallaxAngle } from '@/scripts/animations'
+import { assetImageUrl } from '@/scripts/helpers'
 import useStore from '@/scripts/store'
+import CourseTypeChip from '@/components/CourseTypeChip.vue'
 
 const { course, index } = defineProps({ 
   course: Object,
   index: Number,
 })
-
-const img = new URL(`../assets/images/${course.img}`, import.meta.url).href
 
 const display = useDisplay()
 const hover = ref()
@@ -166,7 +166,6 @@ function applyForCourse() {
 
 onMounted(() => {
   !display.mobile.value && parallaxAngle(card, 4)
-  
 })
 </script>
 

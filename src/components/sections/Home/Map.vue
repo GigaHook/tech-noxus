@@ -7,7 +7,12 @@
         </h2>
 
         <v-card elevation="12" class="map-container">
-          <ActualMap/>
+          <iframe
+            class="map w-100"
+            src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=127607219934"
+            frameborder="0"
+            height="400"
+          ></iframe>
         </v-card>
       </v-col>
 
@@ -46,7 +51,6 @@
 
 <script setup>
 import MapSvg from '@/components/svg/MapSvg.vue'
-import ActualMap from '@/components/ActualMap.vue'
 import { slideLeft, fadeIn } from '@/scripts/animations'
 import { onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'

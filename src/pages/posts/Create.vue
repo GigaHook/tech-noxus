@@ -66,7 +66,7 @@ const rules = {
   image: v => !!v?.[0] || 'Это поле нужно заполнить',
 }
 
-const { create: createPost } = usePosts()
+const { createPost } = usePosts()
 const router = useRouter()
 const form = ref()
 const loading = ref(false)
@@ -92,7 +92,7 @@ async function submit() {
     loading.value = false
   }
   
-  if (!Object.keys(errors.value).length) router.push('/posts')
+  Object.keys(errors.value).length || router.push('/posts')
 }
 
 </script>

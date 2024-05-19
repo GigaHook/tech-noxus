@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router"
 import { useStorage } from '@vueuse/core'
-import useStore from "@/scripts/store"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
+import { defineComponent } from 'vue'
 
 const user = useStorage('user')
 

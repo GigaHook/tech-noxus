@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onActivated } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useTimeline } from '@/scripts/animations'
 
@@ -55,7 +55,7 @@ const { index } = defineProps({
 
 const even = index % 2 == 0
 
-onMounted(() => {
+onActivated(() => {
   useTimeline({
     scrollTrigger: {
       trigger: `.title-${index}`,

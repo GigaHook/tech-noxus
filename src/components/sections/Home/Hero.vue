@@ -21,10 +21,7 @@
           />
         </div>
 
-        <div
-          class="slide-1"
-          :class="mobile ? 'text-h5' : 'text-h3 mt-2'"
-        >
+        <div class="slide-1" :class="mobile ? 'text-h5' : 'text-h3 mt-2'">
           <div>Школа технологий для детей</div>
           <div>г. Смоленск</div>
           <div class="text-h6 mb-2">
@@ -145,22 +142,19 @@
 </template>
 
 <script setup>
-import useStore from '@/scripts/store'
 import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject, nextTick } from 'vue'
 import { useTimeline } from '@/scripts/animations'
+import { useIntersectionObserver } from '@vueuse/core'
 
 const { mobile } = useDisplay()
-const store = useStore()
 const heroBtn = ref()
-
-const slides = ['.slide-0', '.slide-1', '.slide-2']
+const isHeroBtnVisible = inject('isHeroBtnVisible')
 const tl = useTimeline()
 
-onMounted(() => {
-  store.heroBtn = heroBtn
-  tl.set(slides, {
+function animate() {
+  tl.set(['.slide-0', '.slide-1', '.slide-2'], {
     opacity: 0,
     x: '-100%',
     stagger: true,
@@ -190,6 +184,14 @@ onMounted(() => {
     opacity: 1,
     duration: .5,
   })
+}
+
+onMounted(async () => {
+  animate()
+  await nextTick()
+  useIntersectionObserver(
+    heroBtn, ([{ isIntersecting }]) => isHeroBtnVisible.value = isIntersecting
+  )
 })
 </script>
 
@@ -234,6 +236,7 @@ onMounted(() => {
     left: 600%;
   } 
 }
+
 .button:hover {
   background-color: #FF8F00 !important;
 }

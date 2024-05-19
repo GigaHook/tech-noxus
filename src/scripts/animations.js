@@ -1,5 +1,5 @@
 import { gsap } from "gsap/all"
-import { toValue, onMounted, watch, onUnmounted, getCurrentInstance } from "vue"
+import { toValue, onMounted, watch, onUnmounted, getCurrentInstance, onDeactivated } from "vue"
 import { useMouseInElement, useScroll, useElementVisibility, whenever, watchPausable } from '@vueuse/core'
 
 //вжух слева
@@ -48,8 +48,8 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
+//движение к курсору
 const observedParents = new Map()
-
 export function parallax(
   target,
   valueX,
@@ -59,7 +59,7 @@ export function parallax(
   const elem = defineElem(target)
   const { isScrolling } = useScroll(window)
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-
+  
   !observedParents.has(parent) && observedParents.set(parent, useElementVisibility(parent))
   const isVisible = observedParents.get(parent)
   
@@ -135,5 +135,6 @@ export function useAnimations(target) {
 export function useTimeline(...args) {
   const tl = gsap.timeline(...args)
   onUnmounted(() => tl.kill())
+  onDeactivated(() => tl.kill())
   return tl
 }

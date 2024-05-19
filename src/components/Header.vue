@@ -23,7 +23,7 @@
       </template>
 
       <v-btn
-        v-if="btnVisible && route.name == 'Home'"
+        v-if="!isHeroBtnVisible && route.name == 'Home'"
         v-scroll-to="'#form'"
         key="signUp"
         flat
@@ -146,21 +146,19 @@
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, watchEffect } from 'vue'
-import { useIntersectionObserver, useStorage } from '@vueuse/core'
+import { ref, inject } from 'vue'
+import { useStorage } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/scripts/api'
-import useStore from '@/scripts/store'
 
 const { mobile } = useDisplay()
 const { logout } = useAuth()
 const router = useRouter()
 const route = useRoute()
-const store = useStore()
 const side = ref(false)
-const btnVisible = ref(false)
 const adminSide = ref(false)
 const user = useStorage('user', null)
+const isHeroBtnVisible = inject('isHeroBtnVisible')
 
 const homeMenu = [
   {
@@ -198,15 +196,6 @@ const navMenu = [
     icon: 'fas fa-handshake',
   },
 ]
-
-//желтая кнопочка "записаться" в хедере
-watchEffect(() => {
-  if (store.heroBtn && route.name == 'Home') {
-    useIntersectionObserver(
-      store.heroBtn, ([{ isIntersecting }]) => btnVisible.value = !isIntersecting
-    )
-  }
-})
 
 //редирект после логаута
 async function handleLogout() {

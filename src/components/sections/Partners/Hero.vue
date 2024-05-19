@@ -130,7 +130,7 @@ function goToForm() {
 }
 
 .shine {
-  width: 186px; 
+  width: 180px; 
   position: relative; 
   overflow: hidden;
 }

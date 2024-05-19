@@ -1,5 +1,5 @@
 <template>
-  <svg class="animated" id="freepik_stories-content-structure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
+  <svg ref="elem" class="animated" id="freepik_stories-content-structure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
     version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs">
     <g id="freepik--Floor--inject-2" class="animable animator-hidden" style="transform-origin: 251px 351.72px;">
       <ellipse id="freepik--floor--inject-2" cx="251" cy="351.72" rx="240.78" ry="139.01"
@@ -2315,6 +2315,26 @@
     </filter>
   </defs>
 </svg></template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
+
+const elem = ref()
+
+onMounted(() => {
+  useIntersectionObserver(
+    elem,
+    ([{ isIntersecting }]) => {
+      if (isIntersecting) {
+        console.log('entered from component')
+      } else {
+        console.log('left from component')
+      }
+    }
+  )
+})
+</script>
 
 <style>svg#freepik_stories-content-structure:not(.animated) .animable {
   opacity: 0;

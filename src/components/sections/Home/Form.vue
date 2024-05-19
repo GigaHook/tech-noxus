@@ -147,6 +147,7 @@
 import { ref, computed } from 'vue'
 import courses from '@/courses'
 import useStore from '@/scripts/store'
+import CourseTypeChip from '@/components/CourseTypeChip.vue'
 
 const store = useStore()
 const hover = ref(false)

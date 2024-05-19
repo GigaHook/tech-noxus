@@ -1,6 +1,6 @@
 import { useStorage } from "@vueuse/core"
-import { useAxios } from "@/scripts/axios"
 import { useRouter } from "vue-router"
+import useAxios from "@/scripts/axios"
 
 const axios = useAxios()
 
@@ -15,7 +15,7 @@ export function useAuth() {
       login: formData.login,
       password: formData.password,
     })
-    user.value = JSON.stringify(data.user)
+    user.value = JSON.parse(data.user)
   }
 
   async function logout() {
@@ -43,10 +43,10 @@ export function useAuth() {
 }
 
 export function usePosts() {
-  async function create(formData) {
+  async function createPost(formData) {
     await axios.post('/posts', {
       title: formData.title,
-      text: formData.text,
+      text:  formData.text,
       image: formData.image[0],
     }, {
       headers: {
@@ -55,17 +55,28 @@ export function usePosts() {
     })
   }
 
-  async function update(formData) {
-
+  async function updatePost(id, formData) {
+    await axios.update('/posts', {
+      id:    id,
+      title: formData.title ?? null,
+      text:  formData.text ?? null,
+      image: formData.image[0] ?? null,
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
 
-  async function destroy(id) {
-
+  async function deletePost(id) {
+    await axios.delete('/posts', {
+      id: id
+    })
   }
 
   return {
-    create,
-    update,
-    destroy,
+    createPost,
+    updatePost,
+    deletePost,
   }
 }

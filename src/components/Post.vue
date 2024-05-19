@@ -1,10 +1,15 @@
 <template>
-  <v-card class="mb-4">
+  <v-card
+    class="mb-4"
+    :elevation="expanded ? 20 : 6"
+    :style="expanded && 'z-index: 1'"
+  >
     <v-img 
       :src="post.image"
-      width="100%"
+      :aspect-ratio="16 / 9"
       class="mb-2"
       eager
+      cover
     />
 
     <v-card-title>
@@ -16,23 +21,34 @@
     </v-card-subtitle>
 
     <v-card-text class="text-body-1">
-      {{ post.text }}
+      <v-expand-transition mode="in-out">
+        <div v-if="expanded">
+          {{ post.fulltext }}    
+        </div>
+
+        <div v-else>
+          {{ post.text }}    
+        </div>
+      </v-expand-transition>
     </v-card-text>
   
     <v-card-actions class="mt-n4">
-      <v-btn text="Подробнее"/>
+      <v-btn
+        @click="expanded = !expanded"
+        text="Подробнее"
+      />
 
       <template v-if="user">
         <v-btn
           @click="$router.push({
-            name: 'post-edit',
-            params: { id: post.id } 
+            name: 'PostsUpdate',
+            params: { id: post.id },
           })"
           text="Изменить"
         />              
   
         <v-btn
-          @click=""
+          @click="deletePost(post.id)"
           text="Удалить"
         />
       </template>
@@ -42,7 +58,11 @@
 
 <script setup>
 import { useStorage } from '@vueuse/core'
+import { ref } from 'vue'
+import { usePosts } from '@/scripts/api.js'
 
+const expanded = ref(false)
 const user = useStorage('user', null)
 const { post } = defineProps({ post: Object })
+const { deletePost } = usePosts()
 </script>

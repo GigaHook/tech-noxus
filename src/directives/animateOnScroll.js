@@ -1,17 +1,36 @@
 import { useAnimations } from "@/scripts/animations"
-import { breakpointsTailwind, useBreakpoints, useElementSize  } from '@vueuse/core'
-import { gsap, ScrollTrigger } from 'gsap/all'
-import { watch } from "vue"
+import { breakpointsTailwind, useBreakpoints, until } from '@vueuse/core'
+import { gsap } from 'gsap/all'
+
+//запускаем ксс анимации при появлении компонента в поле зрения
+//в основном используется для svg компонентов
 
 const timelines = []
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const mobile = breakpoints.smallerOrEqual('md')
-const { height } = useElementSize(document.querySelector('body'))
-const stop = mobile.value ? watch(height, () => ScrollTrigger.refresh()) : null
 
 const animateOnScroll = {
-  mounted(el) {
+  async mounted(el, binding, vnode) {
+
+    //TODO РЕШЕНИЕ: заменить маунтед и анмаунтед на активейтед и деактивейтед
+
     const { startAnimation, stopAnimation } = useAnimations(el)
+
+    //const button = document.createElement('button', 'asdzxc')
+    //button.innerHTML = 'asdzxc'
+    //button.addEventListener('click', () => {
+    //  stopAnimation()
+    //})
+    //el.parentNode.insertBefore(button, el)
+
+    /*vnode.ctx.proxy.$router.beforeEach((to, from, next) => {
+      timelines.forEach(tl => {
+        tl.kill()
+      })
+      timelines.length = 0
+      next()
+    })*/
+
     gsap.set(el, { opacity: 0 })
     timelines.push(gsap.timeline({
       scrollTrigger: {
@@ -24,15 +43,16 @@ const animateOnScroll = {
         },
         onLeaveBack: () => {
           gsap.fromTo(el, { opacity: 1 }, { opacity: 0 })
-          stopAnimation()
+          //stopAnimation()
         },
       },
     }))
   },
   unmounted() {
-    timelines.forEach(tl => tl.kill())
+    timelines.forEach(tl => {
+      tl.kill()
+    })
     timelines.length = 0
-    stop?.()
   },
 }
 
