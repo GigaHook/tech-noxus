@@ -22,11 +22,14 @@ import Footer from '@/components/Footer.vue'
 import { useFetch, useBreakpoints, useElementSize, breakpointsTailwind } from '@vueuse/core'
 import { ref, provide, watch, onMounted, getCurrentInstance } from 'vue'
 import { useAuth } from '@/scripts/api'
-import { ScrollTrigger } from 'gsap/all'
+import { gsap, ScrollTrigger } from 'gsap/all'
 import { useAnimations } from "@/scripts/animations"
 
 const isHeroBtnVisible = ref(true)
 provide('isHeroBtnVisible', isHeroBtnVisible)
+
+const timelines = []
+provide('timelines', timelines)
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const mobile = breakpoints.smallerOrEqual('md')

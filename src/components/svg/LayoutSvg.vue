@@ -2316,26 +2316,6 @@
   </defs>
 </svg></template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import { useIntersectionObserver } from '@vueuse/core'
-
-const elem = ref()
-
-onMounted(() => {
-  useIntersectionObserver(
-    elem,
-    ([{ isIntersecting }]) => {
-      if (isIntersecting) {
-        console.log('entered from component')
-      } else {
-        console.log('left from component')
-      }
-    }
-  )
-})
-</script>
-
 <style>svg#freepik_stories-content-structure:not(.animated) .animable {
   opacity: 0;
 }

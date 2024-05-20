@@ -26,12 +26,15 @@
     <div v-if="mobile" class="text-h5" :class="`title-${index}`">
       {{ title }}
     </div>
-    
-    <component :is="img" v-animate-on-scroll/>
+
+    <AnimateOnScroll>
+      <component :is="img"/>
+    </AnimateOnScroll>
   </v-col>
 </template>
 
 <script setup>
+import AnimateOnScroll from '@/components/AnimateOnScroll.vue'
 import { onActivated } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useTimeline } from '@/scripts/animations'
