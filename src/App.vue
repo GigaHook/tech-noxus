@@ -19,21 +19,17 @@
 <script setup>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import { useFetch, useBreakpoints, useElementSize, breakpointsTailwind } from '@vueuse/core'
-import { ref, provide, watch, onMounted, getCurrentInstance } from 'vue'
+import { useFetch, useElementSize } from '@vueuse/core'
+import { ref, shallowRef, provide, watch } from 'vue'
 import { useAuth } from '@/scripts/api'
-import { gsap, ScrollTrigger } from 'gsap/all'
-import { useAnimations } from "@/scripts/animations"
+import { ScrollTrigger } from 'gsap/all'
 
 const isHeroBtnVisible = ref(true)
 provide('isHeroBtnVisible', isHeroBtnVisible)
 
-const timelines = []
+const timelines = shallowRef([])
 provide('timelines', timelines)
 
-const breakpoints = useBreakpoints(breakpointsTailwind)
-const mobile = breakpoints.smallerOrEqual('md')
-const { height } = useElementSize(document.querySelector('body'))
 const { verifySession } = useAuth()
 const { data, execute: checkApi } = useFetch(import.meta.env.VITE_API_URL + '/check', {
   immediate: false,
@@ -44,23 +40,8 @@ checkApi().then(() => {
   verifySession()
 })
 
-if (mobile.value) {
-  watch(height, () => ScrollTrigger.refresh())
-}
-
-onMounted(() => {
-  
-
-  //router.beforeEach((to, from, next) => {
-  //  console.log(from.matched[0]?.instances.default)
-  //  console.log(to.matched[0]?.instances.default)
-  //  next()
-  //})
-
-  //watch(currentRoute, () => {
-  //  console.log(currentRoute)
-  //}, { immediate: true, deep: true })
-})
+const { height } = useElementSize(document.querySelector('body'))
+watch(height, () => ScrollTrigger.refresh())
 </script>
 
 <style>

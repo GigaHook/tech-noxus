@@ -1,5 +1,5 @@
 import { gsap } from "gsap/all"
-import { toValue, onMounted, watch, onUnmounted, getCurrentInstance, onDeactivated } from "vue"
+import { toValue, onMounted, watch, onUnmounted, getCurrentInstance, onDeactivated, onActivated } from "vue"
 import { useMouseInElement, useScroll, useElementVisibility, whenever, watchPausable } from '@vueuse/core'
 
 //вжух слева
@@ -48,42 +48,44 @@ function defineElem(target) {
   return target.value instanceof SVGGElement ? target.value : target.value.$el
 }
 
+function whenElementIsVisible() {
+  //TODO доделать + добавить в parallaxAngle
+}
+
 //движение к курсору
 const observedParents = new Map()
 export function parallax(
   target,
   valueX,
   valueY=valueX,
-  parent=getCurrentInstance().parent.ctx.$el //передавать только в случае использования вне SVG
+  parent=getCurrentInstance().parent.ctx.$el //папочка. !!!передавать только в случае использования вне SVG,
+  //тк с SVG получаем ссылку на первый родительский VUE КОМПОНЕНТ, если использовать вне SVG, этот код вернёт просто родителя
 ) {
-  const elem = defineElem(target)
-  const { isScrolling } = useScroll(window)
-  const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target)
-  
-  !observedParents.has(parent) && observedParents.set(parent, useElementVisibility(parent))
-  const isVisible = observedParents.get(parent)
-  
-  const animation = watchPausable([elementX, elementY], () => {
-    gsap.to(elem, {
+  const elem = defineElem(target) //получаем чистый элемент
+  const { isScrolling } = useScroll(window) //проверка на прокручивание страницы
+  const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target) //мышь внутри элемента stuff
+  observedParents.set(parent, useElementVisibility(parent)) //наблюдаем за общим родителем
+  const isVisible = observedParents.get(parent) //проверяем, находится ли родитель в зоне видимости
+  const animation = watchPausable([elementX, elementY], () => { //наблюдаем за координатами мыши
+    gsap.to(elem, { //двигаем элемент вместе с мышью
       x: (elementX.value - elementWidth.value / 2) / valueX,
       y: (elementY.value - elementHeight.value / 2) / valueY,
     })
+    console.log('fybvbhetv')
   })
 
-  animation.pause()
+  animation.pause() //сразу паузим, тк не факт что элемент изначально в зоне видимости
 
-  whenever(
-    () => !isScrolling.value && isVisible.value,
+  whenever( //запускаем только тогда когда страница не скролится и элемент в зоне видимости, иначе не анимируем
+    () => !isScrolling.value && isVisible?.value,
     (newVal, oldVal, onCleanup) => {
       animation.resume()
-      onCleanup(animation.pause)
+      onCleanup(animation.pause) //при чистке останавливаем (в основном при переходе между страницами)
     }
   )
-
-  onUnmounted(animation.stop)
 }
 
-//наклон к курсору
+//наклон к курсору (не оптимизировал ещё)
 export function parallaxAngle(target, max=2, stopOutside=true) {
   const {
     elementX,
