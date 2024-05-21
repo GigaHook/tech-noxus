@@ -6,7 +6,6 @@
   >
     <v-img 
       :src="post.image"
-      :aspect-ratio="16 / 9"
       class="mb-2"
       eager
       cover
@@ -21,21 +20,16 @@
     </v-card-subtitle>
 
     <v-card-text class="text-body-1">
-      <v-expand-transition mode="in-out">
-        <div v-if="expanded">
-          {{ post.fulltext }}    
-        </div>
-
-        <div v-else>
-          {{ post.text }}    
-        </div>
-      </v-expand-transition>
+      <div class="text-container" ref="textContainer">
+        {{ text }}
+      </div>
     </v-card-text>
   
     <v-card-actions class="mt-n4">
       <v-btn
-        @click="expanded = !expanded"
+        @click="expanded ? truncate() : expand()"
         text="Подробнее"
+        style="z-index: 2 !important; background-color: white !important;"
       />
 
       <template v-if="user">
@@ -58,11 +52,44 @@
 
 <script setup>
 import { useStorage } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { usePosts } from '@/scripts/api.js'
+import { gsap } from 'gsap/all'
 
 const expanded = ref(false)
 const user = useStorage('user', null)
 const { post } = defineProps({ post: Object })
 const { deletePost } = usePosts()
+const text = ref(post.text)
+const textContainer = ref()
+const range = document.createRange()
+
+onMounted(() => {
+  gsap.set(textContainer.value, {
+    height: '2.4em',
+  })
+})
+
+function expand() {
+  expanded.value = !expanded.value
+  text.value = post.fulltext
+  nextTick(() => {
+    range.selectNode(textContainer.value.firstChild)
+    gsap.fromTo(textContainer.value, {
+      height: '2.4em',
+    }, {
+      height: range.getBoundingClientRect().height + 'px',
+    })
+  })
+}
+
+function truncate() {
+  expanded.value = !expanded.value
+  text.value = post.text
+  gsap.fromTo(textContainer.value, {
+    height: textContainer.value.clientHeight,
+  }, {
+    height: '2.4em',
+  })
+}
 </script>
