@@ -22,7 +22,7 @@ import Footer from '@/components/Footer.vue'
 import { useFetch, useElementSize } from '@vueuse/core'
 import { ref, shallowRef, provide, watch } from 'vue'
 import { useAuth } from '@/scripts/api'
-import { ScrollTrigger } from 'gsap/all'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const isHeroBtnVisible = ref(true)
 provide('isHeroBtnVisible', isHeroBtnVisible)

@@ -2,7 +2,9 @@
   <v-container class="my-16 pt-16" id="timetable">
     <v-row justify="center" align="center">
       <v-col cols="12" lg="4">
-        <TimetableSvg v-animate-on-scroll/>
+        <AnimateOnScroll>
+          <TimetableSvg/>
+        </AnimateOnScroll>
       </v-col>
 
       <v-col cols="12" lg="8" xl="6" class="position-relative overflow-visible">
@@ -48,6 +50,7 @@
 import TimetableSvg from '@/components/svg/TimetableSvg.vue'
 import { onMounted } from 'vue'
 import { useTimeline } from '@/scripts/animations'
+import AnimateOnScroll from '@/components/AnimateOnScroll.vue';
 
 onMounted(() => {
   const tl = () => useTimeline({

@@ -44,49 +44,54 @@ export function fadeIn(elem) {
   })
 }
 
-function defineElem(target) {
-  return target.value instanceof SVGGElement ? target.value : target.value.$el
-}
+const defineElem = ({ value }) => value instanceof SVGGElement ? value : value.$el
 
-function whenElementIsVisible() {
-  //TODO доделать + добавить в parallaxAngle
-}
-
-//движение к курсору
 const observedParents = new Map()
-export function parallax(
-  target,
-  valueX,
-  valueY=valueX,
-  parent=getCurrentInstance().parent.ctx.$el //папочка. !!!передавать только в случае использования вне SVG,
-  //тк с SVG получаем ссылку на первый родительский VUE КОМПОНЕНТ, если использовать вне SVG, этот код вернёт просто родителя
-) {
-  const elem = defineElem(target) //получаем чистый элемент
-  const { isScrolling } = useScroll(window) //проверка на прокручивание страницы
-  const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(target) //мышь внутри элемента stuff
-  observedParents.set(parent, useElementVisibility(parent)) //наблюдаем за общим родителем
-  const isVisible = observedParents.get(parent) //проверяем, находится ли родитель в зоне видимости
-  const animation = watchPausable([elementX, elementY], () => { //наблюдаем за координатами мыши
-    gsap.to(elem, { //двигаем элемент вместе с мышью
-      x: (elementX.value - elementWidth.value / 2) / valueX,
-      y: (elementY.value - elementHeight.value / 2) / valueY,
-    })
-    console.log('fybvbhetv')
-  })
 
-  animation.pause() //сразу паузим, тк не факт что элемент изначально в зоне видимости
-
-  whenever( //запускаем только тогда когда страница не скролится и элемент в зоне видимости, иначе не анимируем
+//триггер при входе/выходе из области видимости и начала/прокрутки (только для ниже)
+function wheneverVisible(watchPausableInstance, parent) {
+  const { isScrolling } = useScroll(window)                 //проверяем не скролим ли мы страницу
+  observedParents.set(parent, useElementVisibility(parent)) //надо чтобы не полдить обсерверы
+  const isVisible = observedParents.get(parent)             //проверяем находится ли родитель в области видимости
+  watchPausableInstance.pause()                             //сразу паузим, тк не факт что элемент изначально в зоне видимости
+  whenever(                                                 //запускаем когда страница не скролится и элемент в зоне видимости, иначе не анимируем
     () => !isScrolling.value && isVisible?.value,
     (newVal, oldVal, onCleanup) => {
-      animation.resume()
-      onCleanup(animation.pause) //при чистке останавливаем (в основном при переходе между страницами)
+      watchPausableInstance.resume()
+      onCleanup(watchPausableInstance.pause)                //при чистке останавливаем (в основном при переходе между страницами)
     }
   )
 }
+//движение к курсору
+export function parallax(
+  target,
+  valueX=10,
+  valueY=valueX
+) {
+  const elem = defineElem(target) //получаем чистый элемент
+  const { 
+    elementX,
+    elementY,
+    elementWidth,
+    elementHeight
+  } = useMouseInElement(target) //мышь внутри элемента stuff
+  const animation = watchPausable([elementX, elementY], () => { //наблюдаем за координатами мыши, двигаем элемент вместе с мышью
+    gsap.to(elem, {
+      x: (elementX.value - elementWidth.value / 2) / valueX,
+      y: (elementY.value - elementHeight.value / 2) / valueY,
+    })
+  })
+
+  wheneverVisible(animation, elem.ownerSVGElement || target.value.$parent)
+}
 
 //наклон к курсору (не оптимизировал ещё)
-export function parallaxAngle(target, max=2, stopOutside=true) {
+export function parallaxAngle(
+  target,
+  max=2,
+  stopOutside=true,
+) {
+  const elem = defineElem(target)
   const {
     elementX,
     elementY,
@@ -95,9 +100,7 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
     elementWidth,
   } = useMouseInElement(target)
 
-  const elem = defineElem(target)
-
-  watch([elementX, elementY], () => {
+  const animation = watchPausable([elementX, elementY], () => {
     const rX = (
       max / 2 - (elementY.value / elementHeight.value) * max
     ).toFixed(2)
@@ -112,6 +115,10 @@ export function parallaxAngle(target, max=2, stopOutside=true) {
       elem.style.transform = `perspective(${elementWidth.value}px) rotateX(${-rX}deg) rotateY(${-rY}deg)`
     }
   })
+
+  animation.pause()
+
+  wheneverVisible(animation, elem.ownerSVGElement || target.value.$parent)
 }
 
 //начать/остановить css анимации

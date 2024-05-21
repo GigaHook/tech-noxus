@@ -4,7 +4,6 @@ import Home from '@/pages/Home.vue'
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
-import { defineComponent } from 'vue'
 
 const user = useStorage('user')
 

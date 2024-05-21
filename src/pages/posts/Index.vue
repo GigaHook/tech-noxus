@@ -33,9 +33,7 @@
         <v-pagination
           v-model="currentPageNumber"
           :length="posts?.meta.last_page"
-          @next="toPage(posts?.links.next)"
-          @prev="toPage(posts?.links.prev)"
-          @update:model-value="page => toPage(paginatedLink + page)"
+          @update:model-value="page => currentPage = `${url}/posts?page=${page}`"
         />
       </v-col>
     </v-row>
@@ -43,24 +41,19 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, getCurrentInstance } from 'vue'
+import { shallowRef } from 'vue'
 import { useFetch } from '@vueuse/core'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import Post from '@/components/Post.vue'
 
 const url = import.meta.env.VITE_API_URL
 const { mobile } = useDisplay()
-const currentPage = ref(url + '/posts')
-const paginatedLink = url + '/posts?page='
-const currentPageNumber = ref(1)
+const currentPage = shallowRef(url + '/posts')
+const currentPageNumber = shallowRef(1)
 
 const { data: posts, isFetching, error } = useFetch(currentPage, {
   refetch: true,
 }).json()
-
-function toPage(page) {
-  currentPage.value = page
-}
 </script>
 
 <style>
