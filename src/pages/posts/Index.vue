@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="postsTop">
     <v-row justify="center">
       <v-col cols="12" lg="7" xl="5">
         <template v-if="isFetching">
@@ -25,6 +25,7 @@
             v-for="post, index in posts?.data"
             :key="index"
             :post="post"
+            @delete="refetch"
           />
         </template>
       </v-col>
@@ -33,7 +34,7 @@
         <v-pagination
           v-model="currentPageNumber"
           :length="posts?.meta.last_page"
-          @update:model-value="page => currentPage = `${url}/posts?page=${page}`"
+          @update:model-value="page => handlePageChange(page)"
         />
       </v-col>
     </v-row>
@@ -42,7 +43,7 @@
 
 <script setup>
 import { shallowRef } from 'vue'
-import { useFetch } from '@vueuse/core'
+import { useFetch, useWindowScroll } from '@vueuse/core'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import Post from '@/components/Post.vue'
 
@@ -50,10 +51,20 @@ const url = import.meta.env.VITE_API_URL
 const { mobile } = useDisplay()
 const currentPage = shallowRef(url + '/posts')
 const currentPageNumber = shallowRef(1)
+const { y } = useWindowScroll()
 
-const { data: posts, isFetching, error } = useFetch(currentPage, {
+const { data: posts, isFetching, error, execute: refetch } = useFetch(currentPage, {
   refetch: true,
+  afterFetch(ctx) {
+    y.value = 0
+    return ctx
+  },
 }).json()
+
+function handlePageChange(page) {
+  currentPage.value = `${url}/posts?page=${page}`
+  y.value = 0
+}
 </script>
 
 <style>

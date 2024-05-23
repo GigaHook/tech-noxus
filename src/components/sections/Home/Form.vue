@@ -145,12 +145,13 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useState } from '@/scripts/store'
 import courses from '@/courses'
-import useStore from '@/scripts/store'
 import CourseTypeChip from '@/components/CourseTypeChip.vue'
 
-const store = useStore()
 const hover = ref(false)
+const { selectedCourse } = useState()
+
 
 const contactItems = [
   'Написать в Телеграм',
@@ -164,9 +165,9 @@ const chatId = '-4089804866'
 const form = ref()
 const name = ref()
 const tel = ref()
-const course = computed({
-  get: () => store.selectedCourse,
-  set: value => store.selectedCourse = value
+const course = computed({ //сомнительно
+  get: () => selectedCourse.value,
+  set: value => selectedCourse.value = value
 })
 const contactBy = ref()
 const status = ref(false)

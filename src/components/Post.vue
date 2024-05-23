@@ -19,22 +19,22 @@
       {{ post.date }}
     </v-card-subtitle>
 
-    <v-card-text class="text-body-1">
+    <v-card-text class="text-body-1 overflow-y-hidden">
       <div class="text-container" ref="textContainer">
         {{ text }}
       </div>
     </v-card-text>
   
-    <v-card-actions class="mt-n4">
+    <v-card-actions class="mt-n4" v-if="expandable || $user">
       <v-btn
-        @click="expanded ? truncate() : expand()"
-        text="Подробнее"
-        style="z-index: 2 !important; background-color: white !important;"
+        v-if="expandable"
+        @click="expanded ? truncate() : expand()"  
+        :text="expanded ? 'Скрыть' : 'Подробнее'"
       />
 
-      <template v-if="user">
+      <template v-if="$user">
         <v-btn
-          @click="$router.push({
+          @click="$state.postBeingEdited.value = post; $router.push({
             name: 'PostsUpdate',
             params: { id: post.id },
           })"
@@ -42,7 +42,7 @@
         />              
   
         <v-btn
-          @click="deletePost(post.id)"
+          @click="deletePost(post.id).then(() => $emit('delete'))"    
           text="Удалить"
         />
       </template>
@@ -51,20 +51,23 @@
 </template>
 
 <script setup>
-import { useStorage } from '@vueuse/core'
-import { ref, onMounted, nextTick, watch } from 'vue'
+import { ref, onMounted, nextTick, shallowRef } from 'vue'
 import { usePosts } from '@/scripts/api.js'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { gsap } from 'gsap/all'
 
-const expanded = ref(false)
-const user = useStorage('user', null)
 const { post } = defineProps({ post: Object })
 const { deletePost } = usePosts()
-const text = ref(post.text)
+const text = shallowRef()
+const { mobile } = useDisplay()
+const expanded = shallowRef(false)
+const expandable = shallowRef(true)
 const textContainer = ref()
 const range = document.createRange()
 
 onMounted(() => {
+  text.value = mobile.value ? post.text.slice(0, 70) + '...' : post.text
+  expandable.value = mobile.value || post.text.endsWith('...')
   gsap.set(textContainer.value, {
     height: '2.4em',
   })
@@ -85,9 +88,9 @@ function expand() {
 
 function truncate() {
   expanded.value = !expanded.value
-  text.value = post.text
+  text.value = mobile.value ? post.text.slice(0, 70) + '...' : post.text
   gsap.fromTo(textContainer.value, {
-    height: textContainer.value.clientHeight,
+    height: textContainer.value.clientHeight + 'px',
   }, {
     height: '2.4em',
   })

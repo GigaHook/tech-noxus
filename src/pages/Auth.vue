@@ -44,20 +44,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 import { useAuth } from '@/scripts/api'
 import { useRouter } from 'vue-router'
 
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
-  range: v => (v?.length <= 20 && v?.length >= 4) || 'От 4 до 20 символов',
+  range:    v => (v?.length <= 20 && v?.length >= 4) || 'От 4 до 20 символов',
 }
 
 const { login } = useAuth()
 const router = useRouter()
 const form = ref()
-const loading = ref(false)
-const loginError = ref()
+const loading = shallowRef(false)
+const loginError = shallowRef()
 const formData = ref({
   login: '',
   password: '',
@@ -72,7 +72,7 @@ async function submit() {
   try {
     await login(formData.value)
   } catch (error) {
-    loginError.value = error.response?.data.message
+    loginError.value = error.response?.message
     form.value.items[1].reset()
   } finally {
     loading.value = false

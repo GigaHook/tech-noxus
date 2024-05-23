@@ -144,13 +144,14 @@
 <script setup>
 import HeroSvg from '@/components/svg/HeroSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, onMounted, inject, nextTick } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useTimeline } from '@/scripts/animations'
 import { useIntersectionObserver } from '@vueuse/core'
+import { useState } from '@/scripts/store'
 
 const { mobile } = useDisplay()
+const state = useState() 
 const heroBtn = ref()
-const isHeroBtnVisible = inject('isHeroBtnVisible')
 const tl = useTimeline()
 
 function animate() {
@@ -188,10 +189,11 @@ function animate() {
 
 onMounted(async () => {
   animate()
-  await nextTick()
-  useIntersectionObserver(
-    heroBtn, ([{ isIntersecting }]) => isHeroBtnVisible.value = isIntersecting
-  )
+  await nextTick(() => {
+    useIntersectionObserver(
+      heroBtn, ([{ isIntersecting }]) => state.isHeroBtnVisible.value = isIntersecting
+    )
+  })
 })
 </script>
 

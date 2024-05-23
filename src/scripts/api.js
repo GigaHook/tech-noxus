@@ -1,21 +1,20 @@
-import { useStorage } from "@vueuse/core"
-import { useRouter } from "vue-router"
-import useAxios from "@/scripts/axios"
+import { useLocalStorage } from "@/scripts/store"
+import { useAxios } from "@/scripts/axios"
+import { computed } from "vue"
+import { createSharedComposable } from "@vueuse/core"
 
 const axios = useAxios()
 
-export function useAuth() {
-  const router = useRouter()
-  const user = useStorage('user')
-  let isSessionVerified = false
+export const useAuth = createSharedComposable(() => {
+  const store = useLocalStorage()
+  const user = computed({
+    get: () => store.value.user,
+    set: value => store.value.user = value,
+  })
 
   async function login(formData) {
-    await axios.get('/sanctum/csrf-cookie')
-    const { data } = await axios.post('/login', {
-      login: formData.login,
-      password: formData.password,
-    })
-    user.value = JSON.parse(data.user)
+    const { data } = await axios.post('/login', formData)
+    user.value = data.user
   }
 
   async function logout() {
@@ -24,23 +23,23 @@ export function useAuth() {
   }
 
   async function verifySession() {
-    if (user.value && !isSessionVerified) {
-      isSessionVerified = true
+    await axios.get('/sanctum/csrf-cookie')
+    if (user.value) {
       try {
         await axios.get('/user')
       } catch (error) {
-        user.value = null
-        router.push('/login')
+        store.value.user = null
       }
     }
   }
 
   return {
+    user,
     login,
     logout,
     verifySession,
   }
-}
+})
 
 export function usePosts() {
   async function createPost(formData) {
@@ -56,22 +55,20 @@ export function usePosts() {
   }
 
   async function updatePost(id, formData) {
-    await axios.update('/posts', {
-      id:    id,
-      title: formData.title ?? null,
-      text:  formData.text ?? null,
-      image: formData.image[0] ?? null,
+    const { data } = await axios.patch('/posts/' + id, {
+      title: formData.title,
+      text:  formData.text,
+      image: formData.image?.[0],
     }, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
+    console.log(data)
   }
 
   async function deletePost(id) {
-    await axios.delete('/posts', {
-      id: id
-    })
+    await axios.delete('/posts/' + id)
   }
 
   return {

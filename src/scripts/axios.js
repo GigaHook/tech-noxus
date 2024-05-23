@@ -1,15 +1,15 @@
-import { createSharedComposable } from '@vueuse/core'
 import Axios from 'axios'
 
-function useAxiosFn() {
+export function useAxios() {
   const axios = Axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     timeout: 60000,
     withCredentials: true,
     withXSRFToken: true,
     headers: {
-      Accept: "application/json"
+      Accept: "application/json",
     },
+    
   })
 
   axios.interceptors.response.use(null, err => {
@@ -19,7 +19,3 @@ function useAxiosFn() {
 
   return axios
 }
-
-const useAxios = createSharedComposable(useAxiosFn)
-
-export default useAxios

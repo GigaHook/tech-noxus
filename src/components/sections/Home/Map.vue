@@ -7,6 +7,7 @@
         </h2>
 
         <v-card elevation="12" class="map-container">
+          <!--лагает пиздец-->
           <iframe
             class="map w-100"
             src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=127607219934"

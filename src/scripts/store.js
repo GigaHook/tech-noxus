@@ -1,17 +1,18 @@
-import { reactive } from "vue"
-import { gsap } from "gsap/all"
-import { createSharedComposable } from "@vueuse/core"
+import { createGlobalState, useStorage } from '@vueuse/core'
+import { ref, shallowRef, reactive } from 'vue'
 
-const store = reactive({
-  selectedCourse: null,
-  heroBtn: null,
-  yMapData: null,
+export const useLocalStorage = createGlobalState(() => useStorage('store', {}))
+
+export const useState = createGlobalState(() => { 
+  const isHeroBtnVisible = shallowRef(true)
+  const timelines = shallowRef([])
+  const selectedCourse = shallowRef()
+  const postBeingEdited = ref(null)
+
+  return {
+    isHeroBtnVisible,
+    timelines,
+    selectedCourse,
+    postBeingEdited,
+  } 
 })
-
-function useStoreFn() {
-  return store
-}
-
-const useStore = createSharedComposable(useStoreFn)
-
-export default useStore

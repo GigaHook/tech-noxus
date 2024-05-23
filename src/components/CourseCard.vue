@@ -34,7 +34,7 @@
 
         <div class="d-flex justify-space-between align-center w-100">
           <v-btn
-            @click="applyForCourse"
+            @click="$state.selectedCourse.value = course"
             v-scroll-to="'#form'"
             variant="flat"
             color="amber-accent-3"
@@ -63,7 +63,7 @@
         <v-row :style="display.mobile.value && 'max-height: 100%;'">
           <v-col cols="12" md="5" class="d-flex flex-column h-100">
             <v-img
-              :src="img"
+              :src="assetImageUrl(course.img)"
               class="align-self-stretch"
               cover
               eager
@@ -80,7 +80,7 @@
 
             <v-btn
               v-if="!display.mobile.value"
-              @click="applyForCourse"
+              @click="$state.selectedCourse.value = course; overlay = false"
               v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3 w-50"
@@ -116,7 +116,7 @@
 
             <v-btn
               v-if="display.mobile.value"
-              @click="applyForCourse"
+              @click="$state.selectedCourse.value = course; overlay = false"
               v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3"
@@ -144,25 +144,17 @@ import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { parallaxAngle } from '@/scripts/animations'
 import { assetImageUrl } from '@/scripts/helpers'
-import useStore from '@/scripts/store'
 import CourseTypeChip from '@/components/CourseTypeChip.vue'
 
 const { course, index } = defineProps({ 
   course: Object,
   index: Number,
 })
-
 const display = useDisplay()
 const hover = ref()
 const card = ref()
 const cardRoot = ref()
 const overlay = ref(false)
-const store = useStore()
-
-function applyForCourse() {
-  store.selectedCourse = course
-  overlay.value = false
-}
 
 onMounted(() => {
   !display.mobile.value && parallaxAngle(card, 4)

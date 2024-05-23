@@ -20,28 +20,22 @@
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import { useFetch, useElementSize } from '@vueuse/core'
-import { ref, shallowRef, provide, watch } from 'vue'
+import { watch, onMounted } from 'vue'
 import { useAuth } from '@/scripts/api'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-const isHeroBtnVisible = ref(true)
-provide('isHeroBtnVisible', isHeroBtnVisible)
-
-const timelines = shallowRef([])
-provide('timelines', timelines)
 
 const { verifySession } = useAuth()
 const { data, execute: checkApi } = useFetch(import.meta.env.VITE_API_URL + '/check', {
   immediate: false,
 })
 
-checkApi().then(() => {
+onMounted(async () => {
+  const { height } = useElementSize(document.querySelector('body'))
+  watch(height, () => ScrollTrigger.refresh())
+  await checkApi()
   console.log(data.value)
-  verifySession()
+  await verifySession()
 })
-
-const { height } = useElementSize(document.querySelector('body'))
-watch(height, () => ScrollTrigger.refresh())
 </script>
 
 <style>

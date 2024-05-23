@@ -23,7 +23,7 @@
       </template>
 
       <v-btn
-        v-if="!isHeroBtnVisible && route.name == 'Home'"
+        v-if="!$state.isHeroBtnVisible.value && route.name == 'Home'"
         v-scroll-to="'#form'"
         key="signUp"
         flat
@@ -59,14 +59,14 @@
     />
 
     <v-btn
-      v-if="user"
+      v-if="$user"
       :active="adminSide"
       @click="adminSide = !adminSide; side = false"
       key="adminSide"
       class="rounded me-2"
-      icon
       variant="flat"
       color="amber-accent-3"
+      icon
     >
       <v-icon icon="fas fa-key" class="mb-1"/>
     </v-btn>
@@ -119,7 +119,7 @@
 
   <v-navigation-drawer
     temporary
-    v-if="user"
+    v-if="$user"
     location="right"
     v-model="adminSide"
   >
@@ -146,8 +146,7 @@
 
 <script setup>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { ref, inject } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/scripts/api'
 
@@ -157,8 +156,6 @@ const router = useRouter()
 const route = useRoute()
 const side = ref(false)
 const adminSide = ref(false)
-const user = useStorage('user', null)
-const isHeroBtnVisible = inject('isHeroBtnVisible')
 
 const homeMenu = [
   {
@@ -204,7 +201,5 @@ async function handleLogout() {
   if (route.matched[0]?.beforeEnter?.name == 'adminGuard') {
     router.push('/')
   }
-
-  user.value = null
 }
 </script>

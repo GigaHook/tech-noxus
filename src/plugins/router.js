@@ -1,11 +1,12 @@
 import { createWebHistory, createRouter } from "vue-router"
-import { useStorage } from '@vueuse/core'
+import { useAuth } from "@/scripts/api"
 import Home from '@/pages/Home.vue' 
 import Partners from '@/pages/Partners.vue'
 import Auth from '@/pages/Auth.vue'
 import PostsCreate from '@/pages/posts/Create.vue'
+import PostsIndex from '@/pages/posts/Index.vue'
 
-const user = useStorage('user')
+const { user } = useAuth()
 
 function adminGuard(to) {
   return !user?.value ? { name: 'Home' } : true
@@ -30,9 +31,6 @@ const router = createRouter({
       path: '/partners',
       name: 'Partners',
       component: Partners,
-      meta: {
-        keepAlive: true,
-      }
     },
     {
       path: '/auth',
@@ -43,7 +41,7 @@ const router = createRouter({
     {
       path: '/posts',
       name: 'Posts',
-      component: () => import('@/pages/posts/Index.vue'),
+      component: PostsIndex,
     },
     {
       path: '/posts/create',
@@ -52,7 +50,7 @@ const router = createRouter({
       beforeEnter: adminGuard,
     },
     {
-      path: '/posts/:id/edit',
+      path: '/posts/:id',
       name: 'PostsUpdate',
       component: PostsCreate,
       beforeEnter: adminGuard,
