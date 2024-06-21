@@ -1,7 +1,7 @@
 <template>
   <v-container id="partners-about">
     <v-row justify-md="space-around" justify-lg="center" class="mt-2">
-      <AboutRow
+      <SignedImage
         v-for="(row, index) in rows"
         :key="index"
         :index="index"
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import AboutRow from '@/components/AboutRow.vue'
+import SignedImage from '@/components/SignedImage.vue'
 import PartnersCardSvg from "@/components/svg/PartnersCardSvg.vue"
 import GuideSvg from "@/components/svg/GuideSvg.vue"
 

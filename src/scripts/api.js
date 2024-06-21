@@ -26,7 +26,7 @@ export const useAuth = createSharedComposable(() => {
     await axios.get('/sanctum/csrf-cookie')
     if (user.value) {
       try {
-        await axios.get('/user')
+        console.log(await axios.get('/user'))
       } catch (error) {
         store.value.user = null
       }
@@ -55,7 +55,7 @@ export function usePosts() {
   }
 
   async function updatePost(id, formData) {
-    const { data } = await axios.patch('/posts/' + id, {
+    await axios.patch('/posts/' + id, {
       title: formData.title,
       text:  formData.text,
       image: formData.image?.[0],
@@ -64,7 +64,6 @@ export function usePosts() {
         'Content-Type': 'multipart/form-data'
       }
     })
-    console.log(data)
   }
 
   async function deletePost(id) {

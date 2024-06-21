@@ -145,12 +145,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useState } from '@/scripts/store'
+import { useStore } from '@/scripts/store'
 import courses from '@/courses'
 import CourseTypeChip from '@/components/CourseTypeChip.vue'
 
 const hover = ref(false)
-const { selectedCourse } = useState()
+const { selectedCourse } = useStore()
 
 
 const contactItems = [

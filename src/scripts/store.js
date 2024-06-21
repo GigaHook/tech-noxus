@@ -1,9 +1,9 @@
 import { createGlobalState, useStorage } from '@vueuse/core'
-import { ref, shallowRef, reactive } from 'vue'
+import { ref, shallowRef } from 'vue'
 
 export const useLocalStorage = createGlobalState(() => useStorage('store', {}))
 
-export const useState = createGlobalState(() => { 
+export const useStore = createGlobalState(() => { 
   const isHeroBtnVisible = shallowRef(true)
   const timelines = shallowRef([])
   const selectedCourse = shallowRef()

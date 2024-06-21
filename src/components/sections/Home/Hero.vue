@@ -147,10 +147,10 @@ import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { ref, onMounted, nextTick } from 'vue'
 import { useTimeline } from '@/scripts/animations'
 import { useIntersectionObserver } from '@vueuse/core'
-import { useState } from '@/scripts/store'
+import { useStore } from '@/scripts/store'
 
 const { mobile } = useDisplay()
-const state = useState() 
+const store = useStore() 
 const heroBtn = ref()
 const tl = useTimeline()
 
@@ -191,7 +191,7 @@ onMounted(async () => {
   animate()
   await nextTick(() => {
     useIntersectionObserver(
-      heroBtn, ([{ isIntersecting }]) => state.isHeroBtnVisible.value = isIntersecting
+      heroBtn, ([{ isIntersecting }]) => store.isHeroBtnVisible.value = isIntersecting
     )
   })
 })

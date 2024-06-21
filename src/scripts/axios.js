@@ -8,8 +8,7 @@ export function useAxios() {
     withXSRFToken: true,
     headers: {
       Accept: "application/json",
-    },
-    
+    }, 
   })
 
   axios.interceptors.response.use(null, err => {

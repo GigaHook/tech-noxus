@@ -25,24 +25,24 @@
       </div>
     </v-card-text>
   
-    <v-card-actions class="mt-n4" v-if="expandable || $user">
+    <v-card-actions class="mt-n4" v-if="expandable || $user.value">
       <v-btn
         v-if="expandable"
         @click="expanded ? truncate() : expand()"  
         :text="expanded ? 'Скрыть' : 'Подробнее'"
       />
 
-      <template v-if="$user">
+      <template v-if="$user.value">
         <v-btn
-          @click="$state.postBeingEdited.value = post; $router.push({
+          @click="$store.postBeingEdited.value = post; $router.push({
             name: 'PostsUpdate',
             params: { id: post.id },
           })"
           text="Изменить"
-        />              
+        />
   
         <v-btn
-          @click="deletePost(post.id).then(() => $emit('delete'))"    
+          @click="deletePost(post.id).then(() => $emit('deleted'))"    
           text="Удалить"
         />
       </template>

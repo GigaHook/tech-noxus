@@ -1,7 +1,7 @@
 <template>
   <v-container class="px-8 mb-8" id="partners">
     <v-row justify-md="space-around" justify-lg="center">
-      <AboutRow 
+      <SignedImage 
         title="Партнёрская программа"
         :img="CardBannerSvg"
       >
@@ -17,13 +17,13 @@
         >
           Узнать больше
         </v-btn>
-      </AboutRow>
+      </SignedImage>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import AboutRow from '@/components/AboutRow.vue'
+import SignedImage from '@/components/SignedImage.vue'
 import CardBannerSvg from '@/components/svg/CardBannerSvg.vue'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useRouter } from 'vue-router'

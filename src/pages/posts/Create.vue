@@ -4,7 +4,7 @@
       <v-col cols="12" lg="5" xl="4">
         <v-card>
           <v-card-title>
-            {{ $state.postBeingEdited.value ? 'Изменить новость' : 'Добавить новость' }}
+            {{ $store.postBeingEdited.value ? 'Изменить новость' : 'Добавить новость' }}
           </v-card-title>
 
           <v-card-text>
@@ -32,16 +32,16 @@
               <v-file-input
                 v-model="formData.image"
                 label="Изображение"
-                :rules="$state.postBeingEdited.value ? [] : [rules.image]"
+                :rules="$store.postBeingEdited.value ? [] : [rules.image]"
                 :error-messages="errors.image"
-                :prepend-icon="$state.postBeingEdited.value ? 'mdi mdi-image-edit' : 'mdi mdi-image-plus'"
+                :prepend-icon="$store.postBeingEdited.value ? 'mdi mdi-image-edit' : 'mdi mdi-image-plus'"
                 @update:model-value="delete errors.image"
                 show-size
               />
 
               <v-btn
                 type="submit"
-                :text="$state.postBeingEdited.value ? 'Изменить' : 'Добавить'"
+                :text="$store.postBeingEdited.value ? 'Изменить' : 'Добавить'"
                 variant="flat"
                 color="amber-accent-3"
                 :loading="loading"
@@ -58,7 +58,7 @@
 import { ref, shallowRef, onActivated, onDeactivated } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { usePosts } from '@/scripts/api'
-import { useState } from '@/scripts/store'
+import { useStore } from '@/scripts/store'
 
 const rules = {
   required: v => !!v || 'Это поле нужно заполнить',
@@ -68,7 +68,7 @@ const rules = {
 const { createPost, updatePost } = usePosts()
 const router = useRouter()
 const route = useRoute()
-const state = useState()
+const store = useStore()
 const form = ref()
 const loading = shallowRef(false)
 const errors = ref({})
@@ -79,18 +79,18 @@ const formData = ref({
 })
 
 onActivated(() => {
-  if (route.params.id && !state.postBeingEdited.value) {
+  if (route.params.id && !store.postBeingEdited.value) {
     router.push('/posts')
   }
 
-  if (state.postBeingEdited.value) {
-    formData.value.title = state.postBeingEdited.value.title
-    formData.value.text = state.postBeingEdited.value.fulltext
+  if (store.postBeingEdited.value) {
+    formData.value.title = store.postBeingEdited.value.title
+    formData.value.text = store.postBeingEdited.value.fulltext
   }
 })
 
 onDeactivated(() => {
-  state.postBeingEdited.value = null
+  store.postBeingEdited.value = null
   formData.value = {
     title: null,
     text:  null,
@@ -105,7 +105,10 @@ async function submit() {
   loading.value = true
 
   try {
-    if (state.postBeingEdited.value) {
+    if (store.postBeingEdited.value) {
+      console.log('из create')
+      console.log(formData.value)
+      console.log(formData.value.title)
       await updatePost(route.params.id, formData.value)
     } else {
       await createPost(formData.value)

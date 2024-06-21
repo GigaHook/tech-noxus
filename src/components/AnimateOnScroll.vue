@@ -8,18 +8,18 @@
 import { ref, computed, onActivated, onDeactivated } from 'vue'
 import { useAnimations } from "@/scripts/animations"
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { useState } from '@/scripts/store'
+import { useStore } from '@/scripts/store'
 import { gsap } from 'gsap/all'
 
 const wrapper = ref()
 const el = computed(() => wrapper.value?.children?.[0])
 const { mobile } = useDisplay()
-const state = useState()
+const store = useStore()
 
 onActivated(() => {
   const { startAnimation } = useAnimations(el.value)
   gsap.set(el.value, { opacity: 0 })
-  state.timelines.value.push(gsap.timeline({
+  store.timelines.value.push(gsap.timeline({
     scrollTrigger: {
       trigger: el.value,
       start: `top+=${mobile.value ? 150 : 220}px bottom`,
@@ -36,7 +36,7 @@ onActivated(() => {
 })
 
 onDeactivated(() => {
-  state.timelines.value.forEach(tl => tl.kill())
-  state.timelines.value.length = 0
+  store.timelines.value.forEach(tl => tl.kill())
+  store.timelines.value.length = 0
 })
 </script>

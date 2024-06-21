@@ -23,7 +23,7 @@
       </template>
 
       <v-btn
-        v-if="!$state.isHeroBtnVisible.value && route.name == 'Home'"
+        v-if="!$store.isHeroBtnVisible.value && route.name == 'Home'"
         v-scroll-to="'#form'"
         key="signUp"
         flat
@@ -59,7 +59,7 @@
     />
 
     <v-btn
-      v-if="$user"
+      v-if="$user.value"
       :active="adminSide"
       @click="adminSide = !adminSide; side = false"
       key="adminSide"
@@ -119,7 +119,7 @@
 
   <v-navigation-drawer
     temporary
-    v-if="$user"
+    v-if="$user.value"
     location="right"
     v-model="adminSide"
   >

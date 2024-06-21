@@ -62,6 +62,7 @@ function wheneverVisible(watchPausableInstance, parent) {
     }
   )
 }
+
 //движение к курсору
 export function parallax(
   target,

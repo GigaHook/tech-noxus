@@ -15,7 +15,7 @@
         <div v-else-if="error" class="text-center">
           Не удалось загрузить новости
         </div>
-
+        
         <div v-else-if="posts?.data.length == 0" class="text-center">
           У нас пока нет новостей для вас
         </div>
@@ -25,7 +25,7 @@
             v-for="post, index in posts?.data"
             :key="index"
             :post="post"
-            @delete="refetch"
+            @deleted="refetch"
           />
         </template>
       </v-col>
@@ -49,11 +49,11 @@ import Post from '@/components/Post.vue'
 
 const url = import.meta.env.VITE_API_URL
 const { mobile } = useDisplay()
-const currentPage = shallowRef(url + '/posts')
+const currentPageUrl = shallowRef(url + '/posts')
 const currentPageNumber = shallowRef(1)
 const { y } = useWindowScroll()
 
-const { data: posts, isFetching, error, execute: refetch } = useFetch(currentPage, {
+const { data: posts, isFetching, error, execute: refetch } = useFetch(currentPageUrl, {
   refetch: true,
   afterFetch(ctx) {
     y.value = 0
@@ -62,7 +62,7 @@ const { data: posts, isFetching, error, execute: refetch } = useFetch(currentPag
 }).json()
 
 function handlePageChange(page) {
-  currentPage.value = `${url}/posts?page=${page}`
+  currentPageUrl.value = `${url}/posts?page=${page}`
   y.value = 0
 }
 </script>

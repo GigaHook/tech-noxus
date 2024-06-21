@@ -11,7 +11,7 @@
         </div>
       </v-col>
 
-      <AboutRow
+      <SignedImage
         v-for="(row, index) in rows"
         :key="index"
         :index="index"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import AboutRow from '@/components/AboutRow.vue'
+import SignedImage from '@/components/SignedImage.vue'
 import LayoutSvg from "@/components/svg/LayoutSvg.vue"
 import ModelingSvg from "@/components/svg/ModelingSvg.vue"
 import VideoSvg from "@/components/svg/VideoSvg.vue"

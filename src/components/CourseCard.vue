@@ -34,7 +34,7 @@
 
         <div class="d-flex justify-space-between align-center w-100">
           <v-btn
-            @click="$state.selectedCourse.value = course"
+            @click="$store.selectedCourse.value = course"
             v-scroll-to="'#form'"
             variant="flat"
             color="amber-accent-3"
@@ -80,7 +80,7 @@
 
             <v-btn
               v-if="!display.mobile.value"
-              @click="$state.selectedCourse.value = course; overlay = false"
+              @click="$store.selectedCourse.value = course; overlay = false"
               v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3 w-50"
@@ -116,7 +116,7 @@
 
             <v-btn
               v-if="display.mobile.value"
-              @click="$state.selectedCourse.value = course; overlay = false"
+              @click="$store.selectedCourse.value = course; overlay = false"
               v-scroll-to="'#form'"
               variant="flat"
               color="amber-accent-3"
